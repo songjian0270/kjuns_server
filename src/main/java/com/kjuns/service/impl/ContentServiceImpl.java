@@ -10,9 +10,11 @@ import com.kjuns.mapper.ContentMapper;
 import com.kjuns.mapper.ContentRelatedArticlesMapper;
 import com.kjuns.mapper.ContentTagMapper;
 import com.kjuns.mapper.ContentTypeMapper;
+import com.kjuns.mapper.SectionMapper;
 import com.kjuns.mapper.UserInfoMapper;
 import com.kjuns.model.Content;
 import com.kjuns.model.ContentRelatedArticles;
+import com.kjuns.model.ContentSection;
 import com.kjuns.model.ContentTag;
 import com.kjuns.model.ContentType;
 import com.kjuns.model.PageList;
@@ -22,6 +24,7 @@ import com.kjuns.service.ContentService;
 import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
+import com.kjuns.util.SysConf;
 import com.kjuns.util.pager.Page;
 import com.kjuns.vo.ContentVo;
 
@@ -45,6 +48,9 @@ public class ContentServiceImpl implements ContentService {
 	private ContentMapper contentMapper;
 	
 	@Autowired
+	private SectionMapper sectionMapper;
+	
+	@Autowired
 	private UserInfoMapper userInfoMapper;
 	
 	@Autowired
@@ -60,16 +66,40 @@ public class ContentServiceImpl implements ContentService {
 		int count = contentMapper.getTotalCount(typeId);
 		if(count > 0){
 			page.setTotalCount(count);
-			List<Content> list =  contentMapper.queryContentList(typeId, page.getStart(), page.getPageSize());
+			int number = page.getPageSize() / SysConf.INTERVAL_NUMBER;		
+			List<Content> list =  contentMapper.queryContentList(typeId, page.getStart(), page.getPageSize() - number);
 			if(CommonUtils.notListFEmpty(list)){
+				int i = 0; int k = 0 ;
 				for(Content content: list){
-					ContentVo contents = new ContentVo();
-					UserInfo userInfo = userInfoMapper.get(content.getUserId());
-					contents.setIssuerFaceSrc(userInfo.getFaceSrc());
-					contents.setIssuerName(userInfo.getNickName());
-					contents.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
-								CommonConstants.DATETIME_SEC));
-					ContentList.add(contents);
+					if(i == SysConf.INTERVAL_NUMBER - 1){
+						int pageNumber =  page.getStart()/page.getPageSize();
+						List<ContentSection> sectionList = sectionMapper.queryContentSectionList( pageNumber * number , number);
+						int j = 0;
+						if(CommonUtils.notListFEmpty(sectionList)){
+							for(ContentSection section: sectionList){
+								if(k == j){
+									ContentVo contents = new ContentVo();
+									UserInfo userInfo = userInfoMapper.get(section.getIssuerId());
+									contents.setIssuerFaceSrc(userInfo.getFaceSrc());
+									contents.setIssuerName(userInfo.getNickName());
+									contents.setCreateDate(CommonUtils.dateToUnixTimestamp(section.getCreateDate(), 
+												CommonConstants.DATETIME_SEC));
+								}
+								j++;
+							}
+						}
+						j ++;
+						i = 0;
+					}else{
+						ContentVo contents = new ContentVo();
+						UserInfo userInfo = userInfoMapper.get(content.getUserId());
+						contents.setIssuerFaceSrc(userInfo.getFaceSrc());
+						contents.setIssuerName(userInfo.getNickName());
+						contents.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
+									CommonConstants.DATETIME_SEC));
+						ContentList.add(contents);
+					}
+					i++;
 				}
 			}
 		}

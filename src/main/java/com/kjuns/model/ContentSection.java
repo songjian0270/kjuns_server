@@ -11,6 +11,8 @@ public class ContentSection extends BaseModel{
 	private String thumbnail;
 	
 	private int isTop;
+	
+	private String issuerId;
 
 	public String getTitle() {
 		return title;
@@ -50,6 +52,14 @@ public class ContentSection extends BaseModel{
 
 	public void setIsTop(int isTop) {
 		this.isTop = isTop;
+	}
+
+	public String getIssuerId() {
+		return issuerId;
+	}
+
+	public void setIssuerId(String issuerId) {
+		this.issuerId = issuerId;
 	}
 	
 }

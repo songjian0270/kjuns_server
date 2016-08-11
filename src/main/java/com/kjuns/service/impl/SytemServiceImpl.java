@@ -143,7 +143,6 @@ public class SytemServiceImpl implements SystemService{
 		Map<String, Object> result = new TreeMap<String, Object>();
 		
 		result.put("env", SysConf.ENV == false ? 0 : 1);
-		result.put("simulation", SysConf.SIMULATION);
 		result.put("baseShareUrl","http://html.kjunsproject.me/content_detail.html?id=");//分享页面地址
 		result.put("baseHtmlUrl", "http://html.kjunsproject.me/");//所有html页面前缀
 		result.put("backMasterServer", SysConf.BACK_MASTER_SERVER_URL);//备用主域名

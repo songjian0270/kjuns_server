@@ -1056,36 +1056,5 @@ public class CommonUtils {
 		long datetime =Long.valueOf(CommonConstants.DATE_STR.format(d));
 		return datetime;
     }
-    
-    public static String makeRTMPPullLiveURL(String liveId,String userId){
-		String liveType = liveId.substring(14, 17);
-		if(liveType.equals(CommonConstants.SERVICETYPE_LIVE_VIDEO)){
-    		return String.format(SysConf.RTMP_PULL_URL,CommonConstants.LIVE_TYPE_FIX_VIDEO,liveId, userId);
-    	}
-
-		return String.format(SysConf.RTMP_PULL_URL,CommonConstants.LIVE_TYPE_FIX_AUDIO,liveId, userId);
-    }
-
-    public static String makeHLSPullLiveURL(String liveId,String userId){
-		String liveType = liveId.substring(14, 17);
-		if(liveType.equals(CommonConstants.SERVICETYPE_LIVE_VIDEO)){
-    		return String.format(SysConf.HLS_PULL_URL,CommonConstants.LIVE_TYPE_FIX_VIDEO,liveId, userId);
-    	}
-
-		return String.format(SysConf.HLS_PULL_URL,CommonConstants.LIVE_TYPE_FIX_AUDIO,liveId, userId);
-    }
-    
-    public static String makeRTMPPushLiveURL(String liveId,String userId){
-		String liveType = liveId.substring(14, 17);
-		if(liveType.equals(CommonConstants.SERVICETYPE_LIVE_VIDEO)){
-    		return String.format(SysConf.RTMP_PUSH_URL,CommonConstants.LIVE_TYPE_FIX_VIDEO,liveId, userId);
-    	}
-
-		return String.format(SysConf.RTMP_PUSH_URL,CommonConstants.LIVE_TYPE_FIX_AUDIO,liveId, userId);
-    }
-
-	public static void main(String[] args) throws Exception {
-
-	}
 
 }
