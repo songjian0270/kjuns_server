@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/aop   
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+       
+	<mvc:default-servlet-handler />
+	
+	<!--  自定义注解是否开启 -->
+	<aop:aspectj-autoproxy/>
+	
+	<context:component-scan base-package="com.kjuns.controller,com.kjuns.service.impl,com.kjuns.aspect" />
+	
+	<!-- 乱码 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+	    <property name="messageConverters">  
+	        <list>  
+	            <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+	                <property name="supportedMediaTypes">  
+	                    <list>  
+	                        <value>text/html;charset=UTF-8</value>  
+	                    </list>  
+	                </property>  
+	            </bean>  
+	            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />  
+	        </list>  
+	    </property>  
+	</bean>
+	
+	<!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /blog/1.json /blog/1.xml -->  
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">  
+        <property name="ignoreAcceptHeader" value="true" />  
+        <property name="defaultContentType" value="application/json" />  
+        <!-- 扩展名至mimeType的映射,即 /blog.json => application/json -->  
+        <property name="mediaTypes">  
+            <map>  
+                <entry key="json" value="application/json" />  
+                <entry key="xml" value="application/xml" />  
+            </map>  
+        </property>  
+        <!-- 用于开启 /blog/123?format=json 的支持 -->  
+        <property name="favorParameter" value="false" />  
+        <property name="viewResolvers">  
+            <list>  
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />  
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />  
+                    <property name="prefix" value="/pages" />  
+                    <property name="suffix" value=".jsp"></property>  
+                </bean>  
+            </list>  
+        </property>  
+        <property name="defaultViews">  
+        	<list>     
+			    <bean  class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">        
+			   		<property  name="extractValueFromSingleKeyModel" value="true" />     
+			    </bean>        
+			    <bean  class="org.springframework.web.servlet.view.xml.MarshallingView">   
+			    	<property name="marshaller">        
+			    		<bean  class="org.springframework.oxm.xstream.XStreamMarshaller">    
+			    			<property name="autodetectAnnotations" value="true"/>   
+			    			<!-- 针对bean中下划线处理 -->
+			    			<property name="streamDriver">
+				    			<bean class="com.thoughtworks.xstream.io.xml.StaxDriver">
+					                <constructor-arg>
+					                    <bean class="com.thoughtworks.xstream.io.naming.NoNameCoder" />
+				                	</constructor-arg>
+			            		</bean>
+			    			</property>
+			    		</bean>
+			    	</property>      
+			    </bean>      
+		    </list>   
+        </property>  
+    </bean>  
+ 
+	<!-- 支持上传文件 -->  
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    
+    <bean id="exceptionResolver" class="com.kjuns.handler.ExceptionHandler"/>  
+
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/exception/**"/>
+			<mvc:exclude-mapping path="/kjunsproject.apk*"/>
+			<mvc:exclude-mapping path="/user/trans/wxNotification*"/>
+			<bean class="com.kjuns.interceptor.DefaultInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+
+</beans>

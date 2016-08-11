@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+		
+	<!-- init-method="init" -->
+	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" 
+		destroy-method="close">
+		<property name="forceShutdown">
+        	<value>true</value>
+        </property>
+    </bean>
+    
+    <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+    	<property name="transactionTimeout" value="200" />
+    </bean>
+	
+	<bean id="transactionManager"
+         class="org.springframework.transaction.jta.JtaTransactionManager">
+   		<property name="transactionManager">
+	   		<ref bean="atomikosTransactionManager"/>
+	    </property>
+	    <property name="userTransaction">
+	    	<ref bean="atomikosUserTransaction"/>
+	    </property>
+	    <!-- 必须设置，否则程序出现异常 JtaTransactionManager does not support custom isolation levels by default -->
+	    <property name="allowCustomIsolationLevels" value="true"/>
+   	</bean>
+	
+	<aop:config >
+		<aop:advisor pointcut="execution(* com.kjuns.service..*Service.*(..))" advice-ref="txAdvice" />
+	</aop:config>
+	
+	<!-- 声明式事物管理 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<tx:method name="binding*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="add*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="save*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="check*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="insert*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="update*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="modify*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="delete*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="del*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="registe*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="approve*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="clear*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="set*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="reset*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<tx:method name="process*" read-only="false" rollback-for="Exception" propagation="REQUIRED" />
+			<!-- <tx:method name="*" read-only="true"/> -->
+		</tx:attributes>
+	</tx:advice>
+	
+</beans>

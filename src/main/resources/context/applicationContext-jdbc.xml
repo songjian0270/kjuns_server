@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    
+     <!-- 分布式配置 abstract="true" init-method="init"-->
+	<bean id="abstractXADataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" destroy-method="close"
+		abstract="true" init-method="init" >
+		<property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
+		<property name="poolSize" value="1"/>
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="10"/>
+		<property name="borrowConnectionTimeout" value="60"/>
+		<property name="reapTimeout" value="20"/>
+		<!-- 最大空闲时间 -->
+		<property name="maxIdleTime" value="60"/>
+		<property name="maintenanceInterval" value="60"/>
+		<property name="loginTimeout" value="60"/>
+		<property name="testQuery"><value>select 1</value></property>
+	</bean>
+	
+	<bean id="dataSource_kjuns" parent="abstractXADataSource">
+		<!-- value只要两个数据源不同就行，随便取名 -->
+		<property name="uniqueResourceName" value="mysql/kjuns" />
+	    <property name="xaDataSourceClassName"
+	                    value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
+	    <property name="xaProperties">
+		    <props>
+			    <prop key="URL">${dataSource.url}</prop>
+			    <prop key="user">${dataSource.username}</prop>
+			    <prop key="password">${dataSource.password}</prop>
+			    <prop key="pinGlobalTxToPhysicalConnection">true</prop>
+		    </props>
+	    </property>
+	</bean>
+	
+   	<bean name="dynamicDatasource" class="com.kjuns.datasource.CustomerDatasource" > 
+		<property name="targetDataSources">               
+			<map> 
+				<entry key="kjuns" value-ref="dataSource_kjuns" /> 
+			</map> 
+		</property >      
+		<property name="defaultTargetDataSource" ref="dataSource_kjuns" /> 
+	</bean>
+	
+</beans>

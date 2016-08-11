@@ -1,0 +1,21 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT validators (validator)+>
+<!ATTLIST validators
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT validator (field)+>
+<!ATTLIST validator
+    method NMTOKEN #REQUIRED
+    target CDATA #REQUIRED>
+
+<!ELEMENT field (rule)+>
+<!ATTLIST field
+	name NMTOKEN #REQUIRED
+    dataType (String|Integer|Double|Long|List|Float) "String" >
+
+<!ELEMENT rule EMPTY>
+<!ATTLIST rule
+    msg NMTOKEN #IMPLIED
+    validate (notNull|notEmpty|emptyAble|fixedLen|minLen|maxLen|min|max|numeral|specified|email|regular|optional|emojiForbid) "notEmpty"
+    value CDATA #IMPLIED>

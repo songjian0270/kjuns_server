@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	
+	<listener>
+		<listener-class>com.kjuns.util.listener.LogbackConfigListener</listener-class>
+	</listener>
+	
+	<context-param>
+		<param-name>logbackConfigLocation</param-name>
+		<param-value>classpath:logback.xml</param-value>
+	</context-param><absolute-ordering></absolute-ordering>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:context/applicationContext-base.xml</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>loadServlet</servlet-name>
+		<servlet-class>com.kjuns.servlet.HouseKeeperServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<description></description>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+    <servlet-mapping>
+    	<servlet-name>dispatcher</servlet-name>
+    	<url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+    <filter>  
+        <filter-name>characterEncodingFilter</filter-name>  
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
+        <init-param>  
+            <param-name>encoding</param-name>  
+            <param-value>UTF-8</param-value>  
+        </init-param>  
+        <init-param>  
+            <param-name>forceEncoding</param-name>  
+            <param-value>true</param-value>  
+        </init-param>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>characterEncodingFilter</filter-name>  
+        <url-pattern>/*</url-pattern>  
+    </filter-mapping>  
+    
+   	<servlet>
+		<description>启动时自动加载所需资源</description>
+		<display-name>OnStartupServlet</display-name>
+		<servlet-name>OnStartupServlet</servlet-name>
+		<servlet-class>com.kjuns.servlet.OnStartupServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+
+	<filter>
+	    <filter-name>httpPutFormContentFilter</filter-name>
+	    <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>httpPutFormContentFilter</filter-name>
+	    <servlet-name>dispatcher</servlet-name>
+	</filter-mapping>
+
+	<!--
+	<filter>  
+	    <filter-name>HiddenHttpMethodFilter</filter-name>  
+	    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>  
+	</filter>  
+	<filter-mapping>  
+	    <filter-name>HiddenHttpMethodFilter</filter-name>  
+	    <servlet-name>dispatcher</servlet-name>  
+	</filter-mapping>
+-->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+		<url-pattern>*.bmp</url-pattern>
+		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.apk</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

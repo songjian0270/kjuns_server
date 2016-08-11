@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators SYSTEM "../dtd/validation.dtd">
+<validators>
+    
+    <validator target="com.kjuns.controller.SmsController" method="generateCheckCode">
+	    <field name="cellPhoneNumber" dataType="String">
+	 	    <rule validate="notEmpty" msg="手机号不能为空"/>
+	    </field>
+	    <field name="diallingCode" dataType="String">
+	    	<rule validate="notEmpty" msg="国际码不能为空"/>	
+	    </field>
+	    <field name="signature" dataType="String">
+			<rule validate="notEmpty" msg="signature不能为空" />
+		</field>
+    </validator>
+    
+    <validator target="com.kjuns.controller.SmsController" method="verifyCheckCode">
+	    <field name="cellPhoneNumber" dataType="String">
+	 	    <rule validate="notEmpty" msg="手机号不能为空"/>
+	    </field>
+	    <field name="checkCode" dataType="String">
+	    	<rule validate="notEmpty" msg="验证码不能为空"/>	
+	    </field>
+	    <field name="signature" dataType="String">
+			<rule validate="notEmpty" msg="signature不能为空" />
+		</field>
+    </validator>
+    
+</validators>

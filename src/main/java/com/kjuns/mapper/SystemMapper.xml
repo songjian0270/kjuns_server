@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kjuns.mapper.SystemMapper">
+
+	<delete id="deleteAccount" parameterType="String" >
+		delete from base_user_account where mobile_phone =#{cellPhoneNumber}
+	</delete>
+	
+	<delete id="deleteUserInfo" parameterType="String" >
+		delete from base_user_info where id =#{id}
+	</delete>
+	
+	<select id="getAccount" resultType="String" parameterType="String" >
+		select user_id from base_user_account where  mobile_phone =#{cellPhoneNumber}
+	</select>
+	
+</mapper>

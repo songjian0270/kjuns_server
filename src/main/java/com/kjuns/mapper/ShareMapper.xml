@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kjuns.mapper.ShareMapper">
+
+	<insert id="insertContentShare" parameterType="com.kjuns.model.UserShare">
+		insert into kjuns_content_share(create_date,create_by,update_by,update_date,data_flag,content_id,user_id,channel,url,id) 
+		values (#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, 1,#{contentId},#{userId},#{channel},#{url},#{id})
+	</insert>
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM kjuns_content_share where data_flag = 1
+		<if test="contentId != null and contentId != ''">
+			and content_id = #{contentId}
+		</if>
+	</select>
+	
+	<select id="queryContentShareList" resultType="com.kjuns.model.UserShare">
+		SELECT id, content_id contentId,user_id userId, create_by createBy,
+		create_date createDate, user_id userId FROM kjuns_content_share where data_flag = 1 
+		<if test="contentId != null and contentId != ''">
+			and content_id = #{contentId}
+		</if>
+		order by create_date desc limit #{pageNo},#{pageSize}
+	</select>
+	
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+
+	<!-- 线程执行器配置，用于任务注册 -->
+	<bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="10" />
+		<property name="maxPoolSize" value="100" />
+		<property name="queueCapacity" value="500" />
+	</bean>
+	
+	<bean id="redisCheck" class="com.kjuns.util.redis.RedisCheck"/>
+	<bean id="levelSynchronizationTask" class="com.kjuns.task.LevelSynchronizationTask"/>
+	
+	<bean id="redisCheckJob"
+		class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<!-- 调用的类 -->  
+		<property name="jobClass" value="com.kjuns.util.redis.RedisCheck"/> 	<!-- service -->
+		<property name="durability" value="true" /> 
+		<!-- <property name="targetMethod" value="redisSentinelMasterCheck"/>method -->
+	</bean>
+	
+	<!-- 
+	0 0/30 * * * ? 0秒启动，然后每隔30分钟执行一次 
+	0 0 12 * * ?   每天12点触发-->
+	<bean id="redisSentinelMaster" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="redisCheckJob" />
+		<property name="cronExpression" value="0 0/30 * * * ?" />
+	</bean>
+
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="startQuertz"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="redisSentinelMaster" /> 
+			</list>
+		</property>
+		<property name="taskExecutor" ref="executor" />
+        <property name="applicationContextSchedulerContextKey" value="applicationContext" />  
+        <property name="configLocation" value="classpath:quartz.properties" />
+	</bean>
+	
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource_kjuns" />
+		<property name="typeAliasesPackage" value="com.kjuns.model" />
+         <!-- mapper和resultmap配置路径 --> 
+        <property name="mapperLocations">
+            <list>
+                <!-- 表示在com.amos目录下的任意包下的resultmap包目录中，以-resultmap.xml或-mapper.xml结尾所有文件 --> 
+                <value>classpath:com/kjuns/mapper/*Mapper.xml</value>
+            </list>
+        </property>
+	</bean>
+
+	<!-- 配置自定义的SqlSessionTemplate模板，注入相关配置 -->
+    <bean id="sqlSessionTemplate" class="com.kjuns.mybatis.CustomSqlSessionTemplate" scope="prototype">
+        <constructor-arg ref="sqlSessionFactory" />
+        <property name="targetSqlSessionFactorys">
+            <map>     
+            	<entry value-ref="sqlSessionFactory" key="kjuns"/>
+            </map> 
+        </property>
+    </bean>
+    
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.kjuns.mapper" />
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate"/>
+    </bean>
+    
+</beans>

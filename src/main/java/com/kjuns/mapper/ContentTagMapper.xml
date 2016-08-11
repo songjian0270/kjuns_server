@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kjuns.mapper.ContentTagMapper">
+
+	<select id="queryContentTagForContentId" parameterType="String" resultType="com.kjuns.model.ContentTag">
+		select id,tag_id tagId, content_id contentId, tag_name tagName,
+		create_by createBy,create_date createDate from kjuns_content_tag where content_id = #{contentId} and data_flag = 1
+	</select>
+
+	<insert id="addContentTag" parameterType="com.kjuns.model.ContentTag" >
+		insert into kjuns_content_tag (id,tag_id,content_id,tag_name,create_by,create_date,data_flag,update_by,update_date) 
+		values(#{id},#{tagId},#{contentId},#{tagName},#{createBy},#{createDate},1,#{updateBy},#{updateDate})
+	</insert>
+	
+</mapper>
