@@ -2,9 +2,12 @@ package com.kjuns.vo;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kjuns.model.ContentRelatedArticles;
 import com.kjuns.model.ContentTag;
 
+@JsonInclude(Include.NON_NULL)
 public class ContentVo {
 	
 	private String id;
@@ -25,7 +28,7 @@ public class ContentVo {
 	
 	private String subhead;
 	
-	private String type;
+	private int type;
 	
 	private String content;
 	
@@ -48,6 +51,12 @@ public class ContentVo {
 	private String issuerName;
 	
 	private Long createDate;
+	
+	private long likeCount;
+	
+	private long shareCount;
+	
+	private List<ContentVo> contentList;
 
 	public String getId() {
 		return id;
@@ -121,11 +130,11 @@ public class ContentVo {
 		this.subhead = subhead;
 	}
 
-	public String getType() {
+	public int getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 
@@ -216,6 +225,30 @@ public class ContentVo {
 
 	public void setIssuerName(String issuerName) {
 		this.issuerName = issuerName;
+	}
+
+	public long getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(long likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public long getShareCount() {
+		return shareCount;
+	}
+
+	public void setShareCount(long shareCount) {
+		this.shareCount = shareCount;
+	}
+
+	public List<ContentVo> getContentList() {
+		return contentList;
+	}
+
+	public void setContentList(List<ContentVo> contentList) {
+		this.contentList = contentList;
 	}
 	
 }

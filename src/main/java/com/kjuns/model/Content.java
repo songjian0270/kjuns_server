@@ -1,6 +1,9 @@
 package com.kjuns.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.NON_NULL)
 public class Content extends BaseModel{
 
 	private String userId;
@@ -25,7 +28,7 @@ public class Content extends BaseModel{
 	
 	private String content;
 	
-	private String type;
+	private String typeId;
 	
 	private int isTop;
 	
@@ -35,11 +38,11 @@ public class Content extends BaseModel{
 	
 	private int isTease;	//吐槽
 	
-	private String issuers;
+	private String issuerid;
 	
-	private int like;
+	private long likeCount;
 	
-	private int share;
+	private long shareCount;
 
 	public String getSectionId() {
 		return sectionId;
@@ -113,12 +116,12 @@ public class Content extends BaseModel{
 		this.content = content;
 	}
 
-	public String getType() {
-		return type;
+	public String getTypeId() {
+		return typeId;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
 	}
 
 	public int getIsTop() {
@@ -153,12 +156,12 @@ public class Content extends BaseModel{
 		this.isTease = isTease;
 	}
 
-	public String getIssuers() {
-		return issuers;
+	public String getIssuerid() {
+		return issuerid;
 	}
 
-	public void setIssuers(String issuers) {
-		this.issuers = issuers;
+	public void setIssuerid(String issuerid) {
+		this.issuerid = issuerid;
 	}
 
 	public String getUserId() {
@@ -169,20 +172,20 @@ public class Content extends BaseModel{
 		this.userId = userId;
 	}
 
-	public int getLike() {
-		return like;
+	public long getLikeCount() {
+		return likeCount;
 	}
 
-	public void setLike(int like) {
-		this.like = like;
+	public void setLikeCount(long likeCount) {
+		this.likeCount = likeCount;
 	}
 
-	public int getShare() {
-		return share;
+	public long getShareCount() {
+		return shareCount;
 	}
 
-	public void setShare(int share) {
-		this.share = share;
+	public void setShareCount(long shareCount) {
+		this.shareCount = shareCount;
 	}
 
 	public String getBackground() {

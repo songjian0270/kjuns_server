@@ -67,10 +67,10 @@ public class UserLoginServiceImpl implements UserLoginService {
 			ua.setMobilePhone(cellPhoneNumber);
 			UserAccount userAccount = userAccountMapper.get(ua);
 			if (CommonUtils.notEmpty(userAccount)) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/** 登陆 */
@@ -115,51 +115,31 @@ public class UserLoginServiceImpl implements UserLoginService {
 			logger.info("updateForMobilePhone >> userInfo >> " + userInfo==null?"false":"true" );
 			if(CommonUtils.notEmpty(userInfo)){
 				//判断基本信息是否完善 < 2.1 版本必填,之后不用判断>
-				return this.updateUserAccountByUserId(ua.getId(), userInfo);
+				return this.updateUserAccountByUserId(ua, userInfo);
+			}else{
+				Map<String, Object> p = new HashMap<>();
+				p.put("id", ua.getId());
+				return new BaseOutJB(ErrorCode.NOT_PERFECT_USER_INFO, p);
 			}
 		}else{
 			UserAccount record = new UserAccount();
 			record.setMobilePhone(mobilePhone);
-			//MYSQL 查询是否存在
 			record = userAccountMapper.get(record);
 			if(null == record){
 				record = new UserAccount();
 				record.setMobilePhone(mobilePhone);
-				//创建默认创建 userInfo   // < 2.1 版本还是需要完善信息>
-//				UserInfo baseUserInfo = new UserInfo();
-//				baseUserInfo.setFaceSrc("default_head.png");
-//				int nickName = (int)(Math.random()*100000);
-//				baseUserInfo.setMobilePhone(mobilePhone);
-//				baseUserInfo.setNickName(nickName+"");
-//				baseUserInfo.setSex(0);  //默认男
-//				baseUserInfo.setCreateDate(datetime);
-//				baseUserInfo.setDataFlag("1");
-				int result = 0; //userInfoMapper.insert(baseUserInfo);
-//				if( result > 0 ){
-					//该电话号码无数据，则创建account
-					String token = UUIDUtils.getUUID().toString().replace("-", "");
-					record.setToken(token);
-					record.setDataFlag("1");
-				//	record.setUserId(baseUserInfo.getId());
-					record.setCreateDate(datetime);
-					record.setUpdateDate(datetime);
-					result = userAccountMapper.insert(record);
-					if( result > 0 ){
-						return new BaseOutJB(ErrorCode.NOT_PERFECT_USER_INFO);
-					}
-				//}
-			}else{
-				//返回存在信息
-				if(CommonUtils.notEmpty(record.getUserId())){
-					String token = UUIDUtils.getUUID().replace("-", "");
+				String token = UUIDUtils.getUUID().toString().replace("-", "");
+				String id = UUIDUtils.getUUID().toString().replace("-", "");
+				record.setToken(token);
+				record.setDataFlag("1");
+				record.setId(id);
+				record.setCreateDate(datetime);
+				record.setUpdateDate(datetime);
+				int result = userAccountMapper.insert(record);
+				if( result > 0 ){
 					Map<String, Object> p = new HashMap<>();
-					p.put("token",  token);
-					int i = userAccountMapper.updateUserAccountByUserId(record.getUserId(), token);
-					if(i <= 0){
-						return new BaseOutJB(ErrorCode.FAILED, null);
-					}else{
-						return new BaseOutJB(ErrorCode.SUCCESS, p);
-					}
+					p.put("id", id);
+					return new BaseOutJB(ErrorCode.NOT_PERFECT_USER_INFO, p);
 				}
 			}
 		}
@@ -169,12 +149,12 @@ public class UserLoginServiceImpl implements UserLoginService {
 	/**
 	 * 获取用户基本信息
 	 */
-	protected BaseOutJB updateUserAccountByUserId(String accountId, UserInfo userInfo){
+	protected BaseOutJB updateUserAccountByUserId(UserAccount ua, UserInfo userInfo){
 		if(CommonUtils.notEmpty(userInfo.getNickName()) && CommonUtils.notEmpty(userInfo.getFaceSrc()) 
-				&& CommonUtils.notEmpty(userInfo.getSex()) && CommonUtils.notEmpty(userInfo.getIdCard())){
+				&& CommonUtils.notEmpty(userInfo.getSex()) && CommonUtils.notEmpty(userInfo.getIdcard())){
 			UserInfoVo userInfoVo = new UserInfoVo();
 			String token = UUIDUtils.getUUID().replace("-", "");
-			int i = userAccountMapper.updateUserAccountByUserId(accountId, token);
+			int i = userAccountMapper.updateUserAccountByUserId(ua.getId(), token);
 			if(i <= 0){
 				return new BaseOutJB(ErrorCode.FAILED, null);
 			}
@@ -186,7 +166,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 			userInfoVo.setLocation(userInfo.getLocation());
 			return new BaseOutJB(ErrorCode.SUCCESS, userInfoVo);
 		}else{
-			return new BaseOutJB(ErrorCode.NOT_PERFECT_USER_INFO);
+			Map<String, Object> p = new HashMap<>();
+			p.put("id", ua.getId());
+			return new BaseOutJB(ErrorCode.NOT_PERFECT_USER_INFO, p);
 		}
 	}
 	
@@ -465,21 +447,69 @@ public class UserLoginServiceImpl implements UserLoginService {
 	}
 
 	@Override
-	public BaseOutJB complete(String cellPhoneNumber, String nickName, String faceSrc,
-			String idCard) throws Exception {
+	public BaseOutJB complete(String id, String nickName, String faceSrc,
+			String idcard, int sex) throws Exception {
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
-		String id = UUIDUtils.getUUID().toString().replace("-", "");
+		UserAccount ua = new UserAccount();
+		ua.setId(id);
+		UserAccount userAccount = userAccountMapper.get(ua);
+		
+		if(CommonUtils.notEmpty(userAccount.getUserId())){
+			UserInfo userInfo = userInfoMapper.get(userAccount.getUserId());
+			if(null != userInfo){
+				if(CommonUtils.notEmpty(userInfo.getNickName()) && CommonUtils.notEmpty(userInfo.getFaceSrc()) 
+						&& CommonUtils.notEmpty(userInfo.getSex()) && CommonUtils.notEmpty(userInfo.getIdcard())){
+					String token = UUIDUtils.getUUID().toString().replace("-", "");
+					Map<String, Object> params = new HashMap<>();
+					if(CommonUtils.isEmpty(userAccount.getToken())){
+						params.put("token", token);
+						params.put("id", id);
+						userAccountMapper.updateUserAccountByAccountId(params);
+					}else{
+						token = userAccount.getToken();
+					}
+					Map<String, Object> p = new HashMap<>();
+					p.put("faceSrc", CommonUtils.getImage(faceSrc));
+					p.put("nickName", nickName);
+					p.put("token", token);
+					p.put("userId", userAccount.getUserId());
+					return new BaseOutJB(ErrorCode.SUCCESS, p);
+				}
+			}
+		}
+		
+		String userId = UUIDUtils.getUUID().toString().replace("-", "");
 		UserInfo userInfo = new UserInfo();
-		userInfo.setFaceSrc("default_head.png");
-		userInfo.setMobilePhone(cellPhoneNumber);
+		if(CommonUtils.notEmpty(faceSrc)){
+			userInfo.setFaceSrc("default_head.png");	
+		}else{
+			userInfo.setFaceSrc(faceSrc);
+		}
+		userInfo.setIdcard(idcard);
 		userInfo.setNickName(nickName);
-		userInfo.setSex(0);  //默认男
+		userInfo.setSex(sex);  //默认男
 		userInfo.setCreateDate(datetime);
 		userInfo.setDataFlag("1");
-		userInfo.setId(id);
+		userInfo.setId(userId);
+		userInfo.setMobilePhone(userAccount.getMobilePhone());
+		
 		int result = userInfoMapper.insert(userInfo);
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("userId", userId);
+		String token = UUIDUtils.getUUID().toString().replace("-", "");
+		if(CommonUtils.isEmpty(userAccount.getToken())){
+			params.put("token", token);
+		}
+		result = userAccountMapper.updateUserAccountByAccountId(params);
+		
 		if(result > 0){
-			return new BaseOutJB(ErrorCode.SUCCESS);
+			Map<String, Object> p = new HashMap<>();
+			p.put("faceSrc", CommonUtils.getImage(faceSrc));
+			p.put("nickName", nickName);
+			p.put("token", token);
+			p.put("userId", userId);
+			return new BaseOutJB(ErrorCode.SUCCESS, p);
 		}else{
 			return new BaseOutJB(ErrorCode.FAILED);
 		}

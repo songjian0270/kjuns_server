@@ -25,6 +25,7 @@ import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.util.SysConf;
+import com.kjuns.util.UUIDUtils;
 import com.kjuns.util.pager.Page;
 import com.kjuns.vo.ContentVo;
 
@@ -39,7 +40,7 @@ import com.kjuns.vo.ContentVo;
  * @version 2.0
  */
 @Service("contentService")
-public class ContentServiceImpl implements ContentService {
+public abstract class ContentServiceImpl implements ContentService {
 	
 	@Autowired
 	private ContentTypeMapper contentTypeMapper;
@@ -61,13 +62,13 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public PageList queryContent(String typeId, Page page) throws Exception {
-		List<ContentVo> ContentList = new ArrayList<>();
+		List<ContentVo> contentList = new ArrayList<>();
 		PageList pageList = new PageList();
-		int count = contentMapper.getTotalCount(typeId);
+		int count = contentMapper.getTotalCount(typeId, null);
 		if(count > 0){
 			page.setTotalCount(count);
 			int number = page.getPageSize() / SysConf.INTERVAL_NUMBER;		
-			List<Content> list =  contentMapper.queryContentList(typeId, page.getStart(), page.getPageSize() - number);
+			List<Content> list =  contentMapper.queryContentList(typeId, null, page.getStart(), page.getPageSize() - number);
 			if(CommonUtils.notListFEmpty(list)){
 				int i = 0; int k = 0 ;
 				for(Content content: list){
@@ -79,11 +80,37 @@ public class ContentServiceImpl implements ContentService {
 							for(ContentSection section: sectionList){
 								if(k == j){
 									ContentVo contents = new ContentVo();
-									UserInfo userInfo = userInfoMapper.get(section.getIssuerId());
-									contents.setIssuerFaceSrc(userInfo.getFaceSrc());
+									contents.setId(content.getId());
+									contents.setTitle(content.getTitle());
+									contents.setSummary(content.getSummary());
+									contents.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
+									contents.setLikeCount(content.getLikeCount());
+									contents.setShareCount(content.getShareCount());
+									contents.setType(1);
+									List<Content> sectionContentList = contentMapper.queryContentList(null, section.getId(), 0, 6);
+									List<ContentVo> ls = new ArrayList<>();
+									for(Content sectionContent: sectionContentList){
+										ContentVo c = new ContentVo();
+										c.setId(sectionContent.getId());
+										c.setTitle(sectionContent.getTitle());
+										c.setSummary(sectionContent.getSummary());
+										c.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
+										c.setLikeCount(sectionContent.getLikeCount());
+										c.setShareCount(sectionContent.getShareCount());
+										UserInfo userInfo = userInfoMapper.get(sectionContent.getUserId());
+										c.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+										c.setIssuerName(userInfo.getNickName());
+										c.setCreateDate(CommonUtils.dateToUnixTimestamp(sectionContent.getCreateDate(), 
+													CommonConstants.DATETIME_SEC));
+										ls.add(c);
+									}
+									contents.setContentList(ls);
+									UserInfo userInfo = userInfoMapper.get(section.getUserId());
+									contents.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 									contents.setIssuerName(userInfo.getNickName());
 									contents.setCreateDate(CommonUtils.dateToUnixTimestamp(section.getCreateDate(), 
 												CommonConstants.DATETIME_SEC));
+									contentList.add(contents);
 								}
 								j++;
 							}
@@ -92,12 +119,19 @@ public class ContentServiceImpl implements ContentService {
 						i = 0;
 					}else{
 						ContentVo contents = new ContentVo();
+						contents.setId(content.getId());
+						contents.setTitle(content.getTitle());
+						contents.setSummary(content.getSummary());
+						contents.setType(0);
+						contents.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
+						contents.setLikeCount(content.getLikeCount());
+						contents.setShareCount(content.getShareCount());
 						UserInfo userInfo = userInfoMapper.get(content.getUserId());
-						contents.setIssuerFaceSrc(userInfo.getFaceSrc());
+						contents.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 						contents.setIssuerName(userInfo.getNickName());
 						contents.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
 									CommonConstants.DATETIME_SEC));
-						ContentList.add(contents);
+						contentList.add(contents);
 					}
 					i++;
 				}
@@ -105,7 +139,7 @@ public class ContentServiceImpl implements ContentService {
 		}
 		pageList.setPageInvertedIndex(page.getReturnIndex());
 		pageList.setTotalCount(count);
-		pageList.setList(ContentList);
+		pageList.setList(contentList);
 		return pageList;
 	}
 
@@ -113,6 +147,8 @@ public class ContentServiceImpl implements ContentService {
 	public BaseOutJB insertContent(Content content) throws Exception {
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 		content.setCreateDate(datetime);
+		String id = UUIDUtils.getUUID().toString().replace("-", "");
+		content.setId(id);
 		boolean isSucceed = contentMapper.insertContent(content) > 0 ? true: false;
 		if(isSucceed){
 			return new BaseOutJB(ErrorCode.SUCCESS);
@@ -178,6 +214,37 @@ public class ContentServiceImpl implements ContentService {
 	public ErrorCode insertContentShare(String contentId) throws Exception {
 		ErrorCode errorCode = contentMapper.insertContentShare(contentId) > 0 ? ErrorCode.SUCCESS : ErrorCode.FAILED;
 		return errorCode;
+	}
+
+	@Override
+	public PageList querySectionContent(String sectionId, Page page) throws Exception {
+		List<ContentVo> contentList = new ArrayList<>();
+		int count = contentMapper.getTotalCount(null, sectionId);
+		PageList pageList = new PageList();
+		if(count > 0){
+			page.setTotalCount(count);
+			List<Content> contents = contentMapper.queryContentList(null, sectionId, page.getStart(), page.getPageSize());
+			for(Content content:contents){
+				ContentVo contentv = new ContentVo();
+				contentv.setId(content.getId());
+				contentv.setTitle(content.getTitle());
+				contentv.setSummary(content.getSummary());
+				contentv.setType(1);
+				contentv.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
+				contentv.setLikeCount(content.getLikeCount());
+				contentv.setShareCount(content.getShareCount());
+				UserInfo userInfo = userInfoMapper.get(content.getUserId());
+				contentv.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+				contentv.setIssuerName(userInfo.getNickName());
+				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
+							CommonConstants.DATETIME_SEC));
+				contentList.add(contentv);
+			}
+		}
+		pageList.setPageInvertedIndex(page.getReturnIndex());
+		pageList.setTotalCount(count);
+		pageList.setList(contentList);
+		return pageList;
 	}
 	
 }

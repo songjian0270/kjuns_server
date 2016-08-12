@@ -40,6 +40,8 @@ public class UserInfoVo {
 	private int likeCount=0;
 	
 	private int readingQuantity=0;
+	
+	private int automaticThought=0;
 
 	public String getId() {
 		return id;
@@ -143,6 +145,14 @@ public class UserInfoVo {
 
 	public void setJoinYear(int joinYear) {
 		this.joinYear = joinYear;
+	}
+
+	public int getAutomaticThought() {
+		return automaticThought;
+	}
+
+	public void setAutomaticThought(int automaticThought) {
+		this.automaticThought = automaticThought;
 	}
 
 }

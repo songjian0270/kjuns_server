@@ -42,34 +42,20 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public UserInfoVo getUserInfoById(String id) throws Exception {
 		UserInfoVo userInfo = new UserInfoVo();
 		if (CommonUtils.notEmpty(id)) {
-			// userInfo.setExp(info.getExp());
-			// userInfo.setId(idLong);
-			// userInfo.setLvupRemainExp(info.getLvupRemainExp());
-			// userInfo.setLevel(info.getLevel());
-			// userInfo.setFaceSrc(CommonUtils.getImage(info.getFaceSrc()));
-			// userInfo.setRealName(info.getRealName());
-			// userInfo.setCenterCover(info.getCenterCover());
-			// userInfo.setNickName(info.getNickName());
-			// userInfo.setBirthday(info.getBirthday());
-			// userInfo.setLocation(info.getLocation());
-			// userInfo.setSex(info.getSex());
-			// userInfo.setHoroscope(info.getHoroscope());
-			// userInfo.setJob(info.getJob());
-			// userInfo.setDescription(info.getDescription());
-			// userInfo.setBloodType(info.getBloodType());
-			// userInfo.setIsFocus(info.getIsFocus());
-			// userInfo.setkjunsState(info.getkjunsState());
-			// userInfo.setCenterCover(info.getCenterCover());
-			// userInfo.setReceiveAmount(info.getReceiveAmount());
-			// userInfo.setAmount(info.getAmount());
+			UserInfo ui = userInfoMapper.get(id);
+			userInfo.setAutomaticThought(ui.getAutomaticThoughts());
+			userInfo.setFaceSrc(CommonUtils.getImage(ui.getFaceSrc()));
+			userInfo.setLocation(ui.getLocation());
+			userInfo.setSex(ui.getSex());
+			userInfo.setNickName(ui.getNickName());
 		}
 		return userInfo;
 	}
 
 	/** 昵称是否存在 */
 	public boolean nickNameIsExisting(String nickName) throws Exception {
-
-		return true;
+		boolean ishas = userInfoMapper.getForNickNameCount(nickName) > 0 ? false: true;
+		return ishas;
 	}
 
 	/**

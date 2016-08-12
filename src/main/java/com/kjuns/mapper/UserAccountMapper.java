@@ -16,7 +16,7 @@ public interface UserAccountMapper {
 	
 	int updateUserAccountByUserId(@Param("userId")String userId, @Param("token")String token);
 	
-	void updateUserAccountByAccountId(@Param("id")String id);
+	int updateUserAccountByAccountId(Map<String, Object> params);
 	
 	int updateUserAccountByThirdUid(UserAccount userAccount);
 

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kjuns.annotation.VerifyToken;
 import com.kjuns.model.LoginInfo;
-import com.kjuns.model.UserInfo;
 import com.kjuns.out.BaseOutJB;
 import com.kjuns.service.UserLoginService;
 import com.kjuns.util.ErrorCode;
@@ -53,12 +52,10 @@ public class UserLoginController extends BaseController {
 	 * @param cellPhoneNumber
 	 * @param model
 	 */
-	@VerifyToken
-	@RequestMapping(value = "/complete", method = RequestMethod.GET)
-	public void complete(String token, String nickName, String faceSrc, String idCard, Model model) throws Exception{
+	@RequestMapping(value = "/complete", method = RequestMethod.POST)
+	public void complete(String id, String nickName, String faceSrc, String idcard, int sex, Model model) throws Exception{
 		try {
-			UserInfo user = this.getUserInfoForToken(token);
-			BaseOutJB out = userLoginService.complete(user.getMobilePhone(), nickName, faceSrc, idCard);
+			BaseOutJB out = userLoginService.complete(id, nickName, faceSrc, idcard, sex);
 			sendResponseContent(model, out);
 		} catch (Exception ex) {
 			logger.error("isExistCellPhoneNumber >>> {}", ex.getMessage());

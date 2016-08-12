@@ -5,23 +5,29 @@
 	<select id="getTotalCount" resultType="int">
 		SELECT count(*) FROM kjuns_content where data_flag = 1
 		<if test="typeId != null and typeId != ''">
-			and type_id = #{typeId}
+			and type_id = #{typeId} and section_id =''
+		</if>
+		<if test="sectionId != null and sectionId != ''">
+			and section_id = #{sectionId}
 		</if>
 	</select>
 	
 	<select id="queryContentList" resultType="com.kjuns.model.Content">
-		SELECT id, title,source,source_url sourceUrl,summary,thumbnail,mind_map mindMap,content,subhead,sectionId,
-		type,isTop,like,create_by createBy,create_date createDate, user_id userId FROM kjuns_content_comments 
-		where data_flag = 1 
+		SELECT id, title,source,source_url sourceUrl,summary,thumbnail,mind_map mindMap,content,subhead,section_id sectionId,
+		type_id typeId,isTop,like_count likeCount, share_count shareCount,create_by createBy,create_date createDate, user_id userId FROM kjuns_content
+		where data_flag = 1
 		<if test="typeId != null and typeId != ''">
-			and type_id = #{typeId}
+			and type_id = #{typeId} and section_id =''
+		</if>
+		<if test="sectionId != null and sectionId != ''">
+			and section_id = #{sectionId}
 		</if>
 		order by create_date desc limit #{pageNo},#{pageSize}
 	</select>
 
 	<insert id="insertContent" parameterType="com.kjuns.model.Content">
-		insert into ${table}(${columnName},create_date,create_by,update_by,update_date,data_flag,user_id,content,reply_comment_id) 
-		values (#{contentId},#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, #{dataFlag}, #{userId},#{content},#{replyCommentId})
+		insert into kjuns_content(id,create_date,create_by,update_by,update_date,data_flag,content,type_id,user_id) 
+		values (#{id},#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, #{dataFlag},#{content},#{typeId},#{userId})
 	</insert>
 	
 	<update id="delContentById" parameterType="com.kjuns.model.Content">
@@ -30,16 +36,16 @@
 	</update>
 	
 	<update id="insertContentLike" parameterType="String">
-		update kjuns_content set like = like + 1 where id = #{id}
+		update kjuns_content set like_count = like_count + 1 where id = #{id}
 	</update>
 	
 	<update id="insertContentShare" parameterType="String">
-		update kjuns_content set like = like + 1 where id = #{id}
+		update kjuns_content set share_count = share_count + 1 where id = #{id}
 	</update>
 	
 	<select id="selectById" parameterType="String" resultType="com.kjuns.vo.ContentVo">
 		SELECT id, title, subhead, summary, source, mind_map mindMap, thumbnail, content,
-		create_by createBy,create_date createDate,type,isTop,issuer_id issuerId,
+		create_by createBy,create_date createDate,type,isTop,user_id userId,
 		isHot,isDepth,isTease FROM kjuns_content where id=#{id}
 	</select>
 	

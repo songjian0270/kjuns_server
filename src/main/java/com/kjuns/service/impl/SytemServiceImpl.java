@@ -145,8 +145,8 @@ public class SytemServiceImpl implements SystemService{
 		result.put("env", SysConf.ENV == false ? 0 : 1);
 		result.put("baseShareUrl","http://html.kjunsproject.me/content_detail.html?id=");//分享页面地址
 		result.put("baseHtmlUrl", "http://html.kjunsproject.me/");//所有html页面前缀
-		result.put("backMasterServer", SysConf.BACK_MASTER_SERVER_URL);//备用主域名
-		result.put("backSearchServer", SysConf.BACK_SEARCH_SERVER_URL);//备用搜索域名
+		//result.put("backMasterServer", SysConf.BACK_MASTER_SERVER_URL);//备用主域名
+		//result.put("backSearchServer", SysConf.BACK_SEARCH_SERVER_URL);//备用搜索域名
 		return result;
 	}
 	

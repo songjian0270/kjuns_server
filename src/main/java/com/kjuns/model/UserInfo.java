@@ -17,10 +17,12 @@ public class UserInfo extends BaseModel{
 	private String mobilePhone;
 	
 	private String location="";
+	
+	private int automaticThoughts;
 
 	private long fansCount;
 	
-	private String idCard;
+	private String idcard;
 
 	public String getRealName() {
 		return realName;
@@ -78,12 +80,22 @@ public class UserInfo extends BaseModel{
 		this.fansCount = fansCount;
 	}
 
-	public String getIdCard() {
-		return idCard;
+	public String getIdcard() {
+		return idcard;
 	}
 
-	public void setIdCard(String idCard) {
-		this.idCard = idCard;
+	public void setIdcard(String idcard) {
+		this.idcard = idcard;
 	}
+
+	public int getAutomaticThoughts() {
+		return automaticThoughts;
+	}
+
+	public void setAutomaticThoughts(int automaticThoughts) {
+		this.automaticThoughts = automaticThoughts;
+	}
+
+
 	
 }

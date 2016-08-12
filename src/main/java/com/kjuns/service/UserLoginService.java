@@ -20,11 +20,12 @@ public interface UserLoginService {
 	 * @param nickName
 	 * @param faceSrc
 	 * @param idCard
+	 * @param sex
 	 * @param model
 	 * @return
 	 * @throws Exception
 	 */
-	BaseOutJB complete(String cellPhoneNumber, String nickName, String faceSrc, String idCard) throws Exception;
+	BaseOutJB complete(String cellPhoneNumber, String nickName, String faceSrc, String idCard, int sex) throws Exception;
 	
 	/**
 	 * 手机是否存在

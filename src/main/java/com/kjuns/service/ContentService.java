@@ -38,6 +38,13 @@ public interface ContentService {
 	PageList queryContent(String typeId, Page page) throws Exception;
 	
 	/**
+	 * 专栏列表
+	 * @return
+	 * @throws Exception
+	 */
+	PageList querySectionContent(String sectionId, Page page) throws Exception;
+	
+	/**
 	 * 添加内容
 	 * @param Content
 	 * @return

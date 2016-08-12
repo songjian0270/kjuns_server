@@ -60,13 +60,16 @@ public class CommentController extends BaseController{
 	 * @param model
 	 * @throws Exception
 	 */
-	@VerifyToken
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public void add(String id, String replyCommentId, String content, String token, 
 			HttpServletRequest request, Model model) throws Exception{
 		try {
+			String userId = "000000000000000000000000000000000000";
 			UserInfo userInfo = this.getUserInfoForToken(token);
-			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userInfo.getId());
+			if(null != userInfo){
+				userId = userInfo.getId();
+			}
+			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId);
 			sendResponseContent(model, b);
 		} catch (Exception ex) {
 			logger.error("comment >>>> {}",ex.getMessage());

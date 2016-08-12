@@ -48,11 +48,22 @@ public class ContentController extends BaseController{
 		}
 	}
 	
+	@RequestMapping(value = "section/list", method = RequestMethod.GET)
+	public void sectionList(String id, Page page, Model model) throws Exception {
+		try {
+			PageList pageList = contentService.querySectionContent(id, page);
+			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
+		} catch (Exception ex) {
+			logger.error("list >>> {}", ex.getMessage());
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(String typeId, Page page, Model model) throws Exception {
 		try {
 			PageList pageList = contentService.queryContent(typeId, page);
-			sendResponseContent(model, pageList);
+			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
@@ -63,7 +74,7 @@ public class ContentController extends BaseController{
 	public void detail(String id, Model model) throws Exception {
 		try {
 			ContentVo Content = contentService.selectById(id);
-			sendResponseContent(model, Content);
+			sendResponseContent(model, ErrorCode.SUCCESS, Content);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
@@ -88,7 +99,7 @@ public class ContentController extends BaseController{
 	public void add(Content content, String token, Model model) throws Exception {
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);
-			content.setIssuers(userInfo.getId());
+			content.setUserId(userInfo.getId());
 			BaseOutJB jb = contentService.insertContent(content);
 			sendResponseContent(model, jb);
 		} catch (Exception ex) {

@@ -3,25 +3,25 @@
 <mapper namespace="com.kjuns.mapper.UserInfoMapper">
 
 	<select id="get" parameterType="com.kjuns.model.UserInfo" resultType="com.kjuns.model.UserInfo">
-		select face_src faceSrc, sex, nick_name nickName,id,idcard from base_user_info where id = #{userId} 
+		select face_src faceSrc, sex, nick_name nickName,id,idcard,TIMESTAMPDIFF(DAY, create_date,CURRENT_TIMESTAMP()) automaticThoughts from kjuns_user_info where id = #{userId} 
 		and (data_flag = 1 or data_flag = 2)
 	</select>
 	
 	<select id="getForToken" parameterType="String" resultType="com.kjuns.model.UserInfo">
 		select info.face_src faceSrc, info.sex, info.nick_name nickName,info.id,account.id accountId,
-		info.mobile_phone mobilePhone, info.provice + info.city location
+		info.mobile_phone mobilePhone, info.location location
 		from kjuns_user_info info,kjuns_user_account account 
 		where account.token=#{token} and account.data_flag = 1 and info.data_flag = 1
 		and account.user_id = info.id
 	</select>
 
-	<insert id="insert" parameterType="com.kjuns.model.UserInfo" useGeneratedKeys="true" keyProperty="id">
-		insert into base_user_info(face_src,sex,nick_name,data_flag,create_date,mobile_phone)
-		values (#{faceSrc}, #{sex}, #{nickName}, #{dataFlag}, #{createDate}, #{mobilePhone})
+	<insert id="insert" parameterType="com.kjuns.model.UserInfo" >
+		insert into kjuns_user_info(id,face_src,sex,nick_name,data_flag,idcard,create_date,mobile_phone)
+		values (#{id},#{faceSrc}, #{sex}, #{nickName}, 1, #{idcard},#{createDate}, #{mobilePhone})
 	</insert>
 	
 	<update id="updateUserInfoById" parameterType="com.kjuns.model.UserInfo">
-			UPDATE base_user_info 
+			UPDATE kjuns_user_info 
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="from == null "> 
 				<if test="realName != null and realName !='' "> real_name = #{realName} </if>
@@ -40,7 +40,7 @@
 	</update>
 	
 	<update id="updateDescriptionById">
-		UPDATE base_user_info set description = #{description} where id = #{id}
+		UPDATE kjuns_user_info set description = #{description} where id = #{id}
 	</update>
 	
 	<select id="getForNickNameCount" parameterType="String" resultType="int">

@@ -39,9 +39,6 @@
 	    <field name="content" dataType="String">
 	 	    <rule validate="notEmpty" msg="内容不能为空"/>
 	    </field>
-	    <field name="token" dataType="String">
-	 	    <rule validate="notEmpty" msg="token不能为空"/>
-	    </field>
 	    <field name="signature" dataType="String">
 			<rule validate="notEmpty" msg="signature不能为空" />
 		</field>

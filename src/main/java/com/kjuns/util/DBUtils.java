@@ -13,7 +13,7 @@ public class DBUtils {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     
-    static {
+    public DBUtils() {
     	try {
     		 Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
@@ -54,6 +54,28 @@ public class DBUtils {
             	throw new RuntimeException(e);
             }
         }
+    }
+    
+    public boolean cch(String name, String nationality, String remark) {
+    	boolean flag=true;
+    	 String sql= "insert into kjuns_visitor (name,nationality,remark) values(?,?,?)"; 
+    	 conn=this.getConntion();
+    	 try {
+			pstmt=conn.prepareStatement(sql);
+    	 pstmt.setString(1, name); //对占位符设置值，占位符顺序从1开始，第一个参数是占位符的位置，第二个参数是占位符的值。
+         pstmt.setString(2, nationality); 
+         pstmt.setString(3, remark); 
+         int i=pstmt.executeUpdate();
+         if(i==0){
+             flag=false;
+         }
+ 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			closeResources();
+		}
+         return flag;
     }
 
     public int execOther(PreparedStatement pstmt){

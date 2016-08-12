@@ -3,20 +3,20 @@
 <mapper namespace="com.kjuns.mapper.UserAccountMapper">
 
 	<select id="get" parameterType="com.kjuns.model.UserAccount" resultType="com.kjuns.model.UserAccount">
-		select user_id userId, qq_uid qqUid, wb_uid wbUid, wx_uid wxUid, rr_uid rrUid,
-		fb_uid fbUid, twi_uid twiUid
+		select user_id userId, qq_uid qqUid, wb_uid wbUid, wx_uid wxUid,mobile_phone mobilePhone,id,token
 		from kjuns_user_account where 1=1
 		<if test="mobilePhone != null and mobilePhone !=''"> and mobile_phone = #{mobilePhone} </if>
 		<if test="qqUid !=null and qqUid !='' "> and qq_uid = #{qqUid} </if>
 		<if test="wbUid !=null and wbUid !='' "> and wb_uid = #{wbUid} </if>
 		<if test="wxUid !=null and wxUid !='' "> and wx_uid = #{wxUid} </if>
 		<if test="token !=null and token !='' "> and token = #{token} </if>
+		<if test="id !=null and id !='' "> and id = #{id} </if>
 		and data_flag = 1
 	</select>
 	
 	<insert id="insert" parameterType="com.kjuns.model.UserAccount" useGeneratedKeys="true" keyProperty="id">
-		insert into kjuns_user_account(user_id,mobile_phone,token,data_flag,create_date,qq_uid,wb_uid,wx_uid
-		)values (#{userId},#{mobilePhone}, #{token}, #{dataFlag}, #{createDate}, #{qqUid}, #{wbUid}
+		insert into kjuns_user_account(id,mobile_phone,token,data_flag,create_date,qq_uid,wb_uid,wx_uid
+		)values (#{id},#{mobilePhone}, #{token}, #{dataFlag}, #{createDate}, #{qqUid}, #{wbUid}
 		, #{wxUid})
 	</insert>
 	
@@ -40,8 +40,16 @@
 		update kjuns_user_account set token = #{token} where user_id = #{userId}
 	</update>
 	
-	<update id="updateUserAccountByAccountId">
-		update kjuns_user_account set wx_unionid = #{unionId} where id = #{id}
+	<update id="updateUserAccountByAccountId" parameterType="map">
+		update kjuns_user_account 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="userId != null and userId !=''"> user_id = #{userId}</if>
+			<if test="token != null and token !=''"> token = #{token} </if>
+			<if test="qqUid !=null and qqUid !='' "> qq_uid = #{qqUid} </if>
+			<if test="wbUid !=null and wbUid !='' "> wb_uid = #{wbUid} </if>
+			<if test="wxUid !=null and wxUid !='' "> wx_uid = #{wxUid} </if>
+		</trim>
+		where id = #{id}
 	</update>
 
 	<update id="updateUserAccountByThirdUid" parameterType="com.kjuns.model.UserAccount">
@@ -51,9 +59,6 @@
 			<if test="wbUid !=null and wbUid !='' ">	wb_uid = #{wbUid} </if>
 			<if test="wxUid !=null and wxUid !='' "> wx_uid = #{wxUid} </if>
 			<if test="wxUnionid !=null and wxUnionid !='' "> wx_unionid = #{wxUnionid}</if>
-			<if test="rrUid !=null and rrUid !='' "> rr_uid = #{rrUid} </if>
-			<if test="fbUid !=null and fbUid !='' "> fb_uid = #{fbUid} </if>
-			<if test="twiUid !=null and twiUid !='' "> twi_uid = #{twiUid} </if>
 		</trim>
 		where mobile_phone = #{mobilePhone}
 	</update>

@@ -10,7 +10,9 @@ public class UserComment extends BaseModel {
 	
 	private String replyCommentId;
 	
-	private long like;
+	private long likeCount;
+	
+	private String userNickName;
 
 	public String getUserId() {
 		return userId;
@@ -44,12 +46,20 @@ public class UserComment extends BaseModel {
 		this.replyCommentId = replyCommentId;
 	}
 
-	public long getLike() {
-		return like;
+	public long getLikeCount() {
+		return likeCount;
 	}
 
-	public void setLike(long like) {
-		this.like = like;
+	public void setLikeCount(long likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public String getUserNickName() {
+		return userNickName;
+	}
+
+	public void setUserNickName(String userNickName) {
+		this.userNickName = userNickName;
 	}
 
 }

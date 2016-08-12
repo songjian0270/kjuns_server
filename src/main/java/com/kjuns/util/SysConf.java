@@ -22,12 +22,11 @@ public class SysConf {
 	
 	private static final String CONF = "conf";
 	
-	private static final String JDBC = "jdbc";
-	
 	private static final String UMENG = "umeng";
 	
 	private static final String WXPAY = "wxpay";
 	
+	private static final String JDBC = "jdbc";
 	/** 1:正式环境，2：测试环境   */
 	public static final boolean ENV = getEnv();
 	
@@ -39,21 +38,20 @@ public class SysConf {
 	
 	//===================== 间隔条数           ============================================================
 	public static final Integer INTERVAL_NUMBER = SysConf.getBundleInteger(CONF, "interval_number");
-
-	//===================== 备用域名设置   ============================================================
-	/** 备用主域名  */
-	public static final String BACK_MASTER_SERVER_URL = SysConf.getBundleString(CONF, "back_master_server_url");
-	/** 备用搜索域名 */
-	public static final String BACK_SEARCH_SERVER_URL = SysConf.getBundleString(CONF, "back_search_server_url");
-
 	//===================== jdbc设置   ============================================================
 	/** jdbc.url  */
-	public static final String JDBC_URL = SysConf.getBundleString(JDBC, "user.db.url");
+	public static final String JDBC_URL = SysConf.getBundleString(JDBC, "dataSource.url");
 	/** jdbc.username  */
-	public static final String JDBC_USERNAME = SysConf.getBundleString(JDBC, "user.db.user");
+	public static final String JDBC_USERNAME = SysConf.getBundleString(JDBC, "dataSource.username");
 	/** jdbc.password  */
-	public static final String JDBC_PWD = SysConf.getBundleString(JDBC, "user.db.password");
+	public static final String JDBC_PWD = SysConf.getBundleString(JDBC, "dataSource.password");
 	
+	//===================== 备用域名设置   ============================================================
+/*	*//** 备用主域名  *//*
+	public static final String BACK_MASTER_SERVER_URL = SysConf.getBundleString(CONF, "back_master_server_url");
+	*//** 备用搜索域名 *//*
+	public static final String BACK_SEARCH_SERVER_URL = SysConf.getBundleString(CONF, "back_search_server_url");*/
+
 	//=====================  设备相关信息   ==========================================================
 	/** 是否允许jspatch更新  */
 	public static final String JSPATCH_CHECK = SysConf.getBundleString(CONF, "jspatch_check"); 

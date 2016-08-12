@@ -10,8 +10,8 @@
 	</select>
 	
 	<select id="queryContentCommentsList" resultType="com.kjuns.model.UserComment">
-		SELECT id, content_id contentId, reply_commnet_id replyCommnetId, create_by createBy,
-		create_date createDate, user_id userId FROM kjuns_content_comments where data_flag = 1 
+		SELECT id, content_id contentId, reply_commnet_id replyCommnetId, create_by createBy,content,
+		create_date createDate, user_id userId, like_count likeCount FROM kjuns_content_comments where data_flag = 1 
 		<if test="contentId != null and contentId != ''">
 			and content_id = #{contentId}
 		</if>
@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="get" resultType="com.kjuns.model.UserComment" parameterType="String">
-		SELECT id, content_id contentId, reply_commnet_id replyCommnetId, create_by createBy,
+		SELECT id, content_id contentId, reply_commnet_id replyCommnetId, create_by createBy,content, like_count likeCount,
 		create_date createDate, user_id userId FROM kjuns_content_comments where data_flag = 1 
 		and id = #{id}
 	</select>
@@ -35,7 +35,7 @@
 	</update>
 	
 	<update id="insertContentCommentsLike" parameterType="String">
-		update kjuns_content_comments set like = like +1 where id = #{id}
+		update kjuns_content_comments set like_count = like_count +1 where id = #{id}
 	</update>
 	
 </mapper>

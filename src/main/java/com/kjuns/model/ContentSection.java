@@ -12,7 +12,7 @@ public class ContentSection extends BaseModel{
 	
 	private int isTop;
 	
-	private String issuerId;
+	private String userId;
 
 	public String getTitle() {
 		return title;
@@ -54,12 +54,12 @@ public class ContentSection extends BaseModel{
 		this.isTop = isTop;
 	}
 
-	public String getIssuerId() {
-		return issuerId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setIssuerId(String issuerId) {
-		this.issuerId = issuerId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

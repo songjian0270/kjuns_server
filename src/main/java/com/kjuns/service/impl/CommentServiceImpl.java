@@ -2,15 +2,18 @@ package com.kjuns.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kjuns.mapper.CommentMapper;
 import com.kjuns.mapper.UserInfoMapper;
+import com.kjuns.mapper.VisitorMapper;
 import com.kjuns.model.PageList;
 import com.kjuns.model.UserComment;
 import com.kjuns.model.UserInfo;
+import com.kjuns.model.Visitor;
 import com.kjuns.out.BaseOutJB;
 import com.kjuns.service.CommentService;
 import com.kjuns.util.CommonConstants;
@@ -38,6 +41,9 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 	
+	@Autowired
+	private VisitorMapper visitorMapper;
+	
 	private final Integer expire = 10;	//评论间隔时间
 	
 	/**
@@ -53,17 +59,29 @@ public class CommentServiceImpl implements CommentService {
 			if(CommonUtils.notListFEmpty(list)){
 				for(UserComment comment: list){
 					ContentCommentsVo comments = new ContentCommentsVo();
-					UserInfo userInfo = userInfoMapper.get(comment.getUserId());
-					comments.setFaceSrc(userInfo.getFaceSrc());
-					comments.setNickName(userInfo.getNickName());
+					
+					if(comment.getUserId().equals("000000000000000000000000000000000000")){
+						comments.setNickName(comment.getUserNickName());
+					}else{
+						UserInfo userInfo = userInfoMapper.get(comment.getUserId());
+						comments.setFaceSrc(userInfo.getFaceSrc());
+						comments.setNickName(CommonUtils.getImage(userInfo.getNickName()));
+					}
+					
 					comments.setCreateDate(CommonUtils.dateToUnixTimestamp(comment.getCreateDate(), 
 								CommonConstants.DATETIME_SEC));
+					
 					
 					if(CommonUtils.notEmpty(comment.getReplyCommentId())){
 						UserComment userReplyComment = commentMapper.get(comment.getReplyCommentId()); 
 						comments.setReplyUserId(userReplyComment.getUserId());
-						userInfo = userInfoMapper.get(userReplyComment.getUserId());
-						comments.setReplyNickName(userInfo.getNickName());
+						if(comment.getReplyCommentId().equals("000000000000000000000000000000000000")){
+							comments.setNickName(comment.getUserNickName());
+						}else{
+							UserInfo userInfo = userInfoMapper.get(userReplyComment.getUserId());
+							comments.setReplyNickName(userInfo.getNickName());
+							comments.setFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+						}
 						comments.setReplyContent(userReplyComment.getContent());
 						comments.setReplyCreateDate(CommonUtils.dateToUnixTimestamp(userReplyComment.getCreateDate(), 
 								CommonConstants.DATETIME_SEC));
@@ -95,7 +113,13 @@ public class CommentServiceImpl implements CommentService {
 		userComment.setUpdateBy(userId);
 		userComment.setCreateDate(datetime);
 		userComment.setUpdateDate(datetime);
-		
+		if(userId.equals("000000000000000000000000000000000000")){
+			int random = new Random().nextInt(205) +1;
+			Visitor visitor = new Visitor();
+			visitor.setId(random);
+			Visitor vtor = visitorMapper.get(visitor);
+			userComment.setUserNickName(vtor.getName());
+		}
 		boolean f = commentMapper.insertContentComments(userComment) >= 1 ? true: false;
 		if(f){
 			return new BaseOutJB(ErrorCode.SUCCESS);
