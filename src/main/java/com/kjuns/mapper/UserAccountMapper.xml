@@ -3,8 +3,7 @@
 <mapper namespace="com.kjuns.mapper.UserAccountMapper">
 
 	<select id="get" parameterType="com.kjuns.model.UserAccount" resultType="com.kjuns.model.UserAccount">
-		select user_id userId, qq_uid qqUid, wb_uid wbUid, wx_uid wxUid, rr_uid rrUid,
-		fb_uid fbUid, twi_uid twiUid
+		select user_id userId, qq_uid qqUid, wb_uid wbUid, wx_uid wxUid
 		from kjuns_user_account where 1=1
 		<if test="mobilePhone != null and mobilePhone !=''"> and mobile_phone = #{mobilePhone} </if>
 		<if test="qqUid !=null and qqUid !='' "> and qq_uid = #{qqUid} </if>

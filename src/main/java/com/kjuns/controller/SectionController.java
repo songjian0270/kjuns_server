@@ -9,40 +9,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kjuns.annotation.VerifyToken;
+import com.kjuns.model.UserInfo;
+import com.kjuns.service.SectionService;
 import com.kjuns.util.ErrorCode;
-import com.kjuns.util.pager.Page;
 
 /**
- * <b>Function: </b>     
+ * <b>Function: </b>  专栏
  * @author James
- * @date 2015-9-16
- * @file MessageController.java
+ * @date 2016-07-22
+ * @file SectionController.java
  * @package com.kjuns.controller
  * @project kjuns
  * @version 2.0
  */
 @Controller
-@RequestMapping("/message")
-public class MessageController extends BaseController{
-	
-//	@Autowired
-	//private MessageService messageService;
-	
-	/**
-	 * school
-	 * @param model
-	 */
+@RequestMapping("/section")
+public class SectionController extends BaseController {
+
+	@Autowired
+	private SectionService sectionService;
+
 	@VerifyToken
-	@RequestMapping(value="/school", method= RequestMethod.GET)
-	public void querySchool(String token, Page page, HttpServletRequest request, 
-			Model model) throws Exception{
+	@RequestMapping(value = "/subscribe", method = RequestMethod.PUT)
+	public void subscribe(String token, String id,HttpServletRequest request, Model model) throws Exception {
 		try {
-			
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			sectionService.subscribe(userInfo.getId(), id);
 			sendResponseContent(model, ErrorCode.SUCCESS, null);
 		} catch (Exception ex) {
-			logger.error("querySchool  >>>> {}",ex.getMessage());
+			logger.error("subscribe  >>>> {}",ex.getMessage());
 			throw ex;
 		}
 	}
-	
 }
