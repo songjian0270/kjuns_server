@@ -61,7 +61,7 @@ public class ContentServiceImpl implements ContentService {
 	private ContentRelatedArticlesMapper contentRelatedArticlesMapper;
 
 	@Override
-	public PageList queryContent(String typeId, Page page) throws Exception {
+	public PageList queryContent(String typeId, String userId, Page page) throws Exception {
 		List<ContentVo> contentList = new ArrayList<>();
 		PageList pageList = new PageList();
 		int count = contentMapper.getTotalCount(typeId, null);
@@ -87,6 +87,13 @@ public class ContentServiceImpl implements ContentService {
 									contents.setLikeCount(content.getLikeCount());
 									contents.setShareCount(content.getShareCount());
 									contents.setType(1);
+									if(CommonUtils.notEmpty(section.getId()) && CommonUtils.notEmpty(userId)){
+										int c  = sectionMapper.getRssCount(userId, section.getId());
+										contents.setIsRss(c > 0 ? 0 : 1);
+									}else if(CommonUtils.notEmpty(section.getId()) ){
+										int c  = sectionMapper.getRssCount(null, section.getId());
+										contents.setRssCount(c);
+									}
 									List<Content> sectionContentList = contentMapper.queryContentList(null, section.getId(), 0, 6);
 									List<ContentVo> ls = new ArrayList<>();
 									for(Content sectionContent: sectionContentList){
@@ -217,7 +224,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public PageList querySectionContent(String sectionId, Page page) throws Exception {
+	public PageList querySectionContent(String sectionId, String userId, Page page) throws Exception {
 		List<ContentVo> contentList = new ArrayList<>();
 		int count = contentMapper.getTotalCount(null, sectionId);
 		PageList pageList = new PageList();
@@ -238,6 +245,13 @@ public class ContentServiceImpl implements ContentService {
 				contentv.setIssuerName(userInfo.getNickName());
 				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
 							CommonConstants.DATETIME_SEC));
+				if(CommonUtils.notEmpty(sectionId) && CommonUtils.notEmpty(userId)){
+					int c  = sectionMapper.getRssCount(userId, sectionId);
+					contentv.setIsRss(c > 0 ? 0 : 1);
+				}else if(CommonUtils.notEmpty(sectionId) ){
+					int c  = sectionMapper.getRssCount(null, sectionId);
+					contentv.setRssCount(c);
+				}
 				contentList.add(contentv);
 			}
 		}

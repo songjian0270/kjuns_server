@@ -19,4 +19,14 @@
 		insert into kjuns_section_subscribe(create_date,create_by,update_by,update_date,data_flag,user_id,section_id,id) 
 		values (#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, #{dataFlag}, #{userId},#{sectionId},#{id})
 	</insert>
+	
+	<select id="getRssCount" resultType="int">
+		select count(*) from kjuns_section_subscribe where data_flag = 1
+		<if test="userId != null and userId != ''">
+			and user_id = #{userId}
+		</if>
+		<if test="sectionId != null and sectionId != ''">
+			and section_id = #{sectionId}
+		</if>
+	</select>
 </mapper>

@@ -35,14 +35,14 @@ public interface ContentService {
 	 * @return
 	 * @throws Exception
 	 */
-	PageList queryContent(String typeId, Page page) throws Exception;
+	PageList queryContent(String typeId, String userId, Page page) throws Exception;
 	
 	/**
 	 * 专栏列表
 	 * @return
 	 * @throws Exception
 	 */
-	PageList querySectionContent(String sectionId, Page page) throws Exception;
+	PageList querySectionContent(String sectionId, String userId, Page page) throws Exception;
 	
 	/**
 	 * 添加内容
