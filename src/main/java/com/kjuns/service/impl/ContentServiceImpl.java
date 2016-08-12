@@ -40,7 +40,7 @@ import com.kjuns.vo.ContentVo;
  * @version 2.0
  */
 @Service("contentService")
-public abstract class ContentServiceImpl implements ContentService {
+public class ContentServiceImpl implements ContentService {
 	
 	@Autowired
 	private ContentTypeMapper contentTypeMapper;

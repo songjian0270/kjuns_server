@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.kjuns.mapper.SectionMapper;
 import com.kjuns.model.ContentSectionSubscribe;
-import com.kjuns.model.UserShare;
 import com.kjuns.service.SectionService;
 import com.kjuns.util.CommonConstants;
 import com.kjuns.util.UUIDUtils;
