@@ -89,6 +89,10 @@ public class SysConf {
 	
 	//===================== wxpay  ============================================================
 	public static final String WX_PAY_KEY = SysConf.getBundleString(WXPAY, "key");
+
+	public static final String ALI_PUBLIC_SECRET = SysConf.getBundleString(WXPAY, "key");
+	public static final String ALI_PARTNER_ID = SysConf.getBundleString(WXPAY, "key");
+	
 	
 	private SysConf(){}//私有构造函数（不允许实例化）
 	

@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kjuns.annotation.VerifyToken;
@@ -19,6 +20,7 @@ import com.kjuns.service.UserAccountService;
 @Component
 public class VerifyTokenAspect extends BaseController {
 	
+	@Autowired
 	private UserAccountService userAccountService;
 
 	private static final Logger logger = LoggerFactory.getLogger("VerifyTokenAspect");

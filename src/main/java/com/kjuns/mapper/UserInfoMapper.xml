@@ -9,8 +9,7 @@
 	
 	<select id="getForToken" parameterType="String" resultType="com.kjuns.model.UserInfo">
 		select info.face_src faceSrc, info.sex, info.nick_name nickName,info.id,account.id accountId,
-		info.mobile_phone mobilePhone, info.location location
-		from kjuns_user_info info,kjuns_user_account account 
+		info.mobile_phone mobilePhone, info.location location from kjuns_user_info info,kjuns_user_account account 
 		where account.token=#{token} and account.data_flag = 1 and info.data_flag = 1
 		and account.user_id = info.id
 	</select>

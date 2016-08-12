@@ -58,7 +58,6 @@
 			<if test="qqUid !=null and qqUid !='' "> qq_uid = #{qqUid} </if>
 			<if test="wbUid !=null and wbUid !='' ">	wb_uid = #{wbUid} </if>
 			<if test="wxUid !=null and wxUid !='' "> wx_uid = #{wxUid} </if>
-			<if test="wxUnionid !=null and wxUnionid !='' "> wx_unionid = #{wxUnionid}</if>
 		</trim>
 		where mobile_phone = #{mobilePhone}
 	</update>

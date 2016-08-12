@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators SYSTEM "../dtd/validation.dtd">
+<validators>
+
+	<validator target="com.kjuns.controller.SectionController" method="subscribe">
+		<field name="token" dataType="String">
+			<rule validate="notEmpty" msg="token不能为空" />
+		</field>
+		<field name="id" dataType="String">
+			<rule validate="notEmpty" msg="id不能为空" />
+		</field>
+	</validator>
+ 
+    
+</validators>

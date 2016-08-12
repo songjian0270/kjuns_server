@@ -15,4 +15,8 @@
 		order by sort_index desc limit #{pageNo},#{pageSize}
 	</select>
 	
+	<insert id="insertSubscribe" parameterType="com.kjuns.model.ContentSectionSubscribe">
+		insert into kjuns_section_subscribe(create_date,create_by,update_by,update_date,data_flag,user_id,section_id,id) 
+		values (#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, #{dataFlag}, #{userId},#{sectionId},#{id})
+	</insert>
 </mapper>

@@ -24,7 +24,8 @@ import com.kjuns.util.pager.Page;
 @RequestMapping("/message")
 public class MessageController extends BaseController{
 	
-	//@Autowired
+
+//	@Autowired
 	//private MessageService messageService;
 	
 	/**
