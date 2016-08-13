@@ -42,7 +42,7 @@
 		</div>
 		<div style="padding-top:2%;padding-bottom:0px" class="comment_text"><p>${item.content}</p></div>
 		</div>
-		<div style="float:left;width:100%;border:0.5px solid #ebebeb;margin-bottom:2%;"></div>
+		<div style="float:left;width:100%;border:0.5px solid #ebebeb;margin-bottom:2%;margin-top:2%;"></div>
 		<div style="clear:both;"></div>
 	</div>
 	</c:forEach>
@@ -67,7 +67,7 @@
 		</div>
 		<div style="padding-top:2%;padding-bottom:0px" class="comment_text"><p>${item.content}</p></div>
 		</div>
-		<div style="float:left;width:100%;border:0.5px solid #ebebeb;margin-bottom:2%;"></div>
+		<div style="float:left;width:100%;border:0.5px solid #ebebeb;margin-bottom:2%;margin-top:2%;"></div>
 		<div style="clear:both;"></div>
 	</div>
 	</c:forEach>
