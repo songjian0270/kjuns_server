@@ -25,7 +25,7 @@ public interface UserLoginService {
 	 * @return
 	 * @throws Exception
 	 */
-	BaseOutJB complete(String cellPhoneNumber, String nickName, String faceSrc, String idCard, int sex) throws Exception;
+	BaseOutJB complete(String cellPhoneNumber, String nickName, String idCard) throws Exception;
 	
 	/**
 	 * 手机是否存在

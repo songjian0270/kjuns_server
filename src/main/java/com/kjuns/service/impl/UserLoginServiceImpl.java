@@ -154,7 +154,8 @@ public class UserLoginServiceImpl implements UserLoginService {
 				&& CommonUtils.notEmpty(userInfo.getSex()) && CommonUtils.notEmpty(userInfo.getIdcard())){
 			UserInfoVo userInfoVo = new UserInfoVo();
 			String token = UUIDUtils.getUUID().replace("-", "");
-			int i = userAccountMapper.updateUserAccountByUserId(ua.getId(), token);
+
+			int i = userAccountMapper.updateUserAccountByUserId(userInfo.getId(), token);
 			if(i <= 0){
 				return new BaseOutJB(ErrorCode.FAILED, null);
 			}
@@ -447,8 +448,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 	}
 
 	@Override
-	public BaseOutJB complete(String id, String nickName, String faceSrc,
-			String idcard, int sex) throws Exception {
+	public BaseOutJB complete(String id, String nickName, String idcard) throws Exception {
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 		UserAccount ua = new UserAccount();
 		ua.setId(id);
@@ -469,7 +469,6 @@ public class UserLoginServiceImpl implements UserLoginService {
 						token = userAccount.getToken();
 					}
 					Map<String, Object> p = new HashMap<>();
-					p.put("faceSrc", CommonUtils.getImage(faceSrc));
 					p.put("nickName", nickName);
 					p.put("token", token);
 					p.put("userId", userAccount.getUserId());
@@ -480,14 +479,10 @@ public class UserLoginServiceImpl implements UserLoginService {
 		
 		String userId = UUIDUtils.getUUID().toString().replace("-", "");
 		UserInfo userInfo = new UserInfo();
-		if(CommonUtils.notEmpty(faceSrc)){
-			userInfo.setFaceSrc("default_head.png");	
-		}else{
-			userInfo.setFaceSrc(faceSrc);
-		}
+		userInfo.setFaceSrc("default_head.png");	
 		userInfo.setIdcard(idcard);
 		userInfo.setNickName(nickName);
-		userInfo.setSex(sex);  //默认男
+		userInfo.setSex(0);  //默认男
 		userInfo.setCreateDate(datetime);
 		userInfo.setDataFlag("1");
 		userInfo.setId(userId);
@@ -505,7 +500,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		
 		if(result > 0){
 			Map<String, Object> p = new HashMap<>();
-			p.put("faceSrc", CommonUtils.getImage(faceSrc));
+			p.put("faceSrc", "default_head.png");
 			p.put("nickName", nickName);
 			p.put("token", token);
 			p.put("userId", userId);

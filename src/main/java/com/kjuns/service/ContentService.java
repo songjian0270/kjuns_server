@@ -38,6 +38,15 @@ public interface ContentService {
 	PageList queryContent(String typeId, String userId, Page page) throws Exception;
 	
 	/**
+	 * 阵营列表
+	 * @param typeId
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	PageList queryCampContent(Page page) throws Exception;
+	
+	/**
 	 * 专栏列表
 	 * @return
 	 * @throws Exception
@@ -50,7 +59,7 @@ public interface ContentService {
 	 * @return
 	 * @throws Exception
 	 */
-	BaseOutJB insertContent(Content Content) throws Exception;
+	BaseOutJB insertCamp(Content Content) throws Exception;
 	
 	/**
 	 * 删除内容

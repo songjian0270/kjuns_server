@@ -13,6 +13,8 @@ public class UserComment extends BaseModel {
 	private long likeCount;
 	
 	private String userNickName;
+	
+	private String table;
 
 	public String getUserId() {
 		return userId;
@@ -60,6 +62,14 @@ public class UserComment extends BaseModel {
 
 	public void setUserNickName(String userNickName) {
 		this.userNickName = userNickName;
+	}
+
+	public String getTable() {
+		return table;
+	}
+
+	public void setTable(String table) {
+		this.table = table;
 	}
 
 }

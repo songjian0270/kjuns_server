@@ -24,12 +24,6 @@
 	</validator>
 	
 	<validator target="com.kjuns.controller.UserLoginController" method="complete">
-		<field name="faceSrc" dataType="String">
-			<rule validate="notEmpty" msg="头像不能为空" />
-		</field>
-		<field name="sex" dataType="String">
-			<rule validate="notEmpty" msg="性别不能为空" />
-		</field>
 		<field name="idcard" dataType="String">
 			<rule validate="notEmpty" msg="身份证不能为空" />
 		</field>
