@@ -107,7 +107,7 @@ public class UserInfoController extends BaseController {
 	public void changeUserInfo(UserInfo userInfo, 
 			HttpServletRequest request, Model model) throws Exception {
 		try{
-			UserInfo ui = new UserInfo();
+			UserInfo ui = this.getUserInfoForToken(userInfo.getToken());
 			userInfo.setId(ui.getId());
 			BaseOutJB outjb = userInfoService.updateUserInfo(userInfo);
 			sendResponseContent(model, outjb);
