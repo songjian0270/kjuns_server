@@ -56,6 +56,8 @@ public class ContentVo {
 	
 	private Long createDate;
 	
+	private String dateTime;
+	
 	private long likeCount;
 	
 	private long shareCount;
@@ -269,6 +271,14 @@ public class ContentVo {
 
 	public void setRssCount(int rssCount) {
 		this.rssCount = rssCount;
+	}
+
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 	
 }

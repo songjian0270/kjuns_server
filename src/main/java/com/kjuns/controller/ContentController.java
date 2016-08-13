@@ -86,6 +86,7 @@ public class ContentController extends BaseController{
 			ContentVo Content = contentService.selectById(id);
 			sendResponseContent(model, ErrorCode.SUCCESS, Content);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}

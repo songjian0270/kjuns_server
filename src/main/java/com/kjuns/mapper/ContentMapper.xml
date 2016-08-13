@@ -45,7 +45,7 @@
 	
 	<select id="selectById" parameterType="String" resultType="com.kjuns.vo.ContentVo">
 		SELECT id, title, subhead, summary, source, mind_map mindMap, thumbnail, content,
-		create_by createBy,create_date createDate,type,isTop,user_id userId,
+		create_by createBy,create_date dateTime,isTop,user_id userId,
 		isHot,isDepth,isTease FROM kjuns_content where id=#{id}
 	</select>
 	

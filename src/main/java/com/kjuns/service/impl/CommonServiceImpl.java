@@ -14,6 +14,7 @@ import com.kjuns.model.Banner;
 import com.kjuns.model.UserFaq;
 import com.kjuns.service.CommonService;
 import com.kjuns.util.CommonConstants;
+import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.vo.BannerVo;
 
@@ -55,9 +56,8 @@ public class CommonServiceImpl implements CommonService {
 			BannerVo vo = new BannerVo();
 			vo.setId(banner.getId());
 			vo.setContent(banner.getContent());
-			vo.setBackground(banner.getBackground());
 			vo.setTitle(banner.getTitle());
-			vo.setBackground(banner.getBackground());
+			vo.setBackground(CommonUtils.getImage(banner.getBackground()));
 			vo.setUrl(banner.getUrl());
 			list.add(vo);
 		}

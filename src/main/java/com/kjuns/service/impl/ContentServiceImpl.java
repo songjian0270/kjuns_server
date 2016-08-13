@@ -186,29 +186,36 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public ContentVo selectById(String id) throws Exception {
-		ContentVo ContentVo = contentMapper.selectById(id);
+		ContentVo contentVo = contentMapper.selectById(id);
 		//标签
 		List<ContentTag> tagList = contentTagMapper.queryContentTagForContentId(id);
-		ContentVo.setContentTagList(tagList);
+		if(null != tagList){
+			contentVo.setContentTagList(tagList);	
+		}
 		//相关推荐
 		List<ContentRelatedArticles> relatedArticlesList = 
 				contentRelatedArticlesMapper.queryContentRelatedArticlesForContentId(id);
-		ContentVo.setContentRelatedArticlesList(relatedArticlesList);
+		if(null != relatedArticlesList){
+			contentVo.setContentRelatedArticlesList(relatedArticlesList);
+		}
 		//发布人
-		if(CommonUtils.notEmpty(ContentVo.getIssuerId())){
-			UserInfo userInfo = userInfoMapper.get(ContentVo.getIssuerId());
-			ContentVo.setIssuerId(ContentVo.getIssuerId());
-			ContentVo.setIssuerName(userInfo.getNickName());
-			ContentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+		if(CommonUtils.notEmpty(contentVo.getIssuerId())){
+			UserInfo userInfo = userInfoMapper.get(contentVo.getIssuerId());
+			contentVo.setIssuerId(contentVo.getIssuerId());
+			contentVo.setIssuerName(userInfo.getNickName());
+			contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 		}
-		
-		if(CommonUtils.notEmpty(ContentVo.getMindMap())){
-			ContentVo.setMindMap(CommonUtils.getImage(ContentVo.getMindMap()));
+		if(CommonUtils.notEmpty(contentVo.getDateTime())){
+			contentVo.setCreateDate(CommonUtils.dateToUnixTimestamp(contentVo.getDateTime(), 
+					CommonConstants.DATETIME_SEC));
 		}
-		if(CommonUtils.notEmpty(ContentVo.getThumbnail())){
-			ContentVo.setThumbnail(CommonUtils.getImage(ContentVo.getThumbnail()));
+		if(CommonUtils.notEmpty(contentVo.getMindMap())){
+			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap()));
 		}
-		return ContentVo;
+		if(CommonUtils.notEmpty(contentVo.getThumbnail())){
+			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail()));
+		}
+		return contentVo;
 	}
 
 	@Override
