@@ -217,7 +217,7 @@ margin:0;
 <body>
 <div style="width:100%;height:667px;text-align:center;max-width:600px;
 margin-left: auto; margin-right: auto;">
-	<div style="width:100%;height:30%"><img style="background-color:black;width:100%;height:100%" src="${content.mindMap}"/></div>
+	<div style="width:100%;height:37%"><img style="background-color:black;width:100%;height:100%" src="${content.mindMap}"/></div>
 	<div ><p class="biaoti">${content.title}</p></div>
 	<div style="height:5%;margin:5%;">
 		<div style="height:100%;float:left;width:50%">
