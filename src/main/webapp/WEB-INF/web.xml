@@ -7,7 +7,12 @@
 	<listener>
 		<listener-class>com.kjuns.util.listener.LogbackConfigListener</listener-class>
 	</listener>
-	
+	<jsp-config>
+        <taglib>
+            <taglib-uri>/tags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/datetag.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 	<context-param>
 		<param-name>logbackConfigLocation</param-name>
 		<param-value>classpath:logback.xml</param-value>

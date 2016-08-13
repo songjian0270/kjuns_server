@@ -11,13 +11,13 @@
 			order by create_date desc
 		</if>
 		<if test="type != null and type == 1">
-			order by like desc
+			order by like_count desc
 		</if>
 	</select>
 	
 	<select id="queryContentCommentsList" resultType="com.kjuns.model.UserComment">
 		SELECT id, content_id contentId, reply_comment_id replyCommentId, create_by createBy,content,
-		create_date createDate, user_id userId, like_count likeCount FROM kjuns_content_comments where data_flag = 1 
+		create_date createDate, user_id userId, like_count likeCount,user_nick_name userNickName,content content FROM kjuns_content_comments where data_flag = 1 
 		<if test="contentId != null and contentId != ''">
 			and content_id = #{contentId}
 		</if>
@@ -25,7 +25,7 @@
 			order by create_date desc
 		</if>
 		<if test="type != null and type == 1">
-			order by like desc
+			order by like_count desc
 		</if>
 		limit #{pageNo},#{pageSize}
 	</select>

@@ -1,6 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="/tags" prefix="date"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
  <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,7 +82,6 @@ letter-spacing:0.03px;
 line-height:14px;
 text-align:left;
 padding-top:3%;
-float:left
 }
 
 .tuijianyuedu{
@@ -193,14 +195,14 @@ margin:0;
 <body>
 <div style="width:100%;height:667px;text-align:center;max-width:600px;
 margin-left: auto; margin-right: auto;">
-	<div style="width:100%;height:30%"><img style="background-color:black;width:100%;height:100%" src="${content.thumbnail}"/></div>
+	<div style="width:100%;height:30%"><img style="background-color:black;width:100%;height:100%" src="${content.mindMap}"/></div>
 	<div ><p class="biaoti">${content.title}</p></div>
 	<div style="height:5%;margin:5%;">
 		<div style="height:100%;float:left;width:50%">
 			<img class="senderFace" style="height:50%;width:10%;margin:0 auto;float:left" src="${content.issuerFaceSrc }"></img>
 			<p class="senderName">${content.issuerName }</p>
 		</div>
-		<div class="sendDate">${createDate }</div>
+		<div class="sendDate"><date:date value ="${fn:substring(content.createDate,0,10)}"/></div>
 	</div>
 
 <div style="margin-top:4%;">

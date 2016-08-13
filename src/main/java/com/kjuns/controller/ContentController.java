@@ -2,6 +2,7 @@ package com.kjuns.controller;
 
 import java.util.List;
 
+import org.exolab.castor.types.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import com.kjuns.model.ContentType;
 import com.kjuns.model.PageList;
 import com.kjuns.model.UserInfo;
 import com.kjuns.out.BaseOutJB;
+import com.kjuns.service.CommentService;
 import com.kjuns.service.ContentService;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.util.pager.Page;
@@ -35,6 +37,9 @@ public class ContentController extends BaseController{
 	
 	@Autowired 
 	private ContentService contentService;
+
+	@Autowired
+	private CommentService commentService;
 	
 	@IgnoreVerify
 	@RequestMapping(value = "/type/list", method = RequestMethod.GET)
@@ -85,7 +90,7 @@ public class ContentController extends BaseController{
 		try {
 			ContentVo Content = contentService.selectById(id);
 			Content.setContent("");
-			Content.setPageUrl("content/view.h5?id=071670b41c764cd399fb53627b0500ac");
+			Content.setPageUrl("content/view.h5?id="+id);
 			sendResponseContent(model, ErrorCode.SUCCESS, Content);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -150,9 +155,15 @@ public class ContentController extends BaseController{
 	public String view(String id,String isFull, Model model) throws Exception {
 		ContentVo content = contentService.selectById(id);
 		List<ContentType> types= contentService.queryContentType();
+		Page page = new Page(0,2);
+		PageList hotComments = commentService.queryContentComments(id,"1",page );
+		PageList newComments = commentService.queryContentComments(id,"0",page );
 		model.addAttribute("isFull",isFull);
 		model.addAttribute("content",content);
 		model.addAttribute("types",types);
+		model.addAttribute("hotComments",hotComments);
+		model.addAttribute("hotComments",newComments);
+		
 		return "/content/view";
 	}
 }
