@@ -64,8 +64,8 @@ public class CommentServiceImpl implements CommentService {
 						comments.setNickName(comment.getUserNickName());
 					}else{
 						UserInfo userInfo = userInfoMapper.get(comment.getUserId());
-						comments.setFaceSrc(userInfo.getFaceSrc());
-						comments.setNickName(CommonUtils.getImage(userInfo.getNickName()));
+						comments.setFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+						comments.setNickName(userInfo.getNickName());
 					}
 					comments.setLikeCount(comment.getLikeCount());
 					comments.setCreateDate(CommonUtils.dateToUnixTimestamp(comment.getCreateDate(), 
