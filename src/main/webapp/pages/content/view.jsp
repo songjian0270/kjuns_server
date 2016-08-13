@@ -1,0 +1,233 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+<style>
+.zhaiyao{
+font-family:STHeitiSC-Light;
+font-size:16px;
+color:#999999;
+letter-spacing:0px;
+line-height:20px;
+text-align:center;
+margin:4%;
+}
+.biaoti{
+font-family:STHeitiSC-Light;
+font-size:22px;
+color:#333333;
+letter-spacing:0px;
+line-height:26px;
+text-align:left;
+margin:5%;
+}
+
+.notifi{
+font-family:STHeitiSC-Light;
+font-size:14px;
+color:#da3710;
+letter-spacing:-0.22px;
+line-height:14px;
+text-align:left;
+}
+.msgFrom{
+font-family:STHeitiSC-Light;
+font-size:12px;
+color:#808080;
+letter-spacing:-0.41px;
+line-height:12px;
+text-align:left;
+}
+
+.tagStyle{
+background:#f2f2f2;
+border-radius:20%/50%;
+font-family:STHeitiSC-Light;
+font-size:13px;
+color:#333333;
+height:101%;
+line-height:170%;text-align:center;
+float:left;
+padding-left:3%;
+padding-right:3%;
+margin-right:2%;
+margin-top:1%;
+}
+
+.grayBlock{
+background:#f2f2f2;
+width:18%;
+height:3%;
+
+font-family:STHeitiSC-Light;
+font-size:14px;
+color:#333333;
+letter-spacing:-0.22px;
+line-height:150%;
+text-align:center;
+}
+
+.tuijianyuedu div a{
+font-family:STHeitiSC-Medium;
+font-size:14px;
+color:#333333;
+letter-spacing:0.03px;
+line-height:14px;
+text-align:left;
+padding-top:3%;
+float:left
+}
+
+.tuijianyuedu{
+text-align:left;
+margin-left:3%;
+}
+
+.zhengwen{
+font-family:STHeitiSC-Light;
+font-size:17px;
+color:#333333;
+letter-spacing:-0.26px;
+line-height:22px;
+text-align:left;text-overflow:clip;
+word-break:break-all;
+}
+
+.zhengwen img{
+width:100%;
+background:black;
+}
+.zhengwen p{
+padding:0px 6%;
+}
+
+.comment_cell .comment_text{
+font-family:STHeitiSC-Light;
+font-size:14px;
+color:#999999;
+letter-spacing:-0.26px;
+line-height:14px;
+text-align:left;
+}
+
+.comment_cell{
+ height:auto;
+ margin:0 auto;
+ min-height:50px
+}
+
+.comment_cell .comment_nickName{
+font-family:STHeitiSC-Medium;
+font-size:14px;
+color:#333333;
+letter-spacing:0.03px;
+line-height:14px;
+text-align:left;
+}
+
+.comment_cell .comment_senddate{
+font-family:PingFangSC-Regular;
+font-size:14px;
+color:#cccccc;
+letter-spacing:0.03px;
+line-height:14px;
+text-align:left;
+}
+
+.comment_cell .comment_face{
+width:41px;
+height:41px;
+background:#d8d8d8;
+border:1px solid #979797;
+border-radius:100%;
+background-size: cover;
+}
+
+.comment_cell .comment_like_img{
+width:14px;
+height:12px;
+float:left
+}
+.comment_cell .comment_like_count{
+font-family:.PingFangSC-Light;
+font-size:14px;
+color:#999999;
+letter-spacing:0px;
+line-height:14px;
+text-align:left;
+float:left;
+margin:0px;
+}
+
+.senderName{
+margin:0px;
+font-family:STHeitiSC-Light;
+font-size:15px;
+color:#333333;
+letter-spacing:0px;
+line-height:15px;
+text-align:left;
+padding-left:1vw;
+float:left;
+}
+
+.sendDate{
+font-family:STHeitiSC-Light;
+font-size:14px;
+color:#999999;
+letter-spacing:0px;
+line-height:15px;
+text-align:left;float:right;
+}
+body{
+
+margin:0;
+}
+</style>
+
+</head>
+<body>
+<div style="width:100%;height:667px;text-align:center;max-width:600px;
+margin-left: auto; margin-right: auto;">
+	<div style="width:100%;height:30%"><img style="background-color:black;width:100%;height:100%" src="${content.thumbnail}"/></div>
+	<div ><p class="biaoti">${content.title}</p></div>
+	<div style="height:5%;margin:5%;">
+		<div style="height:100%;float:left;width:50%">
+			<img class="senderFace" style="height:50%;width:10%;margin:0 auto;float:left" src="${content.issuerFaceSrc }"></img>
+			<p class="senderName">${content.issuerName }</p>
+		</div>
+		<div class="sendDate">${createDate }</div>
+	</div>
+
+<div style="margin-top:4%;">
+	<p class="zhaiyao">${content.summary}</p>
+</div>
+<div style="border:1px solid #ebebeb;
+width:27%;
+height:0px;text-align:center;
+margin:0 auto;"></div>
+<div style="width:100%" class="zhengwen">
+${ content.content}
+</div>
+<div style="margin:5% 5% 0px 5%">
+<div style="height:2%;width:100%" class="notifi">看军事社区规范：直抒胸臆  理性爱国</div>
+<div style="height:2%;width:100%;margin-top:2%" class="msgFrom">消息参考来源：${content.source }</div>
+<div style="width:100%;margin-top:2%">
+<c:forEach var="item" items="${types}" varStatus="status">
+<div class="tagStyle">${item.name}</div>
+</c:forEach>
+<div style="clear:both;"></div>
+</div>
+</div>
+
+<c:if test="${isFull=='1'}">
+<jsp:include page="comments.jsp" />
+</c:if>
+</div>
+</body>
+</html>
+

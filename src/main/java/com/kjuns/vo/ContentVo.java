@@ -63,6 +63,8 @@ public class ContentVo {
 	private long shareCount;
 	
 	private int commentCount;
+
+	private String pageUrl;
 	
 	private List<ContentVo> contentList;
 
@@ -257,6 +259,14 @@ public class ContentVo {
 
 	public void setContentList(List<ContentVo> contentList) {
 		this.contentList = contentList;
+	}
+
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
 	}
 
 	public int getIsRss() {
