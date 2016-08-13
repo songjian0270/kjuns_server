@@ -171,14 +171,13 @@ public class ContentController extends BaseController{
 		ContentVo content = contentService.selectById(id);
 		List<ContentType> types= contentService.queryContentType();
 		Page page = new Page(0,2);
-		PageList hotComments = commentService.queryContentComments(id,"1",page );
-		PageList newComments = commentService.queryContentComments(id,"0",page );
+		PageList hotComments = commentService.queryContentComments(id, 0, "1",page );
+		PageList newComments = commentService.queryContentComments(id, 0, "0",page );
 		model.addAttribute("isFull",isFull);
 		model.addAttribute("content",content);
 		model.addAttribute("types",types);
 		model.addAttribute("hotComments",hotComments);
 		model.addAttribute("newComments",newComments);
-		
 		return "/content/view";
 	}
 }
