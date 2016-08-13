@@ -17,8 +17,9 @@
 <div style="margin-left:3%;height:8%">
 	<div class="tuijianyuedu">
 		<div>
-			<p><a>自导自演? --911被隐藏14年的机密报告公布</a></p>
-			<p><a>自导自演? --911被隐藏14年的机密报告公布</a></p>
+			<c:forEach var="item" items="${content.contentRelatedArticlesList}" varStatus="status">
+				<p><a href="view.h5?isFull=1&id=${item.relatedArticlesId}">${item.relatedArticlesName }</a></p>
+			</c:forEach>
 		</div>
 	</div>
 </div>
@@ -37,8 +38,9 @@
 		<div style="float:left" class="comment_nickname">${item.nickName }</div>
 		<div style="float:left;padding-left:2%" class="comment_senddate"><date:date value ="${fn:substring(item.createDate,0,10)}"  hommization="true"/></div>
 		<div style="float:right;" class="comment_like">
-			<img class="comment_like_img" ></img>
-			<p class="comment_like_count">${item.likeCount}</p>
+			<div class="comment_like_img" ></div>
+			<div class="comment_like_count">${item.likeCount}</div>
+			<div style="clear:both;"></div>
 		</div>
 		<div style="padding-top:2%;padding-bottom:0px" class="comment_text"><p>${item.content}</p></div>
 		</div>
@@ -50,10 +52,10 @@
 </div>
 
 <div style="height:auto;width:100%">
-<div style="border:0.5px solid #ebebeb;;margin-top:3.5%"></div>
+<div style="border:0.5px solid #ebebeb;"></div>
 <div class="grayBlock" style="margin-left:3%;margin-bottom:2%">最新评论</div>
 <div style="margin-left:3%;height:auto;">
-	<c:forEach var="item" items="${hotComments.list}" varStatus="status">
+	<c:forEach var="item" items="${newComments.list}" varStatus="status">
 	<div class="comment_cell" >
 		<div style="float:left;"> 
 			<img class="comment_face" src="${item.faceSrc }"></img>
@@ -62,8 +64,8 @@
 		<div style="float:left" class="comment_nickname">${item.nickName }</div>
 		<div style="float:left;padding-left:2%" class="comment_senddate"><date:date value ="${fn:substring(item.createDate,0,10)}" hommization="true"/></div>
 		<div style="float:right;" class="comment_like">
-			<img class="comment_like_img" ></img>
-			<p class="comment_like_count">${item.likeCount}</p>
+			<div class="comment_like_img" ></div>
+			<div class="comment_like_count">${item.likeCount}</div>
 		</div>
 		<div style="padding-top:2%;padding-bottom:0px" class="comment_text"><p>${item.content}</p></div>
 		</div>

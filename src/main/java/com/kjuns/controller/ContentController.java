@@ -2,7 +2,6 @@ package com.kjuns.controller;
 
 import java.util.List;
 
-import org.exolab.castor.types.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -162,7 +161,7 @@ public class ContentController extends BaseController{
 		model.addAttribute("content",content);
 		model.addAttribute("types",types);
 		model.addAttribute("hotComments",hotComments);
-		model.addAttribute("hotComments",newComments);
+		model.addAttribute("newComments",newComments);
 		
 		return "/content/view";
 	}

@@ -84,6 +84,19 @@ text-align:left;
 padding-top:3%;
 }
 
+.tuijianyuedu div a:link{
+text-decoration:none;
+}
+.tuijianyuedu div a:visited{
+text-decoration:none;
+}
+.tuijianyuedu div a:hover{
+text-decoration:none;
+}
+.tuijianyuedu div a:active{
+text-decoration:none;
+}
+
 .tuijianyuedu{
 text-align:left;
 margin-left:3%;
@@ -149,10 +162,19 @@ border-radius:100%;
 background-size: cover;
 }
 
+.comment_like{
+width:10%;
+height:10%;
+}
+
+
 .comment_cell .comment_like_img{
 width:14px;
 height:12px;
-float:left
+float:left;
+position: relative;
+background-image:url(http://7xwu0j.com1.z0.glb.clouddn.com/7033F66D-AF2B-42B5-8E7B-097D67D5A089@3x.png);
+background-size:cover;margin-right:-14px;
 }
 .comment_cell .comment_like_count{
 font-family:.PingFangSC-Light;
@@ -161,8 +183,8 @@ color:#999999;
 letter-spacing:0px;
 line-height:14px;
 text-align:left;
-float:left;
 margin:0px;
+padding-left:20px;
 }
 
 .senderName{
@@ -199,7 +221,7 @@ margin-left: auto; margin-right: auto;">
 	<div ><p class="biaoti">${content.title}</p></div>
 	<div style="height:5%;margin:5%;">
 		<div style="height:100%;float:left;width:50%">
-			<img class="senderFace" style="height:50%;width:10%;margin:0 auto;float:left" src="${content.issuerFaceSrc }"></img>
+			<img class="senderFace" style="height:20px;width:20px;margin:0 auto;float:left" src="${content.issuerFaceSrc }"></img>
 			<p class="senderName">${content.issuerName }</p>
 		</div>
 		<div class="sendDate"><date:date value ="${fn:substring(content.createDate,0,10)}"/></div>
