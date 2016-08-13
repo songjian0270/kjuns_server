@@ -62,6 +62,8 @@ public class ContentVo {
 	
 	private long shareCount;
 	
+	private int commentCount;
+	
 	private List<ContentVo> contentList;
 
 	public String getId() {
@@ -279,6 +281,14 @@ public class ContentVo {
 
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
+	}
+
+	public int getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
 	}
 	
 }

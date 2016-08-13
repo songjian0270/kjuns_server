@@ -25,6 +25,8 @@ public class ContentCommentsVo {
 	private String replyNickName = "";
 	
 	private Long createDate=0l;
+	
+	private long likeCount;
 
 	public String getNickName() {
 		return nickName;
@@ -120,6 +122,14 @@ public class ContentCommentsVo {
 
 	public void setReplyFaceSrc(String replyFaceSrc) {
 		this.replyFaceSrc = replyFaceSrc;
+	}
+
+	public long getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(long likeCount) {
+		this.likeCount = likeCount;
 	}
 	
 }

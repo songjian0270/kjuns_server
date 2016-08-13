@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kjuns.mapper.CommentMapper;
 import com.kjuns.mapper.ContentMapper;
 import com.kjuns.mapper.ContentRelatedArticlesMapper;
 import com.kjuns.mapper.ContentTagMapper;
@@ -59,6 +60,8 @@ public class ContentServiceImpl implements ContentService {
 	
 	@Autowired
 	private ContentRelatedArticlesMapper contentRelatedArticlesMapper;
+	
+	private CommentMapper commentMapper;
 
 	@Override
 	public PageList queryContent(String typeId, String userId, Page page) throws Exception {
@@ -87,6 +90,8 @@ public class ContentServiceImpl implements ContentService {
 									contents.setLikeCount(content.getLikeCount());
 									contents.setShareCount(content.getShareCount());
 									contents.setType(1);
+									int commentCount = commentMapper.getTotalCount(content.getId(), null);
+									contents.setCommentCount(commentCount);
 									if(CommonUtils.notEmpty(section.getId()) && CommonUtils.notEmpty(userId)){
 										int c  = sectionMapper.getRssCount(userId, section.getId());
 										contents.setIsRss(c > 0 ? 0 : 1);
@@ -109,6 +114,8 @@ public class ContentServiceImpl implements ContentService {
 										c.setIssuerName(userInfo.getNickName());
 										c.setCreateDate(CommonUtils.dateToUnixTimestamp(sectionContent.getCreateDate(), 
 													CommonConstants.DATETIME_SEC));
+										int cc = commentMapper.getTotalCount(sectionContent.getId(), null);
+										c.setCommentCount(cc);
 										ls.add(c);
 									}
 									contents.setContentList(ls);
@@ -138,6 +145,8 @@ public class ContentServiceImpl implements ContentService {
 						contents.setIssuerName(userInfo.getNickName());
 						contents.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
 									CommonConstants.DATETIME_SEC));
+						int cc = commentMapper.getTotalCount(content.getId(), null);
+						contents.setCommentCount(cc);
 						contentList.add(contents);
 					}
 					i++;
@@ -252,6 +261,8 @@ public class ContentServiceImpl implements ContentService {
 				contentv.setIssuerName(userInfo.getNickName());
 				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
 							CommonConstants.DATETIME_SEC));
+				int cc = commentMapper.getTotalCount(content.getId(), null);
+				contentv.setCommentCount(cc);
 				if(CommonUtils.notEmpty(sectionId) && CommonUtils.notEmpty(userId)){
 					int c  = sectionMapper.getRssCount(userId, sectionId);
 					contentv.setIsRss(c > 0 ? 0 : 1);

@@ -52,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
 	public PageList queryContentComments(String contentId, String type, Page page) throws Exception {
 		List<ContentCommentsVo> ContentCommentsList = new ArrayList<>();
 		PageList pageList = new PageList();
-		int count = commentMapper.getTotalCount(type, contentId);
+		int count = commentMapper.getTotalCount(contentId, type);
 		if(count > 0){
 			page.setTotalCount(count);
 			List<UserComment> list =  commentMapper.queryContentCommentsList(contentId, type, page.getStart(), page.getPageSize());
@@ -67,7 +67,7 @@ public class CommentServiceImpl implements CommentService {
 						comments.setFaceSrc(userInfo.getFaceSrc());
 						comments.setNickName(CommonUtils.getImage(userInfo.getNickName()));
 					}
-					
+					comments.setLikeCount(comment.getLikeCount());
 					comments.setCreateDate(CommonUtils.dateToUnixTimestamp(comment.getCreateDate(), 
 								CommonConstants.DATETIME_SEC));
 					
