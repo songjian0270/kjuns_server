@@ -63,8 +63,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	 * 
 	 * @throws Exception
 	 */
-	public BaseOutJB updateUserInfo(UserInfo baseUserInfo) throws Exception {
-		boolean isUpdate = true;
+	public BaseOutJB updateUserInfo(UserInfo userInfo) throws Exception {
+		boolean isUpdate = userInfoMapper.updateUserInfoById(userInfo) > 0 ? true: false;
 		if (isUpdate) {
 			return new BaseOutJB(ErrorCode.SUCCESS, true);
 		} else {

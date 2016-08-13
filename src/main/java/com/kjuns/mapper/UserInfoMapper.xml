@@ -29,10 +29,6 @@
 				<if test="mobilePhone != null and mobilePhone !='' "> mobile_phone = #{mobilePhone} </if>
 				<if test="sex != null "> sex = #{sex} </if>
 				<if test="location !=null and location !='' "> location = #{location} </if>				
-				<if test="description !=null and description !='' "> description = #{description} </if>
-			</if>
-			<if test="from !=null and from =='perfect' "> 
-				 nick_name = #{nickName}, face_src = #{faceSrc},sex = #{sex}
 			</if>
 		</trim>
 			where id = #{id}
