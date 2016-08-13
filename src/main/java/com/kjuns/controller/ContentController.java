@@ -74,6 +74,8 @@ public class ContentController extends BaseController{
 	public void detail(String id, Model model) throws Exception {
 		try {
 			ContentVo Content = contentService.selectById(id);
+			Content.setContent("");
+			Content.setPageUrl("content/view.h5?id=071670b41c764cd399fb53627b0500ac");
 			sendResponseContent(model, ErrorCode.SUCCESS, Content);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
@@ -132,4 +134,14 @@ public class ContentController extends BaseController{
 		}
 	}
 	
+	@IgnoreVerify
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public String view(String id,String isFull, Model model) throws Exception {
+		ContentVo content = contentService.selectById(id);
+		List<ContentType> types= contentService.queryContentType();
+		model.addAttribute("isFull",isFull);
+		model.addAttribute("content",content);
+		model.addAttribute("types",types);
+		return "/content/view";
+	}
 }

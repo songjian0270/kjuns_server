@@ -45,6 +45,7 @@
             <map>  
                 <entry key="json" value="application/json" />  
                 <entry key="xml" value="application/xml" />  
+                <entry key="h5" value="text/html" />
             </map>  
         </property>  
         <!-- 用于开启 /blog/123?format=json 的支持 -->  

@@ -56,6 +56,8 @@ public class ContentVo {
 	
 	private long shareCount;
 	
+	private String pageUrl;
+	
 	private List<ContentVo> contentList;
 
 	public String getId() {
@@ -249,6 +251,14 @@ public class ContentVo {
 
 	public void setContentList(List<ContentVo> contentList) {
 		this.contentList = contentList;
+	}
+
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
 	}
 	
 }
