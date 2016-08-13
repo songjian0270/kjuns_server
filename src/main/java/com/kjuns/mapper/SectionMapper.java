@@ -15,4 +15,7 @@ public interface SectionMapper {
 			@Param(value="pageSize")int pageSize);
 	
 	int insertSubscribe(ContentSectionSubscribe subscribe);
+	
+	int getRssCount(@Param(value="userId")String userId,@Param(value="sectionId")String sectionId);
+	
 }

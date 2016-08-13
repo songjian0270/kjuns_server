@@ -1,5 +1,7 @@
 package com.kjuns.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kjuns.model.BaseModel;
 
 /**
@@ -11,6 +13,7 @@ import com.kjuns.model.BaseModel;
  * @project idol
  * @version 2.0
  */
+@JsonInclude(Include.NON_NULL)
 public class BannerVo extends BaseModel{
 	
 	private String title;

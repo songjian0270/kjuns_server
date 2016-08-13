@@ -7,15 +7,15 @@
 		values (#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, #{dataFlag},#{title}, #{content})
 	</insert>
 	
-	<insert id="queryFaq" parameterType="com.kjuns.model.UserFaq">
+	<select id="queryFaq" parameterType="com.kjuns.model.UserFaq">
 		select create_date createDate,create_by createBy,update_by updateBy,update_date updateDate,
 		title,content where data_flag = 1
-	</insert>
+	</select>
 	
-	<insert id="queryBanner" parameterType="com.kjuns.model.Banner">
+	<select id="queryBanner" parameterType="com.kjuns.model.Banner"  resultType="com.kjuns.model.Banner">
 		select create_date createDate,create_by createBy,update_by updateBy,update_date updateDate,
 		title, content, url, background from kjuns_banner where data_flag = 1
-	</insert>
+	</select>
 	
 	<insert id="insertReport" parameterType="map">
 		insert into user_faq(create_date,create_by,update_by,update_date,data_flag,report_id,report_type) 

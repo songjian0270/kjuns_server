@@ -21,7 +21,7 @@ public interface CommentService {
 	 * @param page
 	 * @return
 	 */
-	PageList queryContentComments(String id, Page page)  throws Exception;
+	PageList queryContentComments(String id, String type, Page page)  throws Exception;
 	
 	/**
 	 * 保存评论

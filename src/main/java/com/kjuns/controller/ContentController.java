@@ -49,9 +49,14 @@ public class ContentController extends BaseController{
 	}
 	
 	@RequestMapping(value = "section/list", method = RequestMethod.GET)
-	public void sectionList(String id, Page page, Model model) throws Exception {
+	public void sectionList(String id, String token, Page page, Model model) throws Exception {
 		try {
-			PageList pageList = contentService.querySectionContent(id, page);
+			String userId = null;
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			if(null != userInfo){
+				userId = userInfo.getId();
+			}
+			PageList pageList = contentService.querySectionContent(id, userId, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
@@ -60,9 +65,14 @@ public class ContentController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void list(String typeId, Page page, Model model) throws Exception {
+	public void list(String typeId, String token, Page page, Model model) throws Exception {
 		try {
-			PageList pageList = contentService.queryContent(typeId, page);
+			String userId = null;
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			if(null != userInfo){
+				userId = userInfo.getId();
+			}
+			PageList pageList = contentService.queryContent(typeId, userId, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
@@ -78,6 +88,7 @@ public class ContentController extends BaseController{
 			Content.setPageUrl("content/view.h5?id=071670b41c764cd399fb53627b0500ac");
 			sendResponseContent(model, ErrorCode.SUCCESS, Content);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}

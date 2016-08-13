@@ -61,7 +61,7 @@ public class ContentServiceImpl implements ContentService {
 	private ContentRelatedArticlesMapper contentRelatedArticlesMapper;
 
 	@Override
-	public PageList queryContent(String typeId, Page page) throws Exception {
+	public PageList queryContent(String typeId, String userId, Page page) throws Exception {
 		List<ContentVo> contentList = new ArrayList<>();
 		PageList pageList = new PageList();
 		int count = contentMapper.getTotalCount(typeId, null);
@@ -87,6 +87,13 @@ public class ContentServiceImpl implements ContentService {
 									contents.setLikeCount(content.getLikeCount());
 									contents.setShareCount(content.getShareCount());
 									contents.setType(1);
+									if(CommonUtils.notEmpty(section.getId()) && CommonUtils.notEmpty(userId)){
+										int c  = sectionMapper.getRssCount(userId, section.getId());
+										contents.setIsRss(c > 0 ? 0 : 1);
+									}else if(CommonUtils.notEmpty(section.getId()) ){
+										int c  = sectionMapper.getRssCount(null, section.getId());
+										contents.setRssCount(c);
+									}
 									List<Content> sectionContentList = contentMapper.queryContentList(null, section.getId(), 0, 6);
 									List<ContentVo> ls = new ArrayList<>();
 									for(Content sectionContent: sectionContentList){
@@ -179,29 +186,36 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public ContentVo selectById(String id) throws Exception {
-		ContentVo ContentVo = contentMapper.selectById(id);
+		ContentVo contentVo = contentMapper.selectById(id);
 		//标签
 		List<ContentTag> tagList = contentTagMapper.queryContentTagForContentId(id);
-		ContentVo.setContentTagList(tagList);
+		if(null != tagList){
+			contentVo.setContentTagList(tagList);	
+		}
 		//相关推荐
 		List<ContentRelatedArticles> relatedArticlesList = 
 				contentRelatedArticlesMapper.queryContentRelatedArticlesForContentId(id);
-		ContentVo.setContentRelatedArticlesList(relatedArticlesList);
+		if(null != relatedArticlesList){
+			contentVo.setContentRelatedArticlesList(relatedArticlesList);
+		}
 		//发布人
-		if(CommonUtils.notEmpty(ContentVo.getIssuerId())){
-			UserInfo userInfo = userInfoMapper.get(ContentVo.getIssuerId());
-			ContentVo.setIssuerId(ContentVo.getIssuerId());
-			ContentVo.setIssuerName(userInfo.getNickName());
-			ContentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+		if(CommonUtils.notEmpty(contentVo.getIssuerId())){
+			UserInfo userInfo = userInfoMapper.get(contentVo.getIssuerId());
+			contentVo.setIssuerId(contentVo.getIssuerId());
+			contentVo.setIssuerName(userInfo.getNickName());
+			contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 		}
-		
-		if(CommonUtils.notEmpty(ContentVo.getMindMap())){
-			ContentVo.setMindMap(CommonUtils.getImage(ContentVo.getMindMap()));
+		if(CommonUtils.notEmpty(contentVo.getDateTime())){
+			contentVo.setCreateDate(CommonUtils.dateToUnixTimestamp(contentVo.getDateTime(), 
+					CommonConstants.DATETIME_SEC));
 		}
-		if(CommonUtils.notEmpty(ContentVo.getThumbnail())){
-			ContentVo.setThumbnail(CommonUtils.getImage(ContentVo.getThumbnail()));
+		if(CommonUtils.notEmpty(contentVo.getMindMap())){
+			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap()));
 		}
-		return ContentVo;
+		if(CommonUtils.notEmpty(contentVo.getThumbnail())){
+			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail()));
+		}
+		return contentVo;
 	}
 
 	@Override
@@ -217,7 +231,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public PageList querySectionContent(String sectionId, Page page) throws Exception {
+	public PageList querySectionContent(String sectionId, String userId, Page page) throws Exception {
 		List<ContentVo> contentList = new ArrayList<>();
 		int count = contentMapper.getTotalCount(null, sectionId);
 		PageList pageList = new PageList();
@@ -238,6 +252,13 @@ public class ContentServiceImpl implements ContentService {
 				contentv.setIssuerName(userInfo.getNickName());
 				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
 							CommonConstants.DATETIME_SEC));
+				if(CommonUtils.notEmpty(sectionId) && CommonUtils.notEmpty(userId)){
+					int c  = sectionMapper.getRssCount(userId, sectionId);
+					contentv.setIsRss(c > 0 ? 0 : 1);
+				}else if(CommonUtils.notEmpty(sectionId) ){
+					int c  = sectionMapper.getRssCount(null, sectionId);
+					contentv.setRssCount(c);
+				}
 				contentList.add(contentv);
 			}
 		}

@@ -30,6 +30,10 @@ public class ContentVo {
 	
 	private int type;
 	
+	private int isRss;
+	
+	private int rssCount;
+	
 	private String content;
 	
 	private String nickName;
@@ -51,6 +55,8 @@ public class ContentVo {
 	private String issuerName;
 	
 	private Long createDate;
+	
+	private String dateTime;
 	
 	private long likeCount;
 	
@@ -259,6 +265,30 @@ public class ContentVo {
 
 	public void setPageUrl(String pageUrl) {
 		this.pageUrl = pageUrl;
+	}
+
+	public int getIsRss() {
+		return isRss;
+	}
+
+	public void setIsRss(int isRss) {
+		this.isRss = isRss;
+	}
+
+	public int getRssCount() {
+		return rssCount;
+	}
+
+	public void setRssCount(int rssCount) {
+		this.rssCount = rssCount;
+	}
+
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 	
 }
