@@ -8,9 +8,11 @@ import com.kjuns.model.UserComment;
 
 public interface CommentMapper {
 	
-	int getTotalCount(@Param(value="contentId")String contentId, @Param(value="type")String type);
+	int getTotalCount(@Param("table")String table, @Param(value="contentId")String contentId,
+			@Param(value="type")String type);
 	
-	List<UserComment> queryContentCommentsList(@Param(value="contentId")String contentId,
+	List<UserComment> queryContentCommentsList(@Param("table")String table,
+			@Param(value="contentId")String contentId,
 			@Param(value="type")String type, @Param(value="pageNo")int pageNo, 
 			@Param(value="pageSize")int pageSize);
  	
@@ -34,8 +36,8 @@ public interface CommentMapper {
 	 * @param id
 	 * @return
 	 */
-	int insertContentCommentsLike(@Param("id")String id);
+	int insertContentCommentsLike(@Param("table")String table, @Param("id")String id);
 	
-	UserComment get(@Param(value="id")String id);
+	UserComment get(@Param("table")String table, @Param(value="id")String id);
 	
 }

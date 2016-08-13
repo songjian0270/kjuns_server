@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kjuns.mapper.CampMapper;
 import com.kjuns.mapper.CommentMapper;
 import com.kjuns.mapper.ContentMapper;
 import com.kjuns.mapper.ContentRelatedArticlesMapper;
@@ -61,7 +62,11 @@ public class ContentServiceImpl implements ContentService {
 	@Autowired
 	private ContentRelatedArticlesMapper contentRelatedArticlesMapper;
 	
+	@Autowired
 	private CommentMapper commentMapper;
+	
+	@Autowired
+	private CampMapper campMapper;
 
 	@Override
 	public PageList queryContent(String typeId, String userId, Page page) throws Exception {
@@ -90,7 +95,7 @@ public class ContentServiceImpl implements ContentService {
 									contents.setLikeCount(content.getLikeCount());
 									contents.setShareCount(content.getShareCount());
 									contents.setType(1);
-									int commentCount = commentMapper.getTotalCount(content.getId(), null);
+									int commentCount = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, content.getId(), null);
 									contents.setCommentCount(commentCount);
 									if(CommonUtils.notEmpty(section.getId()) && CommonUtils.notEmpty(userId)){
 										int c  = sectionMapper.getRssCount(userId, section.getId());
@@ -114,7 +119,7 @@ public class ContentServiceImpl implements ContentService {
 										c.setIssuerName(userInfo.getNickName());
 										c.setCreateDate(CommonUtils.dateToUnixTimestamp(sectionContent.getCreateDate(), 
 													CommonConstants.DATETIME_SEC));
-										int cc = commentMapper.getTotalCount(sectionContent.getId(), null);
+										int cc = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, sectionContent.getId(), null);
 										c.setCommentCount(cc);
 										ls.add(c);
 									}
@@ -145,7 +150,7 @@ public class ContentServiceImpl implements ContentService {
 						contents.setIssuerName(userInfo.getNickName());
 						contents.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
 									CommonConstants.DATETIME_SEC));
-						int cc = commentMapper.getTotalCount(content.getId(), null);
+						int cc = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, content.getId(), null);
 						contents.setCommentCount(cc);
 						contentList.add(contents);
 					}
@@ -160,12 +165,12 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public BaseOutJB insertContent(Content content) throws Exception {
+	public BaseOutJB insertCamp(Content content) throws Exception {
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 		content.setCreateDate(datetime);
 		String id = UUIDUtils.getUUID().toString().replace("-", "");
 		content.setId(id);
-		boolean isSucceed = contentMapper.insertContent(content) > 0 ? true: false;
+		boolean isSucceed = campMapper.insertCamp(content) > 0 ? true: false;
 		if(isSucceed){
 			return new BaseOutJB(ErrorCode.SUCCESS);
 		}else{
@@ -261,7 +266,7 @@ public class ContentServiceImpl implements ContentService {
 				contentv.setIssuerName(userInfo.getNickName());
 				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
 							CommonConstants.DATETIME_SEC));
-				int cc = commentMapper.getTotalCount(content.getId(), null);
+				int cc = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, content.getId(), null);
 				contentv.setCommentCount(cc);
 				if(CommonUtils.notEmpty(sectionId) && CommonUtils.notEmpty(userId)){
 					int c  = sectionMapper.getRssCount(userId, sectionId);
@@ -270,6 +275,39 @@ public class ContentServiceImpl implements ContentService {
 					int c  = sectionMapper.getRssCount(null, sectionId);
 					contentv.setRssCount(c);
 				}
+				contentList.add(contentv);
+			}
+		}
+		pageList.setPageInvertedIndex(page.getReturnIndex());
+		pageList.setTotalCount(count);
+		pageList.setList(contentList);
+		return pageList;
+	}
+
+	@Override
+	public PageList queryCampContent(Page page) throws Exception {
+		List<ContentVo> contentList = new ArrayList<>();
+		int count = campMapper.getTotalCount();
+		PageList pageList = new PageList();
+		if(count > 0){
+			page.setTotalCount(count);
+			List<Content> contents = campMapper.queryCampList(page.getStart(), page.getPageSize());
+			for(Content content:contents){
+				ContentVo contentv = new ContentVo();
+				contentv.setId(content.getId());
+				contentv.setTitle(content.getTitle());
+				contentv.setSummary(content.getSummary());
+				contentv.setType(1);
+				contentv.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
+				contentv.setLikeCount(content.getLikeCount());
+				contentv.setShareCount(content.getShareCount());
+				UserInfo userInfo = userInfoMapper.get(content.getUserId());
+				contentv.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+				contentv.setIssuerName(userInfo.getNickName());
+				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
+							CommonConstants.DATETIME_SEC));
+				int cc = commentMapper.getTotalCount( CommonConstants.KJUNS_CAMP_COMMENTS, content.getId(), null);
+				contentv.setCommentCount(cc);
 				contentList.add(contentv);
 			}
 		}

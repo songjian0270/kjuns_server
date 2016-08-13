@@ -68,6 +68,22 @@ public class ContentController extends BaseController{
 		}
 	}
 	
+	@RequestMapping(value = "cmap/list", method = RequestMethod.GET)
+	public void cmapList(String id, String token, Page page, Model model) throws Exception {
+		try {
+			String userId = null;
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			if(null != userInfo){
+				userId = userInfo.getId();
+			}
+			PageList pageList = contentService.querySectionContent(id, userId, page);
+			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
+		} catch (Exception ex) {
+			logger.error("list >>> {}", ex.getMessage());
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(String typeId, String token, Page page, Model model) throws Exception {
 		try {
@@ -79,6 +95,7 @@ public class ContentController extends BaseController{
 			PageList pageList = contentService.queryContent(typeId, userId, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}
@@ -92,7 +109,6 @@ public class ContentController extends BaseController{
 			Content.setPageUrl("content/view.h5?id="+id);
 			sendResponseContent(model, ErrorCode.SUCCESS, Content);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}
@@ -117,7 +133,7 @@ public class ContentController extends BaseController{
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);
 			content.setUserId(userInfo.getId());
-			BaseOutJB jb = contentService.insertContent(content);
+			BaseOutJB jb = contentService.insertCamp(content);
 			sendResponseContent(model, jb);
 		} catch (Exception ex) {
 			logger.error("del >>> {}", ex.getMessage());
@@ -155,14 +171,13 @@ public class ContentController extends BaseController{
 		ContentVo content = contentService.selectById(id);
 		List<ContentType> types= contentService.queryContentType();
 		Page page = new Page(0,2);
-		PageList hotComments = commentService.queryContentComments(id,"1",page );
-		PageList newComments = commentService.queryContentComments(id,"0",page );
+		PageList hotComments = commentService.queryContentComments(id, 0, "1",page );
+		PageList newComments = commentService.queryContentComments(id, 0, "0",page );
 		model.addAttribute("isFull",isFull);
 		model.addAttribute("content",content);
 		model.addAttribute("types",types);
 		model.addAttribute("hotComments",hotComments);
 		model.addAttribute("newComments",newComments);
-		
 		return "/content/view";
 	}
 }

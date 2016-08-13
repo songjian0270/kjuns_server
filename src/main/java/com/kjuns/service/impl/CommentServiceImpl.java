@@ -49,13 +49,19 @@ public class CommentServiceImpl implements CommentService {
 	/**
 	 * 获取动态的评论列表
 	 */
-	public PageList queryContentComments(String contentId, String type, Page page) throws Exception {
+	public PageList queryContentComments(String contentId, int contentType, String type, Page page) throws Exception {
 		List<ContentCommentsVo> ContentCommentsList = new ArrayList<>();
 		PageList pageList = new PageList();
-		int count = commentMapper.getTotalCount(contentId, type);
+		String table = "";
+		if(contentType == 0){
+			table = CommonConstants.KJUNS_CONTENT_COMMENTS;
+		}else if(contentType == 1){
+			table = CommonConstants.KJUNS_CAMP_COMMENTS;
+		}
+		int count = commentMapper.getTotalCount(table, contentId, type);
 		if(count > 0){
 			page.setTotalCount(count);
-			List<UserComment> list =  commentMapper.queryContentCommentsList(contentId, type, page.getStart(), page.getPageSize());
+			List<UserComment> list =  commentMapper.queryContentCommentsList(table, contentId, type, page.getStart(), page.getPageSize());
 			if(CommonUtils.notListFEmpty(list)){
 				for(UserComment comment: list){
 					ContentCommentsVo comments = new ContentCommentsVo();
@@ -74,7 +80,7 @@ public class CommentServiceImpl implements CommentService {
 					comments.setReplyCommentId(CommonUtils.getStr(comment.getReplyCommentId()));
 					
 					if(CommonUtils.notEmpty(comment.getReplyCommentId())){
-						UserComment userReplyComment = commentMapper.get(comment.getReplyCommentId()); 
+						UserComment userReplyComment = commentMapper.get(table, comment.getReplyCommentId()); 
 						comments.setReplyUserId(userReplyComment.getUserId());
 						if(comment.getReplyCommentId().equals("000000000000000000000000000000000000")){
 							comments.setNickName(comment.getUserNickName());
@@ -101,7 +107,7 @@ public class CommentServiceImpl implements CommentService {
 	
 
 	// 评论
-	public BaseOutJB insertContentComments(String contentId, String replyCommentId, String content, String userId) throws Exception {
+	public BaseOutJB insertContentComments(String contentId, String replyCommentId, String content, String userId, int contentType) throws Exception {
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 		UserComment userComment = new UserComment();
 		userComment.setContent(content);
@@ -122,6 +128,12 @@ public class CommentServiceImpl implements CommentService {
 			Visitor vtor = visitorMapper.get(visitor);
 			userComment.setUserNickName(vtor.getName());
 		}
+
+		if(contentType == 0){
+			userComment.setTable(CommonConstants.KJUNS_CONTENT_COMMENTS);
+		}else if(contentType == 1){
+			userComment.setTable(CommonConstants.KJUNS_CAMP_COMMENTS);
+		}
 		boolean f = commentMapper.insertContentComments(userComment) >= 1 ? true: false;
 		if(f){
 			return new BaseOutJB(ErrorCode.SUCCESS);
@@ -135,13 +147,18 @@ public class CommentServiceImpl implements CommentService {
 	 * @param comment
 	 * @return
 	 */
-	public boolean delContentCommentById(String contentId, String id, String userId){
+	public boolean delContentCommentById(String contentId, String id, String userId, int contentType){
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 		UserComment userComment = new UserComment();
 		userComment.setId(id);
 		userComment.setContentId(contentId);
 		userComment.setUpdateBy(userId);
 		userComment.setUpdateDate(datetime);
+		if(contentType == 0){
+			userComment.setTable(CommonConstants.KJUNS_CONTENT_COMMENTS);
+		}else if(contentType == 1){
+			userComment.setTable(CommonConstants.KJUNS_CAMP_COMMENTS);
+		}
 		int result = commentMapper.delContentCommentsById(userComment);
 		return result > 0 ? true:false;
 	}

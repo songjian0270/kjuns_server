@@ -44,7 +44,28 @@ public class CommentController extends BaseController{
 			Model model) throws Exception {
 		try {
 			response.addHeader("Access-Control-Allow-Origin", "*");
-			PageList list = commentService.queryContentComments(id,type, page);
+			PageList list = commentService.queryContentComments(id, 0, type, page);
+			sendResponseContent(model, ErrorCode.SUCCESS, list);
+			return model;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error("comments >>> {}", ex.getMessage());
+			throw ex;
+		}
+	}
+	
+	/**
+	 * 获取评论列表
+	 * 
+	 * @param dynamicId
+	 * @param model
+	 */
+	@RequestMapping(value = "camp/list", method = RequestMethod.GET)
+	public Model queryCampComment(String id, String type,Page page, HttpServletResponse response, 
+			Model model) throws Exception {
+		try {
+			response.addHeader("Access-Control-Allow-Origin", "*");
+			PageList list = commentService.queryContentComments(id, 1, type, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, list);
 			return model;
 		} catch (Exception ex) {
@@ -62,7 +83,7 @@ public class CommentController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public void add(String id, String replyCommentId, String content, String token, 
+	public void add(String id, String replyCommentId, String content, String token, String contentType,
 			HttpServletRequest request, Model model) throws Exception{
 		try {
 			String userId = "000000000000000000000000000000000000";
@@ -70,7 +91,31 @@ public class CommentController extends BaseController{
 			if(null != userInfo){
 				userId = userInfo.getId();
 			}
-			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId);
+			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId, 0);
+			sendResponseContent(model, b);
+		} catch (Exception ex) {
+			logger.error("comment >>>> {}",ex.getMessage());
+			throw ex;
+		}
+	}
+	
+	/**
+	 * 评论
+	 * @param userDynamicComments
+	 * @param userWorkComments
+	 * @param model
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "camp/add", method = RequestMethod.POST)
+	public void campAdd(String id, String replyCommentId, String content, String token, String contentType,
+			HttpServletRequest request, Model model) throws Exception{
+		try {
+			String userId = "000000000000000000000000000000000000";
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			if(null != userInfo){
+				userId = userInfo.getId();
+			}
+			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId, 1);
 			sendResponseContent(model, b);
 		} catch (Exception ex) {
 			logger.error("comment >>>> {}",ex.getMessage());
@@ -88,7 +133,7 @@ public class CommentController extends BaseController{
 	public void delComment(String token, String commentId, String contentId, Model model){
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);
-			boolean b  = commentService.delContentCommentById(contentId, commentId, userInfo.getId());
+			boolean b  = commentService.delContentCommentById(contentId, commentId, userInfo.getId(), 0);
 			if(b){
 				sendResponseContent(model, ErrorCode.SUCCESS);
 			}else{
@@ -99,4 +144,25 @@ public class CommentController extends BaseController{
 		}
 	}
 
+	/**
+	 * 删除评论
+	 * @param id
+	 * @param model
+	 */
+	@VerifyToken
+	@RequestMapping(value = "camp/del", method = RequestMethod.DELETE)
+	public void delCampComment(String token, String commentId, String contentId, Model model){
+		try {
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			boolean b  = commentService.delContentCommentById(contentId, commentId, userInfo.getId(), 1);
+			if(b){
+				sendResponseContent(model, ErrorCode.SUCCESS);
+			}else{
+				sendResponseContent(model, ErrorCode.FAILED);
+			}
+		} catch (Exception ex) {
+			logger.error("delDynamicComment >>>> {}", ex.getMessage());
+		}
+	}
+	
 }

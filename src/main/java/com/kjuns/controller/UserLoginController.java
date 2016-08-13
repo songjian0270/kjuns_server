@@ -42,6 +42,7 @@ public class UserLoginController extends BaseController {
 			BaseOutJB out = userLoginService.updateAccount(loginInfo);
 			sendResponseContent(model, out);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error("login >>> {}", ex.getMessage());
 			throw ex;
 		}
@@ -53,9 +54,9 @@ public class UserLoginController extends BaseController {
 	 * @param model
 	 */
 	@RequestMapping(value = "/complete", method = RequestMethod.POST)
-	public void complete(String id, String nickName, String faceSrc, String idcard, int sex, Model model) throws Exception{
+	public void complete(String id, String nickName , String idcard, Model model) throws Exception{
 		try {
-			BaseOutJB out = userLoginService.complete(id, nickName, faceSrc, idcard, sex);
+			BaseOutJB out = userLoginService.complete(id, nickName, idcard);
 			sendResponseContent(model, out);
 		} catch (Exception ex) {
 			logger.error("isExistCellPhoneNumber >>> {}", ex.getMessage());
