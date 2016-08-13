@@ -14,7 +14,7 @@
 	
 <div style="border:0.5px solid #ebebeb;;margin-top:3.5%"></div>
 <div class="grayBlock" style="margin-left:3%">推荐阅读</div>
-<div style="margin-left:3%;height:8%">
+<div style="margin-left:3%;">
 	<div class="tuijianyuedu">
 		<div>
 			<c:forEach var="item" items="${content.contentRelatedArticlesList}" varStatus="status">
@@ -44,7 +44,9 @@
 		</div>
 		<div style="padding-top:2%;padding-bottom:0px" class="comment_text"><p>${item.content}</p></div>
 		</div>
-		<div style="float:left;width:100%;border:0.5px solid #ebebeb;margin-bottom:2%;margin-top:2%;"></div>
+		<c:if test="${!status.last}">
+			<div style="float:left;width:100%;border:0.5px solid #ebebeb;margin-bottom:2%;margin-top:2%;"></div>
+		</c:if>
 		<div style="clear:both;"></div>
 	</div>
 	</c:forEach>
