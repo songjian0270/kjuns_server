@@ -107,7 +107,7 @@ public class CommentController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "camp/add", method = RequestMethod.POST)
-	public void campAdd(String id, String replyCommentId, String content, String token, String contentType,
+	public void addCamp(String id, String replyCommentId, String content, String token, String contentType,
 			HttpServletRequest request, Model model) throws Exception{
 		try {
 			String userId = "000000000000000000000000000000000000";

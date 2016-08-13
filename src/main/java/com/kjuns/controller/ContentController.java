@@ -79,6 +79,20 @@ public class ContentController extends BaseController{
 		}
 	}
 	
+	@RequestMapping(value = "img/list", method = RequestMethod.GET)
+	public void imgList(Page page, Model model) throws Exception {
+		try {
+			String typeId= "2427d4151e334c6594231de41990da4c";
+			PageList pageList = contentService.queryContent(typeId, null, page);
+			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error("list >>> {}", ex.getMessage());
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(String typeId, String token, Page page, Model model) throws Exception {
 		try {
