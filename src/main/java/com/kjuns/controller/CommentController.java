@@ -44,7 +44,7 @@ public class CommentController extends BaseController{
 			Model model) throws Exception {
 		try {
 			response.addHeader("Access-Control-Allow-Origin", "*");
-			PageList list = commentService.queryContentComments(id, page);
+			PageList list = commentService.queryContentComments(id,type, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, list);
 			return model;
 		} catch (Exception ex) {

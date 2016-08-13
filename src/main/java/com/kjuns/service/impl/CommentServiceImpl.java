@@ -71,6 +71,7 @@ public class CommentServiceImpl implements CommentService {
 					comments.setCreateDate(CommonUtils.dateToUnixTimestamp(comment.getCreateDate(), 
 								CommonConstants.DATETIME_SEC));
 					
+					comments.setReplyCommentId(CommonUtils.getStr(comment.getReplyCommentId()));
 					
 					if(CommonUtils.notEmpty(comment.getReplyCommentId())){
 						UserComment userReplyComment = commentMapper.get(comment.getReplyCommentId()); 
@@ -79,6 +80,7 @@ public class CommentServiceImpl implements CommentService {
 							comments.setNickName(comment.getUserNickName());
 						}else{
 							UserInfo userInfo = userInfoMapper.get(userReplyComment.getUserId());
+							comments.setReplyCommentId(CommonUtils.getStr(comment.getReplyCommentId()));
 							comments.setReplyNickName(userInfo.getNickName());
 							comments.setFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 						}
