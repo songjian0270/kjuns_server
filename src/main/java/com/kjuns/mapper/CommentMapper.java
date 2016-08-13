@@ -8,10 +8,11 @@ import com.kjuns.model.UserComment;
 
 public interface CommentMapper {
 	
-	int getTotalCount(@Param(value="contentId")String contentId);
+	int getTotalCount(@Param(value="contentId")String contentId, @Param(value="type")String type);
 	
 	List<UserComment> queryContentCommentsList(@Param(value="contentId")String contentId,
-			@Param(value="pageNo")int pageNo, @Param(value="pageSize")int pageSize);
+			@Param(value="type")String type, @Param(value="pageNo")int pageNo, 
+			@Param(value="pageSize")int pageSize);
  	
 	/**
 	 * 删除一条动态评论

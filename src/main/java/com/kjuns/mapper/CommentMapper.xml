@@ -7,6 +7,12 @@
 		<if test="contentId != null and contentId != ''">
 			and content_id = #{contentId}
 		</if>
+		<if test="type != null and type == 0">
+			order by create_date desc
+		</if>
+		<if test="type != null and type == 1">
+			order by like desc
+		</if>
 	</select>
 	
 	<select id="queryContentCommentsList" resultType="com.kjuns.model.UserComment">
@@ -15,7 +21,13 @@
 		<if test="contentId != null and contentId != ''">
 			and content_id = #{contentId}
 		</if>
-		order by create_date desc limit #{pageNo},#{pageSize}
+		<if test="type != null and type == 0">
+			order by create_date desc
+		</if>
+		<if test="type != null and type == 1">
+			order by like desc
+		</if>
+		limit #{pageNo},#{pageSize}
 	</select>
 	
 	<select id="get" resultType="com.kjuns.model.UserComment" parameterType="String">

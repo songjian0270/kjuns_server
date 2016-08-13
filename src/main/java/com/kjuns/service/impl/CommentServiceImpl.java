@@ -49,13 +49,13 @@ public class CommentServiceImpl implements CommentService {
 	/**
 	 * 获取动态的评论列表
 	 */
-	public PageList queryContentComments(String contentId, Page page) throws Exception {
+	public PageList queryContentComments(String contentId, String type, Page page) throws Exception {
 		List<ContentCommentsVo> ContentCommentsList = new ArrayList<>();
 		PageList pageList = new PageList();
-		int count = commentMapper.getTotalCount(contentId);
+		int count = commentMapper.getTotalCount(type, contentId);
 		if(count > 0){
 			page.setTotalCount(count);
-			List<UserComment> list =  commentMapper.queryContentCommentsList(contentId, page.getStart(), page.getPageSize());
+			List<UserComment> list =  commentMapper.queryContentCommentsList(contentId, type, page.getStart(), page.getPageSize());
 			if(CommonUtils.notListFEmpty(list)){
 				for(UserComment comment: list){
 					ContentCommentsVo comments = new ContentCommentsVo();

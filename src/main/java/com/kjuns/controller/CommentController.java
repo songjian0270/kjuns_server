@@ -40,7 +40,7 @@ public class CommentController extends BaseController{
 	 * @param model
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public Model queryComment(String id, Page page, HttpServletResponse response, 
+	public Model queryComment(String id, String type,Page page, HttpServletResponse response, 
 			Model model) throws Exception {
 		try {
 			response.addHeader("Access-Control-Allow-Origin", "*");
