@@ -68,15 +68,10 @@ public class ContentController extends BaseController{
 		}
 	}
 	
-	@RequestMapping(value = "cmap/list", method = RequestMethod.GET)
-	public void cmapList(String id, String token, Page page, Model model) throws Exception {
+	@RequestMapping(value = "camp/list", method = RequestMethod.GET)
+	public void cmapList(Page page, Model model) throws Exception {
 		try {
-			String userId = null;
-			UserInfo userInfo = this.getUserInfoForToken(token);
-			if(null != userInfo){
-				userId = userInfo.getId();
-			}
-			PageList pageList = contentService.querySectionContent(id, userId, page);
+			PageList pageList = contentService.queryCampContent( page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
