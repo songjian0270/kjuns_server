@@ -65,7 +65,7 @@ public class CommentServiceImpl implements CommentService {
 			if(CommonUtils.notListFEmpty(list)){
 				for(UserComment comment: list){
 					ContentCommentsVo comments = new ContentCommentsVo();
-					
+					comments.setContent(comment.getContent());
 					if(comment.getUserId().equals("000000000000000000000000000000000000")){
 						comments.setNickName(comment.getUserNickName());
 					}else{
