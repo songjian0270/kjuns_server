@@ -39,7 +39,7 @@ public class Page implements Serializable {
 
 	private String property; // 查找属性名称
 	private String keyword; // 查找关键字
-	private String orderBy = "createDate"; // 排序字段
+	private String orderBy = "createTime"; // 排序字段
 	private OrderType orderType = OrderType.desc;// 排序方式
 	private List list; // 数据List
 
@@ -185,7 +185,12 @@ public class Page implements Serializable {
 	}
 
 	public Integer getStart() {
-		return start = this.getPageResult() * this.getPageSize();
+		//return start = this.getPageResult() * this.getPageSize();
+		if(this.pageInvertedIndex == 0){
+			return start = 0;
+		}else{
+			return start = (this.getTotalCount() - this.pageInvertedIndex) + 1;	
+		}
 	}
 
 	public void setStart(Integer start) {
