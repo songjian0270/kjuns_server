@@ -16,6 +16,20 @@
 	    </field>
     </validator>
     
+    <validator target="com.kjuns.controller.ContentController" method="sectionList">
+   	 <field name="id" dataType="String">
+	 	    <rule validate="notEmpty" msg="专栏ID不能为空"/>
+	    </field>
+	   	<field name="pageInvertedIndex" dataType="Integer">
+	 		<rule validate="notEmpty" msg="反向结束索引不能为空"/>
+	 		<rule validate="numeral" msg="反向结束索引应为数字"/>
+	    </field>
+	    <field name="pageSize" dataType="Integer">
+	 		<rule validate="notEmpty" msg="显示条数不能为空"/>
+	 		<rule validate="numeral" msg="显示条数应为数字"/>
+	    </field>
+    </validator>
+    
      <validator target="com.kjuns.controller.ContentController" method="imgList">
 	   	<field name="pageInvertedIndex" dataType="Integer">
 	 		<rule validate="notEmpty" msg="反向结束索引不能为空"/>

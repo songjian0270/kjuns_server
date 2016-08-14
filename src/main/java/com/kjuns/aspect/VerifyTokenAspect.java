@@ -25,7 +25,6 @@ public class VerifyTokenAspect extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger("VerifyTokenAspect");
 
-	@SuppressWarnings("unused")
 	@Before("within(@org.springframework.stereotype.Controller *) && @annotation(verifyToken)")
 	public void verifyToken(final JoinPoint joinPoint, VerifyToken verifyToken) throws Exception {
 		Object[] args = joinPoint.getArgs();
@@ -42,8 +41,8 @@ public class VerifyTokenAspect extends BaseController {
 		String token = request.getParameter("token");
 		UserAccount userAccount = new UserAccount();
 		userAccount.setToken(token);
-		userAccountService.get(userAccount);
-		if(userAccount == null){
+		UserAccount ac = userAccountService.get(userAccount);
+		if(ac == null){
 			logger.error("token已失效，请重新登陆...");
 			throw new TokenInvalidException();
 		}

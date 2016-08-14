@@ -75,25 +75,23 @@ public class ContentServiceImpl implements ContentService {
 		int count = contentMapper.getTotalCount(typeId, null);
 		if(count > 0){
 			page.setTotalCount(count);
-			int number = page.getPageSize() / SysConf.INTERVAL_NUMBER;		
+			int number = page.getPageSize() / SysConf.INTERVAL_NUMBER;	
+			System.out.println(number);
 			List<Content> list =  contentMapper.queryContentList(typeId, null, page.getStart(), page.getPageSize() - number);
 			if(CommonUtils.notListFEmpty(list)){
-				int i = 0; int k = 0 ;
+				int i = 0; int k = 1 ;int j = 1;
 				for(Content content: list){
 					if(i == SysConf.INTERVAL_NUMBER - 1){
 						int pageNumber =  page.getStart()/page.getPageSize();
 						List<ContentSection> sectionList = sectionMapper.queryContentSectionList( pageNumber * number , number);
-						int j = 0;
 						if(CommonUtils.notListFEmpty(sectionList)){
 							for(ContentSection section: sectionList){
 								if(k == j){
 									ContentVo contents = new ContentVo();
-									contents.setId(content.getId());
-									contents.setTitle(content.getTitle());
-									contents.setSummary(content.getSummary());
-									contents.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
-									contents.setLikeCount(content.getLikeCount());
-									contents.setShareCount(content.getShareCount());
+									contents.setId(section.getId());
+									contents.setTitle(section.getTitle());
+									contents.setSummary(section.getSummary());
+									contents.setThumbnail(CommonUtils.getImage(section.getThumbnail()));
 									contents.setType(1);
 									int commentCount = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, content.getId(), null);
 									contents.setCommentCount(commentCount);
@@ -131,10 +129,10 @@ public class ContentServiceImpl implements ContentService {
 												CommonConstants.DATETIME_SEC));
 									contentList.add(contents);
 								}
-								j++;
+								k++;
 							}
 						}
-						j ++;
+						j++;
 						i = 0;
 					}else{
 						ContentVo contents = new ContentVo();

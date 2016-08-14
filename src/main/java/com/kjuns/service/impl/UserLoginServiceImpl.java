@@ -497,7 +497,6 @@ public class UserLoginServiceImpl implements UserLoginService {
 		int result = userInfoMapper.insert(userInfo);
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
-		params.put("userId", userId);
 		String token = UUIDUtils.getUUID().toString().replace("-", "");
 		if(CommonUtils.isEmpty(userAccount.getToken())){
 			params.put("token", token);
