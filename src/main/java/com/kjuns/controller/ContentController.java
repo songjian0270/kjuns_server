@@ -150,7 +150,7 @@ public class ContentController extends BaseController{
 	}
 	
 	@VerifyToken
-	@RequestMapping(value = "/add", method = RequestMethod.PUT)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public void add(Content content, HttpServletRequest request, String token, Model model) throws Exception {
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);

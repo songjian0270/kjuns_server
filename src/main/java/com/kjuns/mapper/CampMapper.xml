@@ -26,7 +26,7 @@
 		update kjuns_camp set data_flag = 0, update_by = #{updateBy}, update_date = #{updateDate}  where id = #{id}
 	</select>
 	
-	<insert id="addCamp" parameterType="com.kjuns.model.Content" >
+	<insert id="insertCamp" parameterType="com.kjuns.model.Content" >
 		insert into kjuns_camp (id,title,content,thumbnail,user_id,create_by,create_date,data_flag,update_by,update_date) 
 		values(#{id},#{title},#{content},#{thumbnail},#{userId},#{createBy},#{createDate},1,#{updateBy},#{updateDate})
 	</insert>
