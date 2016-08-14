@@ -84,7 +84,7 @@ public class ContentController extends BaseController{
 		try {
 			ContentVo content = contentService.selectCampById(id);
 			content.setContent("");
-			content.setPageUrl("content/view.h5?id="+id);
+			content.setPageUrl("content/camp/view.h5?id="+id);
 			sendResponseContent(model, ErrorCode.SUCCESS, content);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
