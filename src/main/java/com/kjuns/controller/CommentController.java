@@ -14,6 +14,7 @@ import com.kjuns.model.PageList;
 import com.kjuns.model.UserInfo;
 import com.kjuns.out.BaseOutJB;
 import com.kjuns.service.CommentService;
+import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.util.pager.Page;
 
@@ -85,10 +86,11 @@ public class CommentController extends BaseController{
 	public void add(String id, String replyCommentId, String content, String token, Model model) throws Exception{
 		try {
 			String userId = "000000000000000000000000000000000000";
-			UserInfo userInfo = this.getUserInfoForToken(token);
-			System.out.println("token:::::::::::::::::::::::::::::"+token +"+userInfo:"+userInfo);
-			if(null != userInfo){
-				userId = userInfo.getId();
+			if(CommonUtils.notEmpty(token)){
+				UserInfo userInfo = this.getUserInfoForToken(token);
+				if(null != userInfo){
+					userId = userInfo.getId();
+				}	
 			}
 			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId, 0);
 			sendResponseContent(model, b);
@@ -110,9 +112,11 @@ public class CommentController extends BaseController{
 			HttpServletRequest request, Model model) throws Exception{
 		try {
 			String userId = "000000000000000000000000000000000000";
-			UserInfo userInfo = this.getUserInfoForToken(token);
-			if(null != userInfo){
-				userId = userInfo.getId();
+			if(CommonUtils.notEmpty(token)){
+				UserInfo userInfo = this.getUserInfoForToken(token);
+				if(null != userInfo){
+					userId = userInfo.getId();
+				}	
 			}
 			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId, 1);
 			sendResponseContent(model, b);
