@@ -12,7 +12,6 @@
 font-size:20px;
 color:#4a4a4a;
 letter-spacing:0.05px;
-background:#e1e8ef;
 line-height:26px;
 vertical-align:middle;
 display:table;"><div style="padding-top:50vh;display:table-cell">服务器发生错误,无法加载页面<br/>请联系管理员</div></div>
