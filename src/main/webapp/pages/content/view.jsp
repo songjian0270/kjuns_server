@@ -247,12 +247,15 @@ ${ content.content}
 <div style="margin:5% 5% 0px 5%">
 <div style="height:2%;width:100%" class="notifi">看军事社区规范：直抒胸臆  理性爱国</div>
 <div style="height:2%;width:100%;margin-top:2%" class="msgFrom">消息参考来源：${content.source }</div>
-<div style="width:100%;margin-top:2%">
-<c:forEach var="item" items="${types}" varStatus="status">
-<div class="tagStyle">${item.name}</div>
-</c:forEach>
-<div style="clear:both;"></div>
-</div>
+
+<c:if test="${content.contentTagList.size()>0}">
+	<div style="width:100%;margin-top:2%">
+	<c:forEach var="item" items="${content.contentTagList}" varStatus="status">
+	<div class="tagStyle">${item.tagName}</div>
+	</c:forEach>
+	<div style="clear:both;"></div>
+	</div>
+</c:if>
 </div>
 
 <c:if test="${isFull=='1'}">

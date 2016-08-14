@@ -86,7 +86,7 @@ public class ContentController extends BaseController{
 		try {
 			ContentVo content = contentService.selectCampById(id);
 			content.setContent("");
-			content.setPageUrl("content/view.h5?id="+id);
+			content.setPageUrl("content/camp/view.h5?id="+id);
 			sendResponseContent(model, ErrorCode.SUCCESS, content);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
@@ -191,13 +191,26 @@ public class ContentController extends BaseController{
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(String id,String isFull, Model model) throws Exception {
 		ContentVo content = contentService.selectById(id);
-		List<ContentType> types= contentService.queryContentType();
 		Page page = new Page(0,2);
 		PageList hotComments = commentService.queryContentComments(id, 0, "1",page );
 		PageList newComments = commentService.queryContentComments(id, 0, "0",page );
 		model.addAttribute("isFull",isFull);
 		model.addAttribute("content",content);
-		model.addAttribute("types",types);
+		model.addAttribute("hotComments",hotComments);
+		model.addAttribute("newComments",newComments);
+		return "/content/view";
+	}
+	
+
+	@IgnoreVerify
+	@RequestMapping(value = "camp/view", method = RequestMethod.GET)
+	public String campView(String id,String isFull, Model model) throws Exception {
+		ContentVo content = contentService.selectCampById(id);
+		Page page = new Page(0,2);
+		PageList hotComments = commentService.queryContentComments(id, 0, "1",page );
+		PageList newComments = commentService.queryContentComments(id, 0, "0",page );
+		model.addAttribute("isFull",isFull);
+		model.addAttribute("content",content);
 		model.addAttribute("hotComments",hotComments);
 		model.addAttribute("newComments",newComments);
 		return "/content/view";
