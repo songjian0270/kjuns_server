@@ -60,7 +60,7 @@ public class CommonController extends BaseController{
 	 */
 	@VerifyToken
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
-	public void report(String token, String id, String type, Model model) throws Exception{
+	public void report(String token, String id, int type, HttpServletRequest request, Model model) throws Exception{
 		try {
 			UserInfo userInfo = getUserInfoForToken(token);
 			ErrorCode errorCode = commonService.insertReport(userInfo.getId(), id, type);
