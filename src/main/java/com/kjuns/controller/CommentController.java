@@ -48,7 +48,6 @@ public class CommentController extends BaseController{
 			sendResponseContent(model, ErrorCode.SUCCESS, list);
 			return model;
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("comments >>> {}", ex.getMessage());
 			throw ex;
 		}
@@ -69,7 +68,6 @@ public class CommentController extends BaseController{
 			sendResponseContent(model, ErrorCode.SUCCESS, list);
 			return model;
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("comments >>> {}", ex.getMessage());
 			throw ex;
 		}

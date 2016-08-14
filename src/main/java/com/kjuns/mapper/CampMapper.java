@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.kjuns.model.Content;
+import com.kjuns.vo.ContentVo;
 
 public interface CampMapper extends Serializable {
 	
@@ -15,7 +16,7 @@ public interface CampMapper extends Serializable {
 
 	List<Content> queryCampList(@Param(value="pageNo")int pageNo, @Param(value="pageSize")int pageSize);
 
-	Content selectById(String id);
+	ContentVo selectById(String id);
 
 	void deleteCamp(Content content);
 

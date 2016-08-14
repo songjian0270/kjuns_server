@@ -61,6 +61,8 @@ public interface ContentService {
 	 */
 	BaseOutJB insertCamp(Content Content) throws Exception;
 	
+	ContentVo selectCampById(String id) throws Exception;
+	
 	/**
 	 * 删除内容
 	 * @param contentId

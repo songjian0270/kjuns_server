@@ -74,7 +74,19 @@ public class ContentController extends BaseController{
 			PageList pageList = contentService.queryCampContent( page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("list >>> {}", ex.getMessage());
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "camp/detail", method = RequestMethod.GET)
+	public void campDetail(String id, Model model) throws Exception {
+		try {
+			ContentVo content = contentService.selectById(id);
+			content.setContent("");
+			content.setPageUrl("content/view.h5?id="+id);
+			sendResponseContent(model, ErrorCode.SUCCESS, content);
+		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}
@@ -87,7 +99,6 @@ public class ContentController extends BaseController{
 			PageList pageList = contentService.queryContent(typeId, null, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}
@@ -105,7 +116,6 @@ public class ContentController extends BaseController{
 			PageList pageList = contentService.queryContent(typeId, userId, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}
@@ -114,10 +124,10 @@ public class ContentController extends BaseController{
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public void detail(String id, Model model) throws Exception {
 		try {
-			ContentVo Content = contentService.selectById(id);
-			Content.setContent("");
-			Content.setPageUrl("content/view.h5?id="+id);
-			sendResponseContent(model, ErrorCode.SUCCESS, Content);
+			ContentVo content = contentService.selectById(id);
+			content.setContent("");
+			content.setPageUrl("content/view.h5?id="+id);
+			sendResponseContent(model, ErrorCode.SUCCESS, content);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());

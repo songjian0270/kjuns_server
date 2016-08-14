@@ -70,7 +70,6 @@ public class UserInfoController extends BaseController {
 				sendResponseContent(model, ErrorCode.SUCCESS, userInfo);
 			}
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("getUserInfoById >>> {}", ex.getMessage());
 			throw ex;
 		}

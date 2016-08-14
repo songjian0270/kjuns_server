@@ -54,7 +54,13 @@
     
     <validator target="com.kjuns.controller.ContentController" method="detail">
 	     <field name="id" dataType="String">
-	 	    <rule validate="notEmpty" msg="评论ID不能为空"/>
+	 	    <rule validate="notEmpty" msg="内容ID不能为空"/>
+	    </field>
+    </validator>
+    
+    <validator target="com.kjuns.controller.ContentController" method="campDetail">
+	     <field name="id" dataType="String">
+	 	    <rule validate="notEmpty" msg="内容ID不能为空"/>
 	    </field>
     </validator>
     
