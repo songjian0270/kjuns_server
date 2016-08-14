@@ -115,8 +115,12 @@ word-break:break-all;
 .zhengwen img{
 width:100%;
 background:black;
+margin:10px 0px;
 }
 .zhengwen p{
+padding:0px 6%;
+}
+.zhengwen div{
 padding:0px 6%;
 }
 
