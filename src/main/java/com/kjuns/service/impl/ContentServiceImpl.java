@@ -70,14 +70,20 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public PageList queryContent(String typeId, String userId, Page page) throws Exception {
+		String isAdmin = "false";
+		if(CommonUtils.notEmpty(userId)){
+			if(userId.indexOf("admin") > 0){
+				isAdmin = "true";
+			}
+		}
 		List<ContentVo> contentList = new ArrayList<>();
 		PageList pageList = new PageList();
-		int count = contentMapper.getTotalCount(typeId, null);
+		int count = contentMapper.getTotalCount(isAdmin, typeId, null);
 		if(count > 0){
 			page.setTotalCount(count);
 			int number = page.getPageSize() / SysConf.INTERVAL_NUMBER;	
 			System.out.println(number);
-			List<Content> list =  contentMapper.queryContentList(typeId, null, page.getStart(), page.getPageSize() - number);
+			List<Content> list =  contentMapper.queryContentList(isAdmin, typeId, null, page.getStart(), page.getPageSize() - number);
 			if(CommonUtils.notListFEmpty(list)){
 				int i = 0; int k = 1 ;int j = 1;
 				for(Content content: list){
@@ -102,7 +108,7 @@ public class ContentServiceImpl implements ContentService {
 										int c  = sectionMapper.getRssCount(null, section.getId());
 										contents.setRssCount(c);
 									}
-									List<Content> sectionContentList = contentMapper.queryContentList(null, section.getId(), 0, 6);
+									List<Content> sectionContentList = contentMapper.queryContentList(isAdmin, null, section.getId(), 0, 6);
 									List<ContentVo> ls = new ArrayList<>();
 									for(Content sectionContent: sectionContentList){
 										ContentVo c = new ContentVo();
@@ -244,12 +250,18 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public PageList querySectionContent(String sectionId, String userId, Page page) throws Exception {
+		String isAdmin = "false";
+		if(CommonUtils.notEmpty(userId)){
+			if(userId.indexOf("admin") > 0){
+				isAdmin = "true";
+			}
+		}
 		List<ContentVo> contentList = new ArrayList<>();
-		int count = contentMapper.getTotalCount(null, sectionId);
+		int count = contentMapper.getTotalCount(isAdmin, null, sectionId);
 		PageList pageList = new PageList();
 		if(count > 0){
 			page.setTotalCount(count);
-			List<Content> contents = contentMapper.queryContentList(null, sectionId, page.getStart(), page.getPageSize());
+			List<Content> contents = contentMapper.queryContentList(isAdmin, null, sectionId, page.getStart(), page.getPageSize());
 			for(Content content:contents){
 				ContentVo contentv = new ContentVo();
 				contentv.setId(content.getId());
