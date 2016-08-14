@@ -46,6 +46,6 @@ public interface CommonService {
 	 * @return
 	 * @throws Exception
 	 */
-	ErrorCode insertReport(String userId, String contentId, String contentType) throws Exception;
+	ErrorCode insertReport(String userId, String contentId, int contentType) throws Exception;
 
 }

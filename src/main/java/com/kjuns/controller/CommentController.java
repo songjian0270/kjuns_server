@@ -81,8 +81,7 @@ public class CommentController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public void add(String id, String replyCommentId, String content, String token, String contentType,
-			HttpServletRequest request, Model model) throws Exception{
+	public void add(String id, String replyCommentId, String content, String token, String contentType, Model model) throws Exception{
 		try {
 			String userId = "000000000000000000000000000000000000";
 			UserInfo userInfo = this.getUserInfoForToken(token);
@@ -128,7 +127,7 @@ public class CommentController extends BaseController{
 	 */
 	@VerifyToken
 	@RequestMapping(value = "/del", method = RequestMethod.DELETE)
-	public void delComment(String token, String commentId, String contentId, Model model){
+	public void delComment(String token, String commentId, String contentId, HttpServletRequest request, Model model){
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);
 			boolean b  = commentService.delContentCommentById(contentId, commentId, userInfo.getId(), 0);
@@ -149,7 +148,7 @@ public class CommentController extends BaseController{
 	 */
 	@VerifyToken
 	@RequestMapping(value = "camp/del", method = RequestMethod.DELETE)
-	public void delCampComment(String token, String commentId, String contentId, Model model){
+	public void delCampComment(String token, String commentId, String contentId, HttpServletRequest request, Model model){
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);
 			boolean b  = commentService.delContentCommentById(contentId, commentId, userInfo.getId(), 1);

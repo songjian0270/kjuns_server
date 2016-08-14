@@ -2,6 +2,8 @@ package com.kjuns.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -136,7 +138,7 @@ public class ContentController extends BaseController{
 	
 	@VerifyToken
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
-	public void del(String id, String token, Model model) throws Exception {
+	public void del(String id, HttpServletRequest request, String token, Model model) throws Exception {
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);
 			BaseOutJB jb = contentService.delContentById(id, userInfo.getId());
@@ -149,7 +151,7 @@ public class ContentController extends BaseController{
 	
 	@VerifyToken
 	@RequestMapping(value = "/add", method = RequestMethod.PUT)
-	public void add(Content content, String token, Model model) throws Exception {
+	public void add(Content content, HttpServletRequest request, String token, Model model) throws Exception {
 		try {
 			UserInfo userInfo = this.getUserInfoForToken(token);
 			content.setUserId(userInfo.getId());
@@ -163,7 +165,7 @@ public class ContentController extends BaseController{
 	
 	@VerifyToken
 	@RequestMapping(value = "/like", method = RequestMethod.POST)
-	public void like(String token, String id, Model model) throws Exception {
+	public void like(String token, HttpServletRequest request, String id, Model model) throws Exception {
 		try {
 			ErrorCode errorCode = contentService.insertContentLike(id);
 			sendResponseContent(model, errorCode);
@@ -175,7 +177,7 @@ public class ContentController extends BaseController{
 	
 	@VerifyToken
 	@RequestMapping(value = "/share", method = RequestMethod.POST)
-	public void share(String token, String id, Model model) throws Exception {
+	public void share(String token, HttpServletRequest request, String id, Model model) throws Exception {
 		try {
 			ErrorCode errorCode = contentService.insertContentShare(id);
 			sendResponseContent(model, errorCode);

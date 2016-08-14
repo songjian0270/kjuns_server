@@ -65,7 +65,7 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public ErrorCode insertReport(String userId, String reportId, String reportType) throws Exception {
+	public ErrorCode insertReport(String userId, String reportId, int reportType) throws Exception {
 		Map<String, Object> params = new HashMap<>();
 		params.put("userId", userId);
 		params.put("reportId", reportId);
