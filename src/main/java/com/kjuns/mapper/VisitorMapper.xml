@@ -3,7 +3,7 @@
 <mapper namespace="com.kjuns.mapper.VisitorMapper">
 
 	<select id="get" resultType="com.kjuns.model.Visitor" >
-		SELECT name,nationality,remark FROM kjuns_section where data_flag = 1 and  id = #{id}
+		SELECT name,nationality,remark FROM kjuns_visitor where data_flag = 1 and  id = #{id}
 	</select>
 	
 </mapper>

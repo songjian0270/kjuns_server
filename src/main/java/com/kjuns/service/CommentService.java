@@ -45,4 +45,6 @@ public interface CommentService {
 	 */
 	boolean delContentCommentById(String contentId, String id, String userId, int contentType);
 	
+	boolean insertContentCommentsLike(String id, String userId, int contentType);
+	
 }

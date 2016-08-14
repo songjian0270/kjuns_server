@@ -14,6 +14,7 @@ import com.kjuns.model.PageList;
 import com.kjuns.model.UserInfo;
 import com.kjuns.out.BaseOutJB;
 import com.kjuns.service.CommentService;
+import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.util.pager.Page;
 
@@ -48,6 +49,7 @@ public class CommentController extends BaseController{
 			sendResponseContent(model, ErrorCode.SUCCESS, list);
 			return model;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error("comments >>> {}", ex.getMessage());
 			throw ex;
 		}
@@ -81,12 +83,14 @@ public class CommentController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public void add(String id, String replyCommentId, String content, String token, String contentType, Model model) throws Exception{
+	public void add(String id, String replyCommentId, String content, String token, Model model) throws Exception{
 		try {
 			String userId = "000000000000000000000000000000000000";
-			UserInfo userInfo = this.getUserInfoForToken(token);
-			if(null != userInfo){
-				userId = userInfo.getId();
+			if(CommonUtils.notEmpty(token)){
+				UserInfo userInfo = this.getUserInfoForToken(token);
+				if(null != userInfo){
+					userId = userInfo.getId();
+				}	
 			}
 			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId, 0);
 			sendResponseContent(model, b);
@@ -108,9 +112,11 @@ public class CommentController extends BaseController{
 			HttpServletRequest request, Model model) throws Exception{
 		try {
 			String userId = "000000000000000000000000000000000000";
-			UserInfo userInfo = this.getUserInfoForToken(token);
-			if(null != userInfo){
-				userId = userInfo.getId();
+			if(CommonUtils.notEmpty(token)){
+				UserInfo userInfo = this.getUserInfoForToken(token);
+				if(null != userInfo){
+					userId = userInfo.getId();
+				}	
 			}
 			BaseOutJB b = commentService.insertContentComments(id, replyCommentId, content, userId, 1);
 			sendResponseContent(model, b);
@@ -159,6 +165,40 @@ public class CommentController extends BaseController{
 			}
 		} catch (Exception ex) {
 			logger.error("delDynamicComment >>>> {}", ex.getMessage());
+		}
+	}
+	
+	@VerifyToken
+	@RequestMapping(value = "/like", method = RequestMethod.POST)
+	public void like(String token, HttpServletRequest request, String id, Model model) throws Exception {
+		try {
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			boolean b = commentService.insertContentCommentsLike(id, userInfo.getId(), 0);
+			if(b){
+				sendResponseContent(model, ErrorCode.SUCCESS);
+			}else{
+				sendResponseContent(model, ErrorCode.FAILED);
+			}
+		} catch (Exception ex) {
+			logger.error("like >>> {}", ex.getMessage());
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	@VerifyToken
+	@RequestMapping(value = "camp/like", method = RequestMethod.POST)
+	public void campLike(String token, HttpServletRequest request, String id, Model model) throws Exception {
+		try {
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			boolean b = commentService.insertContentCommentsLike(id, userInfo.getId(), 1);
+			if(b){
+				sendResponseContent(model, ErrorCode.SUCCESS);
+			}else{
+				sendResponseContent(model, ErrorCode.FAILED);
+			}
+		} catch (Exception ex) {
+			logger.error("like >>> {}", ex.getMessage());
+			throw new Exception(ex.getMessage());
 		}
 	}
 	

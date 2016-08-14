@@ -69,7 +69,6 @@
     <validator target="com.kjuns.controller.CommentController" method="add">
 	     <field name="id" dataType="String">
 	 	    <rule validate="notEmpty" msg="内容ID不能为空"/>
-	        <rule validate="numeral" msg="内容ID应为数字"/>
 	    </field>
 	    <field name="content" dataType="String">
 	 	    <rule validate="notEmpty" msg="内容不能为空"/>
@@ -82,10 +81,33 @@
     <validator target="com.kjuns.controller.CommentController" method="addCamp">
 	     <field name="id" dataType="String">
 	 	    <rule validate="notEmpty" msg="内容ID不能为空"/>
-	        <rule validate="numeral" msg="内容ID应为数字"/>
 	    </field>
 	    <field name="content" dataType="String">
 	 	    <rule validate="notEmpty" msg="内容不能为空"/>
+	    </field>
+	    <field name="signature" dataType="String">
+			<rule validate="notEmpty" msg="signature不能为空" />
+		</field>
+    </validator>
+    
+    <validator target="com.kjuns.controller.CommentController" method="like">
+	     <field name="id" dataType="String">
+	 	    <rule validate="notEmpty" msg="评论ID不能为空"/>
+	    </field>
+	    <field name="token" dataType="String">
+	 	    <rule validate="notEmpty" msg="token不能为空"/>
+	    </field>
+	    <field name="signature" dataType="String">
+			<rule validate="notEmpty" msg="signature不能为空" />
+		</field>
+    </validator>
+    
+    <validator target="com.kjuns.controller.CommentController" method="campLike">
+	    <field name="id" dataType="String">
+	 	    <rule validate="notEmpty" msg="评论ID不能为空"/>
+	    </field>
+	    <field name="token" dataType="String">
+	 	    <rule validate="notEmpty" msg="token不能为空"/>
 	    </field>
 	    <field name="signature" dataType="String">
 			<rule validate="notEmpty" msg="signature不能为空" />

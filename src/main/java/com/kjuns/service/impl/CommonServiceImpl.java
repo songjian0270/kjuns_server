@@ -16,6 +16,7 @@ import com.kjuns.service.CommonService;
 import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
+import com.kjuns.util.UUIDUtils;
 import com.kjuns.vo.BannerVo;
 
 /**
@@ -67,14 +68,16 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public ErrorCode insertReport(String userId, String reportId, int reportType) throws Exception {
 		Map<String, Object> params = new HashMap<>();
+		String id = UUIDUtils.getUUID().toString().replace("-", "");
 		params.put("userId", userId);
+		params.put("id", id);
 		params.put("reportId", reportId);
 		params.put("reportType", reportType);
 		String dateTime = CommonConstants.DATETIME_SEC.format(new Date());
 		params.put("createDate", dateTime);
 		params.put("updateDate", dateTime);
-		params.put("createBy", userId);
-		params.put("updateBy", userId);
+//		params.put("createBy", userId);
+//		params.put("updateBy", userId);
 		return commonMapper.insertReport(params) > 0 ? ErrorCode.SUCCESS : ErrorCode.SYS_ERROR;
 	}
 
