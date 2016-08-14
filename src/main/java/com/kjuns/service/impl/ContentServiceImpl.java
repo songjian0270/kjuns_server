@@ -72,7 +72,7 @@ public class ContentServiceImpl implements ContentService {
 	public PageList queryContent(String typeId, String userId, Page page) throws Exception {
 		String isAdmin = "false";
 		if(CommonUtils.notEmpty(userId)){
-			if(userId.indexOf("admin") > 0){
+			if(userId.indexOf("admin") >= 0){
 				isAdmin = "true";
 			}
 		}
@@ -252,7 +252,7 @@ public class ContentServiceImpl implements ContentService {
 	public PageList querySectionContent(String sectionId, String userId, Page page) throws Exception {
 		String isAdmin = "false";
 		if(CommonUtils.notEmpty(userId)){
-			if(userId.indexOf("admin") > 0){
+			if(userId.indexOf("admin") >= 0){
 				isAdmin = "true";
 			}
 		}
