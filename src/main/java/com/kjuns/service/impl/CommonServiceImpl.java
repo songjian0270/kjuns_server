@@ -76,8 +76,8 @@ public class CommonServiceImpl implements CommonService {
 		String dateTime = CommonConstants.DATETIME_SEC.format(new Date());
 		params.put("createDate", dateTime);
 		params.put("updateDate", dateTime);
-		params.put("createBy", userId);
-		params.put("updateBy", userId);
+//		params.put("createBy", userId);
+//		params.put("updateBy", userId);
 		return commonMapper.insertReport(params) > 0 ? ErrorCode.SUCCESS : ErrorCode.SYS_ERROR;
 	}
 
