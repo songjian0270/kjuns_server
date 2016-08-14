@@ -82,7 +82,7 @@ public class ContentController extends BaseController{
 	@RequestMapping(value = "camp/detail", method = RequestMethod.GET)
 	public void campDetail(String id, Model model) throws Exception {
 		try {
-			ContentVo content = contentService.selectById(id);
+			ContentVo content = contentService.selectCampById(id);
 			content.setContent("");
 			content.setPageUrl("content/view.h5?id="+id);
 			sendResponseContent(model, ErrorCode.SUCCESS, content);
