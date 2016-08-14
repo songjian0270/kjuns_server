@@ -95,10 +95,15 @@ public class ContentController extends BaseController{
 	}
 	
 	@RequestMapping(value = "img/list", method = RequestMethod.GET)
-	public void imgList(Page page, Model model) throws Exception {
+	public void imgList(Page page, String token, Model model) throws Exception {
 		try {
 			String typeId= "2427d4151e334c6594231de41990da4c";
-			PageList pageList = contentService.queryContent(typeId, null, page);
+			String userId = null;
+			UserInfo userInfo = this.getUserInfoForToken(token);
+			if(null != userInfo){
+				userId = userInfo.getId();
+			}
+			PageList pageList = contentService.queryContent(typeId, userId, page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
 			logger.error("list >>> {}", ex.getMessage());

@@ -4,6 +4,9 @@
 
 	<select id="getTotalCount" resultType="int">
 		SELECT count(*) FROM kjuns_content where data_flag = 1
+		<if test="isAdmin != null and isAdmin == 'ture'">
+			or data_flag = 2
+		</if>
 		<if test="typeId != null and typeId != ''">
 			and type_id = #{typeId} and section_id =''
 		</if>
@@ -16,6 +19,9 @@
 		SELECT id, title,source,source_url sourceUrl,summary,thumbnail,mind_map mindMap,content,subhead,section_id sectionId,
 		type_id typeId,isTop,like_count likeCount, share_count shareCount,create_by createBy,create_date createDate, user_id userId FROM kjuns_content
 		where data_flag = 1
+		<if test="isAdmin != null and isAdmin == 'ture'">
+			or data_flag = 2
+		</if>
 		<if test="typeId != null and typeId != ''">
 			and type_id = #{typeId} and section_id =''
 		</if>

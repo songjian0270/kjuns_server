@@ -9,9 +9,10 @@ import com.kjuns.vo.ContentVo;
 
 public interface ContentMapper {
 	
-	int getTotalCount(@Param(value="typeId")String typeId, @Param(value="sectionId")String sectionId);
+	int getTotalCount(@Param(value="isAdmin")String isAdmin, @Param(value="typeId")String typeId, @Param(value="sectionId")String sectionId);
 	
-	List<Content> queryContentList(@Param(value="typeId")String typeId, @Param(value="sectionId")String sectionId,
+	List<Content> queryContentList(@Param(value="isAdmin")String isAdmin, @Param(value="typeId")String typeId, 
+			@Param(value="sectionId")String sectionId,
 			@Param(value="pageNo")int pageNo, @Param(value="pageSize")int pageSize);
 	
 	/**
