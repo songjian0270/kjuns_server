@@ -215,6 +215,7 @@ public class ContentController extends BaseController{
 			PageList hotComments = commentService.queryContentComments(id, 0, "1",page );
 			PageList newComments = commentService.queryContentComments(id, 0, "0",page );
 			model.addAttribute("isFull",isFull);
+			model.addAttribute("isCamp","1");
 			model.addAttribute("content",content);
 			model.addAttribute("hotComments",hotComments);
 			model.addAttribute("newComments",newComments);

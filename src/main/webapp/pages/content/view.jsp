@@ -224,7 +224,10 @@ background-size:cover;margin-right:-14px;
 <body>
 <div style="width:100%;height:667px;text-align:center;max-width:600px;
 margin-left: auto; margin-right: auto;">
+
+	<c:if test="${isCamp!='1'}">
 	<div style="width:100%;height:37%"><img style="background-color:black;width:100%;height:100%" src="${content.mindMap}"/></div>
+	</c:if>
 	<div ><p class="biaoti">${content.title}</p></div>
 	<div style="height:5%;margin:5%;">
 		<div style="height:100%;float:left;width:50%">
@@ -234,6 +237,7 @@ margin-left: auto; margin-right: auto;">
 		<div class="sendDate"><date:date value ="${fn:substring(content.createDate,0,10)}"/></div>
 	</div>
 
+<c:if test="${isCamp!='1'}">
 <div style="margin-top:4%;">
 	<p class="zhaiyao">${content.summary}</p>
 </div>
@@ -241,6 +245,7 @@ margin-left: auto; margin-right: auto;">
 width:27%;
 height:0px;text-align:center;
 margin:0 auto;"></div>
+</c:if>
 <div style="width:100%" class="zhengwen">
 ${ content.content}
 </div>
