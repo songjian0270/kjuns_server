@@ -93,7 +93,7 @@ public class CommentServiceImpl implements CommentService {
 							Visitor visitor = new Visitor();
 							visitor.setId(random);
 							Visitor vtor = visitorMapper.get(visitor);
-							comments.setNickName(vtor.getName());
+							comments.setReplyNickName(vtor.getName());
 						}else{
 							UserInfo userInfo = userInfoMapper.get(userReplyComment.getUserId());
 							comments.setReplyCommentId(CommonUtils.getStr(comment.getReplyCommentId()));
