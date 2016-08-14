@@ -211,6 +211,13 @@ body{
 
 margin:0;
 }
+
+.senderFace{
+
+background-image:url(${content.issuerFaceSrc});
+background-size:cover;margin-right:-14px;
+}
+
 </style>
 
 </head>
@@ -221,7 +228,7 @@ margin-left: auto; margin-right: auto;">
 	<div ><p class="biaoti">${content.title}</p></div>
 	<div style="height:5%;margin:5%;">
 		<div style="height:100%;float:left;width:50%">
-			<img class="senderFace" style="height:20px;width:20px;margin:0 auto;float:left" src="${content.issuerFaceSrc }"></img>
+			<div class="senderFace" style="height:20px;width:20px;margin:0 auto;float:left"></div>
 			<p class="senderName">${content.issuerName }</p>
 		</div>
 		<div class="sendDate"><date:date value ="${fn:substring(content.createDate,0,10)}"/></div>
@@ -253,5 +260,40 @@ ${ content.content}
 </c:if>
 </div>
 </body>
+<script>
+function getAllImg(){
+ return document.getElementsByTagName("img");
+}
+
+function initImage(){ 
+	if(document.getElementsByName){ 
+		var alltr = getAllImg();
+		for(var i=0;i<alltr.length;i++){
+			alltr[i].onclick=function(){
+				clickImg(this);
+			}
+		}
+	}
+}
+
+function clickImg(target){
+	if(navigator.userAgent.match(/(iPhone|iPod|ios)/i)){
+		window.location.href = 'kanjunshi://content/img/'+ target.getAttribute('src');
+	}
+	else{
+		window.KanjunshiAndroid.showImgs(target.getAttribute('src')+"|"+getImgSrc(getAllImg()));
+	}
+}
+
+function getImgSrc(target){
+	var result ;
+	var alltr = getAllImg();
+	for(var i=0;i<alltr.length;i++){
+		result = result+alltr[i].getAttribute('src')+"|"
+	}
+	return result;
+}
+window.onload=initImage(); 
+</script>
 </html>
 
