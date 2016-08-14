@@ -18,8 +18,8 @@
 	</select>
 	
 	<insert id="insertReport" parameterType="map">
-		insert into kjuns_report(id,create_date,create_by,update_by,update_date,data_flag,report_id,report_type) 
-		values (#{id},#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, 1,#{reportId}, #{reportType})
+		insert into kjuns_report(id,create_date,create_by,update_by,update_date,data_flag,report_id,report_type,user_id) 
+		values (#{id},#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, 1,#{reportId}, #{reportType},#{userId})
 	</insert>
 	
 </mapper>
