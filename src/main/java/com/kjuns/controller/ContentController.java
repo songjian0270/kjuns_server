@@ -69,11 +69,12 @@ public class ContentController extends BaseController{
 	}
 	
 	@RequestMapping(value = "camp/list", method = RequestMethod.GET)
-	public void cmapList(Page page, Model model) throws Exception {
+	public void campList(Page page, Model model) throws Exception {
 		try {
 			PageList pageList = contentService.queryCampContent( page);
 			sendResponseContent(model, ErrorCode.SUCCESS, pageList);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error("list >>> {}", ex.getMessage());
 			throw new Exception(ex.getMessage());
 		}

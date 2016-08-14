@@ -301,7 +301,8 @@ public class ContentServiceImpl implements ContentService {
 				contentv.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
 				contentv.setLikeCount(content.getLikeCount());
 				contentv.setShareCount(content.getShareCount());
-				UserInfo userInfo = userInfoMapper.get(content.getUserId());
+				UserInfo userInfo = userInfoMapper.get(content.getIssuerId());
+				System.out.println(userInfo);
 				contentv.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 				contentv.setIssuerName(userInfo.getNickName());
 				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
