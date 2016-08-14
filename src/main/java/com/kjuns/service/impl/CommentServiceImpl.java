@@ -19,6 +19,7 @@ import com.kjuns.service.CommentService;
 import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
+import com.kjuns.util.UUIDUtils;
 import com.kjuns.util.pager.Page;
 import com.kjuns.vo.ContentCommentsVo;
 
@@ -82,8 +83,8 @@ public class CommentServiceImpl implements CommentService {
 					
 					if(CommonUtils.notEmpty(comment.getReplyCommentId())){
 						UserComment userReplyComment = commentMapper.get(table, comment.getReplyCommentId()); 
-						comments.setReplyUserId(userReplyComment.getUserId());
-						if(comment.getReplyCommentId().equals("000000000000000000000000000000000000")){
+						comments.setReplyUserId(userReplyComment.getUserId());							
+						if(userReplyComment.getUserId().equals("000000000000000000000000000000000000")){
 							comments.setNickName(comment.getUserNickName());
 						}else{
 							UserInfo userInfo = userInfoMapper.get(userReplyComment.getUserId());
@@ -110,9 +111,11 @@ public class CommentServiceImpl implements CommentService {
 	// 评论
 	public BaseOutJB insertContentComments(String contentId, String replyCommentId, String content, String userId, int contentType) throws Exception {
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
+		String id = UUIDUtils.getUUID().toString().replace("-", "");
 		UserComment userComment = new UserComment();
 		userComment.setContent(content);
 		userComment.setContentId(contentId);
+		userComment.setId(id);
 		userComment.setReplyCommentId(replyCommentId);
 		userComment.setUserId(userId);
 		if(expire > 0 ){
@@ -129,7 +132,6 @@ public class CommentServiceImpl implements CommentService {
 			Visitor vtor = visitorMapper.get(visitor);
 			userComment.setUserNickName(vtor.getName());
 		}
-
 		if(contentType == 0){
 			userComment.setTable(CommonConstants.KJUNS_CONTENT_COMMENTS);
 		}else if(contentType == 1){
@@ -161,6 +163,22 @@ public class CommentServiceImpl implements CommentService {
 			userComment.setTable(CommonConstants.KJUNS_CAMP_COMMENTS);
 		}
 		int result = commentMapper.delContentCommentsById(userComment);
+		return result > 0 ? true:false;
+	}
+	
+	/**
+	 * 点赞
+	 * @param comment
+	 * @return
+	 */
+	public boolean insertContentCommentsLike(String id, String userId, int contentType){
+		String table = "";
+		if(contentType == 0){
+			table = CommonConstants.KJUNS_CONTENT_COMMENTS;
+		}else if(contentType == 1){
+			table = CommonConstants.KJUNS_CAMP_COMMENTS;
+		}
+		int result = commentMapper.insertContentCommentsLike(table, id);
 		return result > 0 ? true:false;
 	}
 	

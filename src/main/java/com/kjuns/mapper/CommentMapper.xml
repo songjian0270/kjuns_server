@@ -39,8 +39,8 @@
 	</select>
 	
 	<insert id="insertContentComments" parameterType="com.kjuns.model.UserComment">
-		insert into ${table}(content_id,create_date,create_by,update_by,update_date,data_flag,user_id,content,reply_comment_id) 
-		values (#{contentId},#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, #{dataFlag}, #{userId},#{content},#{replyCommentId})
+		insert into ${table}(id,content_id,create_date,create_by,update_by,update_date,data_flag,user_id,content,reply_comment_id, user_nick_name) 
+		values (#{id},#{contentId},#{createDate}, #{createBy}, #{updateBy}, #{updateDate}, 1, #{userId},#{content},#{replyCommentId}, #{userNickName})
 	</insert>
 	
 	<update id="delContentCommentsById" parameterType="com.kjuns.model.UserComment">
