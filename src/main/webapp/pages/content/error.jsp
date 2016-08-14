@@ -8,10 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body style="width:100vw;height:100vh;margin:0px">
-<div style="height:100%;line-height:667px;padding-top: 0px;
-padding-bottom: 0px;text-align:center; vertical-align:middle;font-family:STHeitiSC-Light;
-font-size:22px;
-color:#333333;
-letter-spacing:0px;">服务器错误,无法加载页面</div>
+<div style="height:100vh;width:100vw;text-align:center;font-family:STHeitiSC-Light;
+font-size:20px;
+color:#4a4a4a;
+letter-spacing:0.05px;
+background:#e1e8ef;
+line-height:26px;
+vertical-align:middle;
+display:table;"><div style="padding-top:50vh;display:table-cell">服务器发生错误,无法加载页面<br/>请联系管理员</div></div>
 </body>
 </html>
