@@ -486,12 +486,17 @@ public class UserLoginServiceImpl implements UserLoginService {
 		userInfo.setCreateDate(datetime);
 		userInfo.setDataFlag("1");
 		userInfo.setId(userId);
-		userInfo.setMobilePhone(userAccount.getMobilePhone());
+		
+		boolean isHas = userInfoMapper.getForNickNameCount(nickName) > 0 ? false: true;
+		if(isHas){
+			userInfo.setMobilePhone(userAccount.getMobilePhone());
+		}else{
+			return new BaseOutJB(ErrorCode.NICK_NAME_EXIST_ERROR);
+		}
 		
 		int result = userInfoMapper.insert(userInfo);
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
-		params.put("userId", userId);
 		String token = UUIDUtils.getUUID().toString().replace("-", "");
 		if(CommonUtils.isEmpty(userAccount.getToken())){
 			params.put("token", token);

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class ContentCommentsVo {
 	
+	private String id;
+	
 	private String nickName;
 	
 	private String faceSrc;
@@ -31,6 +33,14 @@ public class ContentCommentsVo {
 	private Long createDate=0l;
 	
 	private long likeCount;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getNickName() {
 		return nickName;

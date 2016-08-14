@@ -8,22 +8,18 @@
 
 	<select id="getTotalCount" resultType="int" parameterType="String">
 		SELECT count(*) FROM kjuns_camp where data_flag = 1
-		<if test="title != null and title != ''">
-			and title like CONCAT('%',#{title},'%')
-		</if>
 	</select>
 	
 	<select id="queryCampList" resultType="com.kjuns.model.Content">
-		SELECT id, title, content, thumbnail,user_id issuers, create_by createBy,create_date createDate 
+		SELECT id, title, content, thumbnail,user_id issuerId, create_by createBy,create_date createDate 
 		FROM kjuns_camp where data_flag = 1 
-		<if test="title != null and title != ''">
-			and title like CONCAT('%',#{title},'%')
-		</if>
 		order by create_date desc limit #{pageNo},#{pageSize}
 	</select>
 	
-	<select id="selectById" parameterType="String" resultType="com.kjuns.model.Content">
-		SELECT id, title, content,thumbnail, user_id issuers, create_by createBy,create_date createDate  FROM kjuns_camp where id=#{0}
+	<select id="selectById" parameterType="String" resultType="com.kjuns.vo.ContentVo">
+		SELECT id, title, subhead, summary, source, mind_map mindMap, thumbnail, content,
+		create_by createBy,create_date dateTime,isTop,user_id issuerId,
+		isHot,isDepth,isTease FROM kjuns_camp where id=#{id}
 	</select>
 	
 	<select id="deleteCamp" parameterType="com.kjuns.model.Content">
@@ -32,7 +28,7 @@
 	
 	<insert id="addCamp" parameterType="com.kjuns.model.Content" >
 		insert into kjuns_camp (id,title,content,thumbnail,user_id,create_by,create_date,data_flag,update_by,update_date) 
-		values(#{id},#{title},#{content},#{thumbnail},#{issuers},#{createBy},#{createDate},1,#{updateBy},#{updateDate})
+		values(#{id},#{title},#{content},#{thumbnail},#{userId},#{createBy},#{createDate},1,#{updateBy},#{updateDate})
 	</insert>
 	
 </mapper>

@@ -3,7 +3,8 @@
 <mapper namespace="com.kjuns.mapper.UserInfoMapper">
 
 	<select id="get" parameterType="com.kjuns.model.UserInfo" resultType="com.kjuns.model.UserInfo">
-		select face_src faceSrc, sex, nick_name nickName,id,idcard,TIMESTAMPDIFF(DAY, create_date,CURRENT_TIMESTAMP()) automaticThoughts from kjuns_user_info where id = #{userId} 
+		select face_src faceSrc, sex, nick_name nickName,id,idcard,TIMESTAMPDIFF(DAY, create_date,CURRENT_TIMESTAMP()) automaticThoughts 
+		,location from kjuns_user_info where id = #{userId} 
 		and (data_flag = 1 or data_flag = 2)
 	</select>
 	
@@ -22,18 +23,12 @@
 	<update id="updateUserInfoById" parameterType="com.kjuns.model.UserInfo">
 			UPDATE kjuns_user_info 
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="from == null "> 
-				<if test="realName != null and realName !='' "> real_name = #{realName} </if>
-				<if test="nickName != null and nickName !='' "> nick_name = #{nickName} </if>
-				<if test="faceSrc != null and faceSrc !='' "> face_src = #{faceSrc} </if>
-				<if test="mobilePhone != null and mobilePhone !='' "> mobile_phone = #{mobilePhone} </if>
-				<if test="sex != null "> sex = #{sex} </if>
-				<if test="location !=null and location !='' "> location = #{location} </if>				
-				<if test="description !=null and description !='' "> description = #{description} </if>
-			</if>
-			<if test="from !=null and from =='perfect' "> 
-				 nick_name = #{nickName}, face_src = #{faceSrc},sex = #{sex}
-			</if>
+			<if test="realName != null and realName !='' "> real_name = #{realName} </if>
+			<if test="nickName != null and nickName !='' "> nick_name = #{nickName} </if>
+			<if test="faceSrc != null and faceSrc !='' "> face_src = #{faceSrc} </if>
+			<if test="mobilePhone != null and mobilePhone !='' "> mobile_phone = #{mobilePhone} </if>
+			<if test="sex != null "> sex = #{sex} </if>
+			<if test="location !=null and location !='' "> location = #{location} </if>				
 		</trim>
 			where id = #{id}
 	</update>

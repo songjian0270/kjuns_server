@@ -42,7 +42,6 @@ public class UserLoginController extends BaseController {
 			BaseOutJB out = userLoginService.updateAccount(loginInfo);
 			sendResponseContent(model, out);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("login >>> {}", ex.getMessage());
 			throw ex;
 		}

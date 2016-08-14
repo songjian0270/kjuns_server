@@ -38,7 +38,7 @@ public class Content extends BaseModel{
 	
 	private int isTease;	//吐槽
 	
-	private String issuerid;
+	private String issuerId;
 	
 	private long likeCount;
 	
@@ -156,12 +156,12 @@ public class Content extends BaseModel{
 		this.isTease = isTease;
 	}
 
-	public String getIssuerid() {
-		return issuerid;
+	public String getIssuerId() {
+		return issuerId;
 	}
 
-	public void setIssuerid(String issuerid) {
-		this.issuerid = issuerid;
+	public void setIssuerId(String issuerId) {
+		this.issuerId = issuerId;
 	}
 
 	public String getUserId() {
