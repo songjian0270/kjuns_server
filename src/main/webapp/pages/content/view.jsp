@@ -258,8 +258,9 @@ ${ content.content}
 </div>
 <div style="margin:5% 5% 0px 5%">
 <div style="height:2%;width:100%" class="notifi">看军事社区规范：直抒胸臆  理性爱国</div>
-<div style="height:2%;width:100%;margin-top:2%" class="msgFrom">消息参考来源：${content.source }</div>
-
+<c:if test="${isCamp!='1'}">
+	<div style="height:2%;width:100%;margin-top:2%" class="msgFrom">消息参考来源：${content.source }</div>
+</c:if>
 <c:if test="${content.contentTagList.size()>0}">
 	<div style="width:100%;margin-top:2%">
 	<c:forEach var="item" items="${content.contentTagList}" varStatus="status">
