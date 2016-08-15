@@ -4,7 +4,7 @@
 
 	<select id="get" parameterType="com.kjuns.model.UserInfo" resultType="com.kjuns.model.UserInfo">
 		select face_src faceSrc, sex, nick_name nickName,id,idcard,TIMESTAMPDIFF(DAY, create_date,CURRENT_TIMESTAMP()) automaticThoughts 
-		,location from kjuns_user_info where id = #{userId} 
+		,location,real_name realName from kjuns_user_info where id = #{userId} 
 		and (data_flag = 1 or data_flag = 2)
 	</select>
 	
@@ -16,8 +16,8 @@
 	</select>
 
 	<insert id="insert" parameterType="com.kjuns.model.UserInfo" >
-		insert into kjuns_user_info(id,face_src,sex,nick_name,data_flag,idcard,create_date,mobile_phone)
-		values (#{id},#{faceSrc}, #{sex}, #{nickName}, 1, #{idcard},#{createDate}, #{mobilePhone})
+		insert into kjuns_user_info(id,face_src,sex,real_name,nick_name,data_flag,idcard,create_date,mobile_phone)
+		values (#{id},#{faceSrc}, #{sex},#{realName}, #{nickName}, 1, #{idcard},#{createDate}, #{mobilePhone})
 	</insert>
 	
 	<update id="updateUserInfoById" parameterType="com.kjuns.model.UserInfo">

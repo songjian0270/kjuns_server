@@ -16,11 +16,17 @@ public class PostTest {
 		TreeMap<String, Object> treeMap = new TreeMap<String, Object>();
 		
 		//登录
-		treeMap.put("cellPhoneNumber", "86-88888888");
+		treeMap.put("cellPhoneNumber", "86-18321971666");
 		treeMap.put("checkCode", "8888");
 		
 		//完善信息
 //		treeMap.put("token","f4b17010480e4286a0adaab0ac4063bb");
+//		treeMap.put("id","6c88c45272ca4c1397e55c1f64dd9009");
+//		treeMap.put("idcard","4444");
+//		treeMap.put("nickName","测34312323221");
+//		treeMap.put("realName","测试");
+		
+		
 //		treeMap.put("id","d21d8fd0e73148d0946010684f295a12");
 //		treeMap.put("replyCommentId","d21d8fd0e73148d0946010684f295a32");
 //		treeMap.put("content","测试");

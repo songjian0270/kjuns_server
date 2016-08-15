@@ -53,9 +53,9 @@ public class UserLoginController extends BaseController {
 	 * @param model
 	 */
 	@RequestMapping(value = "/complete", method = RequestMethod.POST)
-	public void complete(String id, String nickName , String idcard, Model model) throws Exception{
+	public void complete(String id, String nickName , String idcard, String realName, Model model) throws Exception{
 		try {
-			BaseOutJB out = userLoginService.complete(id, nickName, idcard);
+			BaseOutJB out = userLoginService.complete(id, nickName, idcard, realName);
 			sendResponseContent(model, out);
 		} catch (Exception ex) {
 			logger.error("isExistCellPhoneNumber >>> {}", ex.getMessage());

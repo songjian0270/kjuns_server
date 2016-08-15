@@ -150,8 +150,8 @@ public class UserLoginServiceImpl implements UserLoginService {
 	 * 获取用户基本信息
 	 */
 	protected BaseOutJB updateUserAccountByUserId(UserAccount ua, UserInfo userInfo){
-		if(CommonUtils.notEmpty(userInfo.getNickName()) && CommonUtils.notEmpty(userInfo.getFaceSrc()) 
-				&& CommonUtils.notEmpty(userInfo.getSex()) && CommonUtils.notEmpty(userInfo.getIdcard())){
+		if(CommonUtils.notEmpty(userInfo.getNickName()) && CommonUtils.notEmpty(userInfo.getRealName()) 
+				&& CommonUtils.notEmpty(userInfo.getIdcard())){
 			UserInfoVo userInfoVo = new UserInfoVo();
 			String token = UUIDUtils.getUUID().replace("-", "");
 
@@ -164,6 +164,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 			userInfoVo.setFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 			userInfoVo.setNickName(userInfo.getNickName());
 			userInfoVo.setSex(userInfo.getSex());
+			userInfoVo.setRealName(userInfo.getRealName());
 			userInfoVo.setLocation(userInfo.getLocation());
 			return new BaseOutJB(ErrorCode.SUCCESS, userInfoVo);
 		}else{
@@ -448,7 +449,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 	}
 
 	@Override
-	public BaseOutJB complete(String id, String nickName, String idcard) throws Exception {
+	public BaseOutJB complete(String id, String nickName, String idcard, String realName) throws Exception {
 		String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 		UserAccount ua = new UserAccount();
 		ua.setId(id);
@@ -457,8 +458,8 @@ public class UserLoginServiceImpl implements UserLoginService {
 		if(CommonUtils.notEmpty(userAccount.getUserId())){
 			UserInfo userInfo = userInfoMapper.get(userAccount.getUserId());
 			if(null != userInfo){
-				if(CommonUtils.notEmpty(userInfo.getNickName()) && CommonUtils.notEmpty(userInfo.getFaceSrc()) 
-						&& CommonUtils.notEmpty(userInfo.getSex()) && CommonUtils.notEmpty(userInfo.getIdcard())){
+				if(CommonUtils.notEmpty(userInfo.getNickName()) && CommonUtils.notEmpty(userInfo.getRealName()) 
+						&& CommonUtils.notEmpty(userInfo.getIdcard())){
 					String token = UUIDUtils.getUUID().toString().replace("-", "");
 					Map<String, Object> params = new HashMap<>();
 					if(CommonUtils.isEmpty(userAccount.getToken())){
@@ -470,6 +471,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 					}
 					Map<String, Object> p = new HashMap<>();
 					p.put("nickName", nickName);
+					p.put("realName", realName);
 					p.put("token", token);
 					p.put("userId", userAccount.getUserId());
 					return new BaseOutJB(ErrorCode.SUCCESS, p);
@@ -482,6 +484,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		userInfo.setFaceSrc("default_head.png");	
 		userInfo.setIdcard(idcard);
 		userInfo.setNickName(nickName);
+		userInfo.setRealName(realName);
 		userInfo.setSex(0);  //默认男
 		userInfo.setCreateDate(datetime);
 		userInfo.setDataFlag("1");
@@ -497,16 +500,20 @@ public class UserLoginServiceImpl implements UserLoginService {
 		int result = userInfoMapper.insert(userInfo);
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
-		String token = UUIDUtils.getUUID().toString().replace("-", "");
-		if(CommonUtils.isEmpty(userAccount.getToken())){
+		params.put("userId", userId);
+		String token = userAccount.getToken();
+		if(CommonUtils.isEmpty(token)){
+			token = UUIDUtils.getUUID().toString().replace("-", "");
 			params.put("token", token);
 		}
+		
 		result = userAccountMapper.updateUserAccountByAccountId(params);
 		
 		if(result > 0){
 			Map<String, Object> p = new HashMap<>();
 			p.put("faceSrc", "default_head.png");
 			p.put("nickName", nickName);
+			p.put("realName", realName);
 			p.put("token", token);
 			p.put("userId", userId);
 			return new BaseOutJB(ErrorCode.SUCCESS, p);
