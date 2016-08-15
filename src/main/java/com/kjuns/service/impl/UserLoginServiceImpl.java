@@ -164,6 +164,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 			userInfoVo.setFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 			userInfoVo.setNickName(userInfo.getNickName());
 			userInfoVo.setSex(userInfo.getSex());
+			userInfoVo.setRealName(userInfo.getRealName());
 			userInfoVo.setLocation(userInfo.getLocation());
 			return new BaseOutJB(ErrorCode.SUCCESS, userInfoVo);
 		}else{
@@ -500,8 +501,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
 		params.put("userId", userId);
-		String token = UUIDUtils.getUUID().toString().replace("-", "");
-		if(CommonUtils.isEmpty(userAccount.getToken())){
+		String token = userAccount.getToken();
+		if(CommonUtils.isEmpty(token)){
+			token = UUIDUtils.getUUID().toString().replace("-", "");
 			params.put("token", token);
 		}
 		
