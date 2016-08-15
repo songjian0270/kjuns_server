@@ -118,6 +118,12 @@ width:100%;
 padding:0px;
 margin:0px;
 }
+.zhengwen video{
+width:100%;
+height:auto;
+margin:10px 0px;
+}
+
 .zhengwen p{
 padding:0px 6%;
 margin:0px;
@@ -317,6 +323,9 @@ function initImage(){
 		for(var i=0;i<alltr.length;i++){
 			for(var j=0;j<alltr[i].getElementsByTagName("img").length;j++){
 				imgs.push(alltr[i].getElementsByTagName("img")[j]);
+			}
+			for(var j=0;j<alltr[i].getElementsByTagName("video").length;j++){
+				imgs.push(alltr[i].getElementsByTagName("video")[j]);
 			}
 		}
 		for(var i=0;i<imgs.length;i++){
