@@ -27,6 +27,9 @@
 		<field name="idcard" dataType="String">
 			<rule validate="notEmpty" msg="身份证不能为空" />
 		</field>
+		<field name="realName" dataType="String">
+			<rule validate="notEmpty" msg="真名不能为空" />
+		</field>
 		<field name="nickName" dataType="String">
 			<rule validate="notEmpty" msg="昵称不能为空" />
 		</field>

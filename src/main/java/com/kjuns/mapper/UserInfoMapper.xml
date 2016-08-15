@@ -4,7 +4,7 @@
 
 	<select id="get" parameterType="com.kjuns.model.UserInfo" resultType="com.kjuns.model.UserInfo">
 		select face_src faceSrc, sex, nick_name nickName,id,idcard,TIMESTAMPDIFF(DAY, create_date,CURRENT_TIMESTAMP()) automaticThoughts 
-		,location from kjuns_user_info where id = #{userId} 
+		,location,real_name realName from kjuns_user_info where id = #{userId} 
 		and (data_flag = 1 or data_flag = 2)
 	</select>
 	
