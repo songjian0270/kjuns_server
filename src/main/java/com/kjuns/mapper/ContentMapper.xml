@@ -7,7 +7,7 @@
 		<if test="isAdmin != null and isAdmin == 'true'">
 			or data_flag = 2
 		</if>
-		<if test="typeId != null and typeId != ''">
+		<if test="typeId != null and typeId != '1b6e31c117724d1599f5091b87d76632'">
 			and type_id = #{typeId} and section_id =''
 		</if>
 		<if test="sectionId != null and sectionId != ''">
@@ -22,7 +22,7 @@
 		<if test="isAdmin != null and isAdmin == 'true'">
 			or data_flag = 2
 		</if>
-		<if test="typeId != null and typeId != ''">
+		<if test="typeId != null and typeId != '1b6e31c117724d1599f5091b87d76632'">
 			and type_id = #{typeId} and section_id =''
 		</if>
 		<if test="sectionId != null and sectionId != ''">

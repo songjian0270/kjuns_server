@@ -199,7 +199,15 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public List<ContentType> queryContentType() throws Exception {
-		return contentTypeMapper.queryContentType();
+		List<ContentType> list = new ArrayList<>();
+		ContentType type = new ContentType();
+		type.setId("1b6e31c117724d1599f5091b87d76632");
+		type.setName("热点");
+		list.add(type);
+		
+		List<ContentType> mysqlList =  contentTypeMapper.queryContentType();
+		list.addAll(mysqlList);
+		return list;
 	}
 
 	@Override

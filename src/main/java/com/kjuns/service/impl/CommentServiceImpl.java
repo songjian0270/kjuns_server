@@ -129,8 +129,8 @@ public class CommentServiceImpl implements CommentService {
 		if(expire > 0 ){
 			//return new BaseOutJB(ErrorCode.NOT_QUICK_SEND_COMMENT);	
 		}
-		userComment.setCreateBy(userId);
-		userComment.setUpdateBy(userId);
+		//userComment.setCreateBy(userId);
+		//userComment.setUpdateBy(userId);
 		userComment.setCreateDate(datetime);
 		userComment.setUpdateDate(datetime);
 		if(userId.equals("000000000000000000000000000000000000")){
@@ -163,7 +163,7 @@ public class CommentServiceImpl implements CommentService {
 		UserComment userComment = new UserComment();
 		userComment.setId(id);
 		userComment.setContentId(contentId);
-		userComment.setUpdateBy(userId);
+		//userComment.setUpdateBy(userId);
 		userComment.setUpdateDate(datetime);
 		if(contentType == 0){
 			userComment.setTable(CommonConstants.KJUNS_CONTENT_COMMENTS);

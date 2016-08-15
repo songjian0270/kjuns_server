@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="queryContentSectionList" resultType="com.kjuns.model.ContentSection">
-		SELECT id,title,summary,background,isTop, create_by createBy,user_id userId,
+		SELECT id,title,summary,background,isTop, create_by createBy,user_id userId,thumbnail,
 		create_date createDate FROM kjuns_section where data_flag = 1 
 		order by sort_index desc limit #{pageNo},#{pageSize}
 	</select>
