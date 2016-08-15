@@ -43,7 +43,7 @@
 	<update id="updateUserAccountByAccountId" parameterType="map">
 		update kjuns_user_account 
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="userId != null and userId !=''"> user_id = #{userId}</if>
+			<if test="userId != null and userId !=''"> user_id = #{userId} ,</if>
 			<if test="token != null and token !=''"> token = #{token} </if>
 			<if test="qqUid !=null and qqUid !='' "> qq_uid = #{qqUid} </if>
 			<if test="wbUid !=null and wbUid !='' "> wb_uid = #{wbUid} </if>
