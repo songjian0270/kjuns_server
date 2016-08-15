@@ -112,10 +112,10 @@ text-align:left;text-overflow:clip;
 word-break:break-all;
 }
 
-.zhengwen img{
+.zhengwen div img{
 width:100%;
-background:black;
-margin:10px 0px;
+padding:0px;
+margin:0px;
 }
 .zhengwen p{
 padding:0px 6%;
@@ -123,7 +123,8 @@ margin:0px;
 }
 
 .zhengwen div{
-padding:0px;
+width:100%;
+height:auto;
 margin:10px 0px;
 }
 
@@ -300,21 +301,29 @@ function removeElement(_element){
     var _parentElement = _element.parentNode;
     var newNode = document.createElement("div"); 
     var _parentparentElement = insertAfter(newNode,_parentElement);
-    newNode.innerHTML = _element.outerHTML;
     if(_parentElement){
         _parentElement.removeChild(_element);  
  	}
+    newNode.innerHTML = _element.outerHTML;
   /*   var _newparent = _parentparentElement.createElement("div");
     _newparent.innerHTML = _element; */
 }
 
 function initImage(){ 
 	if(document.getElementsByName){ 
-		var alltr = document.getElementById("zhengwen").getElementsByTagName("img");
+		var alltr = document.getElementById("zhengwen").getElementsByTagName("p");
+		var imgs= [];
 		for(var i=0;i<alltr.length;i++){
-			removeElement(alltr[i]);
+			for(var j=0;j<alltr[i].getElementsByTagName("img").length;j++){
+				imgs.push(alltr[i].getElementsByTagName("img")[j]);
+			}
+		}
+		for(var i=0;i<imgs.length;i++){
+			removeElement(imgs[i]);
 		}
 	}
+	document.getElementById("zhengwen").setAttribute("class","");
+	document.getElementById("zhengwen").setAttribute("class","zhengwen");
 	
 	if(document.getElementsByName){ 
 		var alltr = getAllImg();
