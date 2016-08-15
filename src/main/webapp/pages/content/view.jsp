@@ -252,7 +252,7 @@ margin-left: auto; margin-right: auto;">
 <div style="border:1px solid #ebebeb;
 width:27%;
 height:0px;text-align:center;
-margin:0 auto;"></div>
+margin:0px auto 10px auto;"></div>
 </c:if>
 <div style="width:100%" class="zhengwen" id="zhengwen">
 ${ content.content}
