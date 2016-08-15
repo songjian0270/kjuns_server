@@ -119,9 +119,12 @@ margin:10px 0px;
 }
 .zhengwen p{
 padding:0px 6%;
+margin:0px;
 }
+
 .zhengwen div{
-padding:0px 6%;
+padding:0px;
+margin:10px 0px;
 }
 
 .comment_cell .comment_text{
@@ -250,7 +253,7 @@ width:27%;
 height:0px;text-align:center;
 margin:0 auto;"></div>
 </c:if>
-<div style="width:100%" class="zhengwen">
+<div style="width:100%" class="zhengwen" id="zhengwen">
 ${ content.content}
 </div>
 <div style="margin:5% 5% 0px 5%">
@@ -277,7 +280,41 @@ function getAllImg(){
  return document.getElementsByTagName("img");
 }
 
+function insertAfter( newElement, targetElement)
+{
+   var parent = targetElement.parentNode;
+   if ( parent.lastChild == targetElement )
+   {
+        // 如果最后的节点是目标元素，则直接添加。因为默认是最后
+        parent.a( newElement );
+   }
+   else
+   {
+        //如果不是，则插入在目标元素的下一个兄弟节点的前面。也就是目标元素的后面
+        parent.insertBefore( newElement, targetElement.nextSibling );
+   }
+}
+
+function removeElement(_element){
+    var _parentElement = _element.parentNode;
+    var newNode = document.createElement("div"); 
+    var _parentparentElement = insertAfter(newNode,_parentElement);
+    newNode.innerHTML = _element.outerHTML;
+    if(_parentElement){
+        _parentElement.removeChild(_element);  
+ 	}
+  /*   var _newparent = _parentparentElement.createElement("div");
+    _newparent.innerHTML = _element; */
+}
+
 function initImage(){ 
+	if(document.getElementsByName){ 
+		var alltr = document.getElementById("zhengwen").getElementsByTagName("img");
+		for(var i=0;i<alltr.length;i++){
+			removeElement(alltr[i]);
+		}
+	}
+	
 	if(document.getElementsByName){ 
 		var alltr = getAllImg();
 		for(var i=0;i<alltr.length;i++){
