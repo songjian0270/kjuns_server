@@ -1,7 +1,14 @@
 package kjuns;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import com.kjuns.util.DBUtils;
+import com.kjuns.util.UUIDUtils;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
 
 public class Test {
 
@@ -16,98 +23,58 @@ public class Test {
 		 * mail.setSubject("aaaaaaaaa"); mail.setMessage("bbbbbbbbbbbbbbbbb");
 		 * new MailUtil().send(mail);
 		 */
-		
-		
-		List<String> list1 = new ArrayList<>();
-		
-		list1.add("1");
-		list1.add("2");
-		list1.add("3");
-		list1.add("4");
-		list1.add("5");
-		list1.add("6");
-		List<String> list2= new ArrayList<>();
-		
-		list2.add("88");
-		list2.add("88");
-		int j =0;
-		List<String> list = new ArrayList<>();
-		for(int i = 0;i<list1.size()+list2.size();i++){
-			int index = i;
-			
-			if(index%3==0 && index !=0){
-				for(int k=0;k<list2.size();k++){
-					if(k==j){
-						list.add(list2.get(k));
-						j++;
-						break;
-					}
-				}
-			}
-			if(i <list1.size()){
-				list.add(list1.get(i));
-			}
-			
-		}
-		System.out.println("list.size():"+list.size());
-		for(String li:list){
-			System.out.println(li);
-		}
-		
+
 //		System.out.println("000000000000000000000000000000000000".length());
-//		jxl.Workbook readwb = null;
-//		String id = UUIDUtils.getUUID().toString().replace("-", "");
-//		System.out.println(id);
-//
-//		try
-//
-//		{
-//
-//			// 构建Workbook对象, 只读Workbook对象
-//
-//			// 直接从本地文件创建Workbook
-//
-//			InputStream instream = new FileInputStream("C:/Users/jl/Desktop/11.xls");
-//
-//			readwb = Workbook.getWorkbook(instream);
-//
-//			// Sheet的下标是从0开始
-//
-//			// 获取第一张Sheet表
-//
-//			Sheet readsheet = readwb.getSheet(0);
-//
-//
-//			// 获取Sheet表中所包含的总行数
-//
-//			int rsRows = readsheet.getRows();
-//
-//			// 获取指定单元格的对象引用
-//		    for (int i = 1; i < rsRows; i++)
-//
-//			{
-//				
-//				Cell cell1 = readsheet.getCell(0, i);
-//				String name = cell1.getContents();
-//				Cell cell2 = readsheet.getCell(1, i);
-//				String nationality = cell2.getContents();
-//				Cell cell3 = readsheet.getCell(2, i);
-//				String remark = cell3.getContents();
-//				new DBUtils().cch(name, nationality, remark);
-//			}
-//
-//
-//			
-//
-//		} catch (Exception e) {
-//
-//			e.printStackTrace();
-//
-//		} finally {
-//
-//			readwb.close();
-//
-//		}
+		jxl.Workbook readwb = null;
+		String id = UUIDUtils.getUUID().toString().replace("-", "");
+		System.out.println(id);
+
+		try
+
+		{
+
+			// 构建Workbook对象, 只读Workbook对象
+
+			// 直接从本地文件创建Workbook
+
+			InputStream instream = new FileInputStream("C:/Users/jl/Desktop/xxx.xls");
+
+			readwb = Workbook.getWorkbook(instream);
+
+			// Sheet的下标是从0开始
+
+			// 获取第一张Sheet表
+
+			Sheet readsheet = readwb.getSheet(0);
+
+
+			// 获取Sheet表中所包含的总行数
+
+			int rsRows = readsheet.getRows();
+
+			// 获取指定单元格的对象引用
+		    for (int i = 1; i < rsRows; i++)
+
+			{
+				
+				Cell cell1 = readsheet.getCell(0, i);
+				String name = cell1.getContents();
+				
+				new DBUtils().cchname(name);
+			}
+
+
+			
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			readwb.close();
+
+		}
 	}
 
 }

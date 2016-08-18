@@ -9,9 +9,8 @@
 		<if test="qqUid !=null and qqUid !='' "> and qq_uid = #{qqUid} </if>
 		<if test="wbUid !=null and wbUid !='' "> and wb_uid = #{wbUid} </if>
 		<if test="wxUid !=null and wxUid !='' "> and wx_uid = #{wxUid} </if>
-		<if test="token !=null and token !='' "> and token = #{token} </if>
-		<if test="id !=null and id !='' "> and id = #{id} </if>
-		and data_flag = 1
+		<if test="token !=null and token !='' "> and token = #{token}  and data_flag = 1</if>
+		<if test="id !=null and id !='' "> and id = #{id} and data_flag = 1</if>
 	</select>
 	
 	<insert id="insert" parameterType="com.kjuns.model.UserAccount" useGeneratedKeys="true" keyProperty="id">

@@ -77,6 +77,26 @@ public class DBUtils {
 		}
          return flag;
     }
+    
+    public boolean cchname(String name) {
+    	boolean flag=true;
+    	 String sql= "insert into kjuns_filter_vocabulary (name) values(?)"; 
+    	 conn=this.getConntion();
+    	 try {
+			pstmt=conn.prepareStatement(sql);
+    	 pstmt.setString(1, name); //对占位符设置值，占位符顺序从1开始，第一个参数是占位符的位置，第二个参数是占位符的值。
+         int i=pstmt.executeUpdate();
+         if(i==0){
+             flag=false;
+         }
+ 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			closeResources();
+		}
+         return flag;
+    }
 
     public int execOther(PreparedStatement pstmt){
         try {
