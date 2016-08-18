@@ -355,10 +355,10 @@ function clickImg(target){
 }
 
 function getImgSrc(target){
-	var result ;
+	var result ="";
 	var alltr = getAllImg();
 	for(var i=0;i<alltr.length;i++){
-		result = result+alltr[i].getAttribute('src')+"|"
+		result = result+alltr[i].getAttribute('src')+","
 	}
 	return result;
 }
