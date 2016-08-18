@@ -350,7 +350,7 @@ function clickImg(target){
 		window.location.href = 'kanjunshi://content/img/'+ target.getAttribute('src');
 	}
 	else{
-		window.KanjunshiAndroid.showImgs(target.getAttribute('src')+"|"+getImgSrc(getAllImg()));
+		window.KanjunshiAndroid.showImgs(target.getAttribute('src')+","+getImgSrc(getAllImg()));
 	}
 }
 
