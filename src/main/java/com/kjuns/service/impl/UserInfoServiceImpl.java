@@ -47,6 +47,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			userInfo.setFaceSrc(CommonUtils.getImage(ui.getFaceSrc()));
 			userInfo.setLocation(ui.getLocation());
 			userInfo.setSex(ui.getSex());
+			userInfo.setId(id);
 			userInfo.setNickName(ui.getNickName());
 		}
 		return userInfo;

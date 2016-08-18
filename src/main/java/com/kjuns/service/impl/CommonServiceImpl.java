@@ -17,6 +17,8 @@ import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.util.UUIDUtils;
+import com.kjuns.util.mail.Mail;
+import com.kjuns.util.mail.MailUtil;
 import com.kjuns.vo.BannerVo;
 
 /**
@@ -78,6 +80,18 @@ public class CommonServiceImpl implements CommonService {
 		params.put("updateDate", dateTime);
 //		params.put("createBy", userId);
 //		params.put("updateBy", userId);
+		int result = commonMapper.insertReport(params) ;
+		
+		if(result >0 ){
+			 Mail mail = new Mail(); mail.setHost("smtp.qq.com"); //
+			 mail.setSender("houtai2@kanjunshi.net");
+			 mail.setReceiver("houtai1@qq.com"); // 接收人
+			 mail.setUsername("houtai1@qq.com"); // 登录账号,一般都是和邮箱名一样吧
+			 mail.setPassword("Houtai22016"); // 发件人邮箱的登录密码
+			 mail.setSubject("举报信息ID:"+ reportId+reportType); mail.setMessage("举报ID:"+reportId+"-----举报类型:"+reportType);
+			 new MailUtil().send(mail);
+		}
+		
 		return commonMapper.insertReport(params) > 0 ? ErrorCode.SUCCESS : ErrorCode.SYS_ERROR;
 	}
 
