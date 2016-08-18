@@ -82,24 +82,25 @@ public class ContentServiceImpl implements ContentService {
 		if(count > 0){
 			page.setTotalCount(count);
 			int number = page.getPageSize() / SysConf.INTERVAL_NUMBER;	
-			System.out.println(number);
-			List<Content> list =  contentMapper.queryContentList(isAdmin, typeId, null, page.getStart(), page.getPageSize() - number);
+			List<Content> list =  contentMapper.queryContentList(isAdmin, typeId, null, page.getStart(), page.getPageSize());
 			if(CommonUtils.notListFEmpty(list)){
-				int i = 0; int k = 1 ;int j = 1;
-				for(Content content: list){
-					if(i == SysConf.INTERVAL_NUMBER - 1){
+				int k = 0 ;
+				for(int i =0 ; i < list.size() + number; i++){
+					if(i % SysConf.INTERVAL_NUMBER==0 && i != 0){
 						int pageNumber =  page.getStart()/page.getPageSize();
 						List<ContentSection> sectionList = sectionMapper.queryContentSectionList( pageNumber * number , number);
 						if(CommonUtils.notListFEmpty(sectionList)){
-							for(ContentSection section: sectionList){
-								if(k == j){
+							for(int p = 0; p < sectionList.size(); p++){
+								ContentSection section = sectionList.get(p);
+								if(k == p){
 									ContentVo contents = new ContentVo();
 									contents.setId(section.getId());
 									contents.setTitle(section.getTitle());
 									contents.setSummary(section.getSummary());
+									contents.setIsTop(section.getIsTop());
 									contents.setThumbnail(CommonUtils.getImage(section.getThumbnail()));
 									contents.setType(1);
-									int commentCount = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, content.getId(), null);
+									int commentCount = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, contents.getId(), null);
 									contents.setCommentCount(commentCount);
 									if(CommonUtils.notEmpty(section.getId()) && CommonUtils.notEmpty(userId)){
 										int c  = sectionMapper.getRssCount(userId, section.getId());
@@ -115,9 +116,14 @@ public class ContentServiceImpl implements ContentService {
 										c.setId(sectionContent.getId());
 										c.setTitle(sectionContent.getTitle());
 										c.setSummary(sectionContent.getSummary());
-										c.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
+										c.setThumbnail(CommonUtils.getImage(sectionContent.getThumbnail()));
 										c.setLikeCount(sectionContent.getLikeCount());
 										c.setShareCount(sectionContent.getShareCount());
+										c.setIsDepth(sectionContent.getIsDepth());
+										c.setIsTop(sectionContent.getIsTop());
+										c.setIsHot(sectionContent.getIsHot());
+										c.setIsTease(sectionContent.getIsTease());
+										
 										UserInfo userInfo = userInfoMapper.get(sectionContent.getUserId());
 										c.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 										c.setIssuerName(userInfo.getNickName());
@@ -134,13 +140,14 @@ public class ContentServiceImpl implements ContentService {
 									contents.setCreateDate(CommonUtils.dateToUnixTimestamp(section.getCreateDate(), 
 												CommonConstants.DATETIME_SEC));
 									contentList.add(contents);
+									k++;
+									break;
 								}
-								k++;
 							}
 						}
-						j++;
-						i = 0;
-					}else{
+					}
+					if(i < list.size()){
+						Content content = list.get(i);
 						ContentVo contents = new ContentVo();
 						contents.setId(content.getId());
 						contents.setTitle(content.getTitle());
@@ -149,6 +156,12 @@ public class ContentServiceImpl implements ContentService {
 						contents.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
 						contents.setLikeCount(content.getLikeCount());
 						contents.setShareCount(content.getShareCount());
+						
+						contents.setIsDepth(content.getIsDepth());
+						contents.setIsTop(content.getIsTop());
+						contents.setIsHot(content.getIsHot());
+						contents.setIsTease(content.getIsTease());
+						
 						UserInfo userInfo = userInfoMapper.get(content.getUserId());
 						contents.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 						contents.setIssuerName(userInfo.getNickName());
@@ -158,7 +171,6 @@ public class ContentServiceImpl implements ContentService {
 						contents.setCommentCount(cc);
 						contentList.add(contents);
 					}
-					i++;
 				}
 			}
 		}

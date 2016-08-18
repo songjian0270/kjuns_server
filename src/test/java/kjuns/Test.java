@@ -1,18 +1,7 @@
 package kjuns;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
-import com.kjuns.util.DBUtils;
-import com.kjuns.util.UUIDUtils;
-
-import ch.qos.logback.core.db.dialect.DBUtil;
-import jxl.Cell;
-import jxl.CellType;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.write.Label;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test {
 
@@ -27,10 +16,48 @@ public class Test {
 		 * mail.setSubject("aaaaaaaaa"); mail.setMessage("bbbbbbbbbbbbbbbbb");
 		 * new MailUtil().send(mail);
 		 */
-		System.out.println("000000000000000000000000000000000000".length());
-		jxl.Workbook readwb = null;
-		String id = UUIDUtils.getUUID().toString().replace("-", "");
-		System.out.println(id);
+		
+		
+		List<String> list1 = new ArrayList<>();
+		
+		list1.add("1");
+		list1.add("2");
+		list1.add("3");
+		list1.add("4");
+		list1.add("5");
+		list1.add("6");
+		List<String> list2= new ArrayList<>();
+		
+		list2.add("88");
+		list2.add("88");
+		int j =0;
+		List<String> list = new ArrayList<>();
+		for(int i = 0;i<list1.size()+list2.size();i++){
+			int index = i;
+			
+			if(index%3==0 && index !=0){
+				for(int k=0;k<list2.size();k++){
+					if(k==j){
+						list.add(list2.get(k));
+						j++;
+						break;
+					}
+				}
+			}
+			if(i <list1.size()){
+				list.add(list1.get(i));
+			}
+			
+		}
+		System.out.println("list.size():"+list.size());
+		for(String li:list){
+			System.out.println(li);
+		}
+		
+//		System.out.println("000000000000000000000000000000000000".length());
+//		jxl.Workbook readwb = null;
+//		String id = UUIDUtils.getUUID().toString().replace("-", "");
+//		System.out.println(id);
 //
 //		try
 //

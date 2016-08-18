@@ -42,6 +42,8 @@ public class ContentVo {
 	
 	private List<ContentTag> contentTagList;
 	
+	private int isTop;		//是否置顶
+	
 	private int isHot;		//热帖
 	
 	private int isDepth;	//深度
@@ -299,6 +301,14 @@ public class ContentVo {
 
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
+	}
+
+	public int getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(int isTop) {
+		this.isTop = isTop;
 	}
 	
 }
