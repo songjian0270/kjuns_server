@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kjuns.exception.AuthorizeException;
+import com.kjuns.mapper.FilterVocabularyMapper;
 import com.kjuns.mapper.UserAccountMapper;
 import com.kjuns.mapper.UserInfoMapper;
 import com.kjuns.model.LoginInfo;
@@ -54,6 +55,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 	
 	@Autowired
 	private SmsService smsService;
+	
+	@Autowired
+	private FilterVocabularyMapper filterVocabularyMapper;
 	
 	public static final String QQ_TYPE_TOKEN = "0";
 	public static final String WX_TYPE_TOKEN = "1";
@@ -469,6 +473,18 @@ public class UserLoginServiceImpl implements UserLoginService {
 					}else{
 						token = userAccount.getToken();
 					}
+					boolean isAllergy = filterVocabularyMapper.getTotalCount(nickName) > 0 ? false: true;
+					boolean isHas = userInfoMapper.getForNickNameCount(nickName) > 0 ? false: true;
+					if(isHas && isAllergy){
+						UserInfo ui =new UserInfo();
+						ui.setId(id);
+						ui.setNickName(nickName);
+						ui.setIdcard(idcard);
+						ui.setRealName(realName);
+						userInfoMapper.updateUserInfoById(ui);
+					}else{
+						return new BaseOutJB(ErrorCode.NICK_NAME_EXIST_ERROR);
+					}
 					Map<String, Object> p = new HashMap<>();
 					p.put("nickName", nickName);
 					p.put("realName", realName);
@@ -485,13 +501,13 @@ public class UserLoginServiceImpl implements UserLoginService {
 		userInfo.setIdcard(idcard);
 		userInfo.setNickName(nickName);
 		userInfo.setRealName(realName);
-		userInfo.setSex(0);  //默认男
+		userInfo.setSex(1);  //默认男
 		userInfo.setCreateDate(datetime);
 		userInfo.setDataFlag("1");
 		userInfo.setId(userId);
-		
+		boolean isAllergy = filterVocabularyMapper.getTotalCount(nickName) > 0 ? false: true;
 		boolean isHas = userInfoMapper.getForNickNameCount(nickName) > 0 ? false: true;
-		if(isHas){
+		if(isHas && isAllergy){
 			userInfo.setMobilePhone(userAccount.getMobilePhone());
 		}else{
 			return new BaseOutJB(ErrorCode.NICK_NAME_EXIST_ERROR);

@@ -23,9 +23,9 @@
 	<update id="updateUserInfoById" parameterType="com.kjuns.model.UserInfo">
 			UPDATE kjuns_user_info 
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="realName != null and realName !='' "> real_name = #{realName} </if>
-			<if test="nickName != null and nickName !='' "> nick_name = #{nickName} </if>
-			<if test="faceSrc != null and faceSrc !='' "> face_src = #{faceSrc} </if>
+			<if test="realName != null and realName !='' "> real_name = #{realName}, </if>
+			<if test="nickName != null and nickName !='' "> nick_name = #{nickName}, </if>
+			<if test="faceSrc != null and faceSrc !='' "> face_src = #{faceSrc}, </if>
 			<if test="mobilePhone != null and mobilePhone !='' "> mobile_phone = #{mobilePhone} </if>
 			<if test="sex != null "> sex = #{sex} </if>
 			<if test="location !=null and location !='' "> location = #{location} </if>				
