@@ -75,5 +75,6 @@ public class CommonConstants {
 	
 	public static final String KJUNS_CAMP_COMMENTS = "kjuns_camp_comments";
 
+	public static final String KJUNS_IMG_TYPE_ID = "2427d4151e334c6594231de41990da4c";
 	
 }

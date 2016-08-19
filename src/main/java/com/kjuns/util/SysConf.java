@@ -46,6 +46,14 @@ public class SysConf {
 	/** jdbc.password  */
 	public static final String JDBC_PWD = SysConf.getBundleString(JDBC, "dataSource.password");
 	
+	public static final String SEND_MAIL_USER = SysConf.getBundleString(CONF, "send_mail_user");
+	
+	public static final String SEND_MAIL_PWD = SysConf.getBundleString(CONF, "send_mail_pwd");
+	
+	public static final String RECEPTION_MAIL_USER = SysConf.getBundleString(CONF, "reception_mail_user");
+	
+	public static final String MAIL_HOST = SysConf.getBundleString(CONF, "mai_host");
+	
 	//===================== 备用域名设置   ============================================================
 /*	*//** 备用主域名  *//*
 	public static final String BACK_MASTER_SERVER_URL = SysConf.getBundleString(CONF, "back_master_server_url");

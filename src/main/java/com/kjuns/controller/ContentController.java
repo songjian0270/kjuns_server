@@ -19,6 +19,7 @@ import com.kjuns.model.UserInfo;
 import com.kjuns.out.BaseOutJB;
 import com.kjuns.service.CommentService;
 import com.kjuns.service.ContentService;
+import com.kjuns.util.CommonConstants;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.util.pager.Page;
 import com.kjuns.vo.ContentVo;
@@ -97,7 +98,7 @@ public class ContentController extends BaseController{
 	@RequestMapping(value = "img/list", method = RequestMethod.GET)
 	public void imgList(Page page, String token, Model model) throws Exception {
 		try {
-			String typeId= "2427d4151e334c6594231de41990da4c";
+			String typeId= CommonConstants.KJUNS_IMG_TYPE_ID;
 			String userId = null;
 			UserInfo userInfo = this.getUserInfoForToken(token);
 			if(null != userInfo){

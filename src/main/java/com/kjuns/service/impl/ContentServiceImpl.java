@@ -86,62 +86,64 @@ public class ContentServiceImpl implements ContentService {
 			if(CommonUtils.notListFEmpty(list)){
 				int k = 0 ;
 				for(int i =0 ; i < list.size() + number; i++){
-					if(i % SysConf.INTERVAL_NUMBER==0 && i != 0){
-						int pageNumber =  page.getStart()/page.getPageSize();
-						List<ContentSection> sectionList = sectionMapper.queryContentSectionList( pageNumber * number , number);
-						if(CommonUtils.notListFEmpty(sectionList)){
-							for(int p = 0; p < sectionList.size(); p++){
-								ContentSection section = sectionList.get(p);
-								if(k == p){
-									ContentVo contents = new ContentVo();
-									contents.setId(section.getId());
-									contents.setTitle(section.getTitle());
-									contents.setSummary(section.getSummary());
-									contents.setIsTop(section.getIsTop());
-									contents.setThumbnail(CommonUtils.getImage(section.getThumbnail()));
-									contents.setType(1);
-									int commentCount = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, contents.getId(), null);
-									contents.setCommentCount(commentCount);
-									if(CommonUtils.notEmpty(section.getId()) && CommonUtils.notEmpty(userId)){
-										int c  = sectionMapper.getRssCount(userId, section.getId());
-										contents.setIsRss(c > 0 ? 0 : 1);
-									}else if(CommonUtils.notEmpty(section.getId()) ){
-										int c  = sectionMapper.getRssCount(null, section.getId());
-										contents.setRssCount(c);
-									}
-									List<Content> sectionContentList = contentMapper.queryContentList(isAdmin, null, section.getId(), 0, 6);
-									List<ContentVo> ls = new ArrayList<>();
-									for(Content sectionContent: sectionContentList){
-										ContentVo c = new ContentVo();
-										c.setId(sectionContent.getId());
-										c.setTitle(sectionContent.getTitle());
-										c.setSummary(sectionContent.getSummary());
-										c.setThumbnail(CommonUtils.getImage(sectionContent.getThumbnail()));
-										c.setLikeCount(sectionContent.getLikeCount());
-										c.setShareCount(sectionContent.getShareCount());
-										c.setIsDepth(sectionContent.getIsDepth());
-										c.setIsTop(sectionContent.getIsTop());
-										c.setIsHot(sectionContent.getIsHot());
-										c.setIsTease(sectionContent.getIsTease());
-										
-										UserInfo userInfo = userInfoMapper.get(sectionContent.getUserId());
-										c.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
-										c.setIssuerName(userInfo.getNickName());
-										c.setCreateDate(CommonUtils.dateToUnixTimestamp(sectionContent.getCreateDate(), 
+					if(!typeId.equals(CommonConstants.KJUNS_IMG_TYPE_ID)){
+						if(i % SysConf.INTERVAL_NUMBER==0 && i != 0){
+							int pageNumber =  page.getStart()/page.getPageSize();
+							List<ContentSection> sectionList = sectionMapper.queryContentSectionList( pageNumber * number , number);
+							if(CommonUtils.notListFEmpty(sectionList)){
+								for(int p = 0; p < sectionList.size(); p++){
+									ContentSection section = sectionList.get(p);
+									if(k == p){
+										ContentVo contents = new ContentVo();
+										contents.setId(section.getId());
+										contents.setTitle(section.getTitle());
+										contents.setSummary(section.getSummary());
+										contents.setIsTop(section.getIsTop());
+										contents.setThumbnail(CommonUtils.getImage(section.getThumbnail()));
+										contents.setType(1);
+										int commentCount = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, contents.getId(), null);
+										contents.setCommentCount(commentCount);
+										if(CommonUtils.notEmpty(section.getId()) && CommonUtils.notEmpty(userId)){
+											int c  = sectionMapper.getRssCount(userId, section.getId());
+											contents.setIsRss(c > 0 ? 0 : 1);
+										}else if(CommonUtils.notEmpty(section.getId()) ){
+											int c  = sectionMapper.getRssCount(null, section.getId());
+											contents.setRssCount(c);
+										}
+										List<Content> sectionContentList = contentMapper.queryContentList(isAdmin, null, section.getId(), 0, 6);
+										List<ContentVo> ls = new ArrayList<>();
+										for(Content sectionContent: sectionContentList){
+											ContentVo c = new ContentVo();
+											c.setId(sectionContent.getId());
+											c.setTitle(sectionContent.getTitle());
+											c.setSummary(sectionContent.getSummary());
+											c.setThumbnail(CommonUtils.getImage(sectionContent.getThumbnail()));
+											c.setLikeCount(sectionContent.getLikeCount());
+											c.setShareCount(sectionContent.getShareCount());
+											c.setIsDepth(sectionContent.getIsDepth());
+											c.setIsTop(sectionContent.getIsTop());
+											c.setIsHot(sectionContent.getIsHot());
+											c.setIsTease(sectionContent.getIsTease());
+											
+											UserInfo userInfo = userInfoMapper.get(sectionContent.getUserId());
+											c.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+											c.setIssuerName(userInfo.getNickName());
+											c.setCreateDate(CommonUtils.dateToUnixTimestamp(sectionContent.getCreateDate(), 
+														CommonConstants.DATETIME_SEC));
+											int cc = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, sectionContent.getId(), null);
+											c.setCommentCount(cc);
+											ls.add(c);
+										}
+										contents.setContentList(ls);
+										UserInfo userInfo = userInfoMapper.get(section.getUserId());
+										contents.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+										contents.setIssuerName(userInfo.getNickName());
+										contents.setCreateDate(CommonUtils.dateToUnixTimestamp(section.getCreateDate(), 
 													CommonConstants.DATETIME_SEC));
-										int cc = commentMapper.getTotalCount(CommonConstants.KJUNS_CONTENT_COMMENTS, sectionContent.getId(), null);
-										c.setCommentCount(cc);
-										ls.add(c);
+										contentList.add(contents);
+										k++;
+										break;
 									}
-									contents.setContentList(ls);
-									UserInfo userInfo = userInfoMapper.get(section.getUserId());
-									contents.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
-									contents.setIssuerName(userInfo.getNickName());
-									contents.setCreateDate(CommonUtils.dateToUnixTimestamp(section.getCreateDate(), 
-												CommonConstants.DATETIME_SEC));
-									contentList.add(contents);
-									k++;
-									break;
 								}
 							}
 						}

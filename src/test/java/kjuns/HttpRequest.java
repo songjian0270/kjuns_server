@@ -20,7 +20,6 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpParams;
 
 @SuppressWarnings("deprecation")
 public class HttpRequest {

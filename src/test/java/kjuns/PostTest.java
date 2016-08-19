@@ -7,9 +7,9 @@ import com.kjuns.util.CommonUtils;
 
 public class PostTest {
 
-//	public static String url = "http://localhost:8080/kjuns_server/";
+	public static String url = "http://localhost:8080/kjuns_server/";
 	
-	public static String url = "http://139.196.100.235:56521/";
+//	public static String url = "http://139.196.100.235:56521/";
 
 	public static void main(String[] args) throws Exception {
 
@@ -20,12 +20,15 @@ public class PostTest {
 		treeMap.put("checkCode", "8888");*/
 		
 		//完善信息
-		treeMap.put("token","f3c7beff91f0447487a81f54842dda54");
+/*		treeMap.put("token","f3c7beff91f0447487a81f54842dda54");
 		treeMap.put("id","6c88c45272ca4c1397e55c1f64dd9009");
 		treeMap.put("idcard","4444");
 		treeMap.put("nickName","xzcvzxcvzxczxc");
 		treeMap.put("realName","测试");
-		
+		*/
+		treeMap.put("token","f3c7beff91f0447487a81f54842dda54");
+		treeMap.put("id","6c88c45272ca4c1397e55c1f64dd9009");
+		treeMap.put("type","0");
 		
 //		treeMap.put("id","d21d8fd0e73148d0946010684f295a12");
 //		treeMap.put("replyCommentId","d21d8fd0e73148d0946010684f295a32");
@@ -55,10 +58,11 @@ public class PostTest {
 		String sign = CommonUtils.md5Encode32(keyStr);
 
 	//	String reStr = HttpRequest.sendPost("http://localhost:8080/kjuns_server/user/login", sbffkey+"signature=" + sign);
-		String reStr = HttpRequest.sendPost("http://localhost:8080/kjuns_server/user/complete", sbffkey+"signature=" + sign);
+	//	String reStr = HttpRequest.sendPost("http://localhost:8080/kjuns_server/user/complete", sbffkey+"signature=" + sign);
 	//	String reStr = HttpRequest.sendPost("http://localhost:8080/kjuns_server/user/info/detail", sbffkey+"signature=" + sign);	
 	//	String reStr = HttpRequest.sendPost("http://localhost:8080/kjuns_server/comments/add", sbffkey+"signature=" + sign);
 	//	String reStr = HttpRequest.sendPost(url+"content/add", sbffkey+"signature=" + sign);
+		String reStr = HttpRequest.sendPost(url+"common/report", sbffkey+"signature=" + sign);
 		System.out.println(reStr);
 
 

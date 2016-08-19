@@ -39,7 +39,8 @@ public class MailUtil {
 			// 要发送的邮件主题
 			email.setSubject(mail.getSubject());
 			// 要发送的信息，由于使用了HtmlEmail，可以在邮件内容中使用HTML标签
-			email.setMsg(mail.getMessage());
+		/*	email.setMsg(mail.getMessage());*/
+			email.addPart(mail.getMessage(), "text/html;charset=utf-8");
 			// 发送
 			email.send();
 			if (logger.isDebugEnabled()) {

@@ -1,31 +1,49 @@
 package kjuns;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-
-import com.kjuns.util.DBUtils;
-import com.kjuns.util.UUIDUtils;
-
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws EmailException {
 		// TODO Auto-generated method stub
-		/*
-		 * Mail mail = new Mail(); mail.setHost("smtp.qq.com"); //
-		 * 设置邮件服务器,如果不用163的,自己找找看相关的 mail.setSender("346327002@qq.com");
-		 * mail.setReceiver("346327002@qq.com"); // 接收人
-		 * mail.setUsername("346327002@qq.com"); // 登录账号,一般都是和邮箱名一样吧
-		 * mail.setPassword("s&j0270"); // 发件人邮箱的登录密码
-		 * mail.setSubject("aaaaaaaaa"); mail.setMessage("bbbbbbbbbbbbbbbbb");
-		 * new MailUtil().send(mail);
-		 */
+		
+//		 Mail mail = new Mail(); mail.setHost("smtp.qq.com"); //
+//		 mail.setSender("houtai1@kanjunshi.net");
+//		 mail.setReceiver("houtai2@kanjunshi.net"); // 接收人
+//		 mail.setUsername("houtai2@kanjunshi.net"); // 登录账号,一般都是和邮箱名一样吧
+//		 mail.setPassword("Tanglang2016"); // 发件人邮箱的登录密码
+//		 mail.setSubject("举报信息ID:1123123"); mail.setMessage("举报ID:12312312313");
+//		 
+//		 
+//		 new MailUtil().send(mail);
+		 
+		 
+		  HtmlEmail email = new HtmlEmail();
+
+		   email.setAuthenticator(new DefaultAuthenticator("houtai1@kanjunshi.net", "Tanglang2016"));
+		   email.setHostName("smtp.qq.com");
+
+		   //设置收件人
+		   email.addTo("houtai2@kanjunshi.net", "收件人昵称（可以为空）");
+
+		   //设置发件人
+		   email.setFrom("houtai1@kanjunshi.net", "Tanglang2016");
+
+		   //主题
+		   email.setSubject("举报信息ID:1123123");
+
+		   // 设置邮件正文和字符编码
+		   StringBuffer bodyBf = new StringBuffer();
+		   bodyBf.append("举报ID:12312312313");
+		   email.addPart(bodyBf.toString(), "text/html;charset=utf-8");
+
+	
+		   email.send();
 
 //		System.out.println("000000000000000000000000000000000000".length());
-		jxl.Workbook readwb = null;
+	/*	jxl.Workbook readwb = null;
 		String id = UUIDUtils.getUUID().toString().replace("-", "");
 		System.out.println(id);
 
@@ -74,7 +92,7 @@ public class Test {
 
 			readwb.close();
 
-		}
+		}*/
 	}
 
 }
