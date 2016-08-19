@@ -114,19 +114,20 @@ word-break:break-all;
 }
 
 .zhengwen div img{
-width:100%;
-padding:0px;
-margin:0px;
+width:100% !important;
+height:auto !important;
+padding:0px !important;
+margin:0px !important;
 }
 .zhengwen video{
-width:100%;
-height:auto;
-margin:10px 0px;
+width:100% !important;
+height:auto !important;
+margin:10px 0px !important;
 }
 
 .zhengwen p{
-padding:0px 6%;
-margin:0px;
+padding:0px 6% !important;
+margin:0px !important;
 }
 
 .zhengwen div{
@@ -304,7 +305,7 @@ function insertAfter( newElement, targetElement)
    }
 }
 
-function removeElement(_element){
+function moveElement(_element){
     var _parentElement = _element.parentNode;
     var newNode = document.createElement("div"); 
     var _parentparentElement = insertAfter(newNode,_parentElement);
@@ -329,7 +330,11 @@ function initImage(){
 			}
 		}
 		for(var i=0;i<imgs.length;i++){
-			removeElement(imgs[i]);
+			//给视频增加封面
+			if(imgs[i].tagName.toUpperCase() =="VIDEO"){
+				imgs[i].setAttribute("poster",imgs[i].getAttribute("src")+"-000001");
+			}
+			moveElement(imgs[i]);
 		}
 	}
 	document.getElementById("zhengwen").setAttribute("class","");
