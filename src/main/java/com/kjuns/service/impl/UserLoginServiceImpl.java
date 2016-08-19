@@ -501,7 +501,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		userInfo.setIdcard(idcard);
 		userInfo.setNickName(nickName);
 		userInfo.setRealName(realName);
-		userInfo.setSex(0);  //默认男
+		userInfo.setSex(1);  //默认男
 		userInfo.setCreateDate(datetime);
 		userInfo.setDataFlag("1");
 		userInfo.setId(userId);
