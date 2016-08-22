@@ -69,11 +69,11 @@ public class CommentServiceImpl implements CommentService {
 					comments.setId(comment.getId());
 					comments.setContent(comment.getContent());
 					if(comment.getUserId().equals("000000000000000000000000000000000000")){
-						int random = new Random().nextInt(205) +1;
-						Visitor visitor = new Visitor();
-						visitor.setId(random);
-						Visitor vtor = visitorMapper.get(visitor);
-						comments.setNickName(vtor.getName());
+//						int random = new Random().nextInt(205) +1;
+//						Visitor visitor = new Visitor();
+//						visitor.setId(random);
+//						Visitor vtor = visitorMapper.get(visitor);
+						comments.setNickName(comment.getUserNickName());
 					}else{
 						UserInfo userInfo = userInfoMapper.get(comment.getUserId());
 						comments.setFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
@@ -89,11 +89,11 @@ public class CommentServiceImpl implements CommentService {
 						UserComment userReplyComment = commentMapper.get(table, comment.getReplyCommentId()); 
 						comments.setReplyUserId(userReplyComment.getUserId());							
 						if(userReplyComment.getUserId().equals("000000000000000000000000000000000000")){
-							int random = new Random().nextInt(205) +1;
-							Visitor visitor = new Visitor();
-							visitor.setId(random);
-							Visitor vtor = visitorMapper.get(visitor);
-							comments.setReplyNickName(vtor.getName());
+//							int random = new Random().nextInt(205) +1;
+//							Visitor visitor = new Visitor();
+//							visitor.setId(random);
+//							Visitor vtor = visitorMapper.get(visitor);
+							comments.setNickName(userReplyComment.getUserNickName());
 						}else{
 							UserInfo userInfo = userInfoMapper.get(userReplyComment.getUserId());
 							comments.setReplyCommentId(CommonUtils.getStr(comment.getReplyCommentId()));

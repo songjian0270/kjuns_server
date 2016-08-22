@@ -17,6 +17,8 @@ public interface UserInfoMapper {
 	
 	UserInfo get(@Param("userId")String userId);
 	
+	UserInfo getStop(@Param("userId")String userId);
+	
 	UserInfo getForToken(@Param("token")String token);
 	
 	int insert(UserInfo baseUserInfo);

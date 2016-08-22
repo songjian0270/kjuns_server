@@ -125,7 +125,7 @@ public class ContentServiceImpl implements ContentService {
 											c.setIsHot(sectionContent.getIsHot());
 											c.setIsTease(sectionContent.getIsTease());
 											
-											UserInfo userInfo = userInfoMapper.get(sectionContent.getUserId());
+											UserInfo userInfo = userInfoMapper.getStop(sectionContent.getUserId());
 											c.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 											c.setIssuerName(userInfo.getNickName());
 											c.setCreateDate(CommonUtils.dateToUnixTimestamp(sectionContent.getCreateDate(), 
@@ -135,7 +135,7 @@ public class ContentServiceImpl implements ContentService {
 											ls.add(c);
 										}
 										contents.setContentList(ls);
-										UserInfo userInfo = userInfoMapper.get(section.getUserId());
+										UserInfo userInfo = userInfoMapper.getStop(section.getUserId());
 										contents.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 										contents.setIssuerName(userInfo.getNickName());
 										contents.setCreateDate(CommonUtils.dateToUnixTimestamp(section.getCreateDate(), 
@@ -164,7 +164,7 @@ public class ContentServiceImpl implements ContentService {
 						contents.setIsHot(content.getIsHot());
 						contents.setIsTease(content.getIsTease());
 						
-						UserInfo userInfo = userInfoMapper.get(content.getUserId());
+						UserInfo userInfo = userInfoMapper.getStop(content.getUserId());
 						contents.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 						contents.setIssuerName(userInfo.getNickName());
 						contents.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
@@ -240,7 +240,7 @@ public class ContentServiceImpl implements ContentService {
 		}
 		//发布人
 		if(CommonUtils.notEmpty(contentVo.getIssuerId())){
-			UserInfo userInfo = userInfoMapper.get(contentVo.getIssuerId());
+			UserInfo userInfo = userInfoMapper.getStop(contentVo.getIssuerId());
 			contentVo.setIssuerId(contentVo.getIssuerId());
 			contentVo.setIssuerName(userInfo.getNickName());
 			contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
@@ -293,7 +293,7 @@ public class ContentServiceImpl implements ContentService {
 				contentv.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
 				contentv.setLikeCount(content.getLikeCount());
 				contentv.setShareCount(content.getShareCount());
-				UserInfo userInfo = userInfoMapper.get(content.getUserId());
+				UserInfo userInfo = userInfoMapper.getStop(content.getUserId());
 				contentv.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 				contentv.setIssuerName(userInfo.getNickName());
 				contentv.setCreateDate(CommonUtils.dateToUnixTimestamp(content.getCreateDate(), 
@@ -333,7 +333,7 @@ public class ContentServiceImpl implements ContentService {
 				contentv.setThumbnail(CommonUtils.getImage(content.getThumbnail()));
 				contentv.setLikeCount(content.getLikeCount());
 				contentv.setShareCount(content.getShareCount());
-				UserInfo userInfo = userInfoMapper.get(content.getIssuerId());
+				UserInfo userInfo = userInfoMapper.getStop(content.getIssuerId());
 				System.out.println(userInfo);
 				contentv.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
 				contentv.setIssuerName(userInfo.getNickName());
@@ -366,7 +366,7 @@ public class ContentServiceImpl implements ContentService {
 		}
 		//发布人
 		if(CommonUtils.notEmpty(contentVo.getIssuerId())){
-			UserInfo userInfo = userInfoMapper.get(contentVo.getIssuerId());
+			UserInfo userInfo = userInfoMapper.getStop(contentVo.getIssuerId());
 			contentVo.setIssuerId(contentVo.getIssuerId());
 			contentVo.setIssuerName(userInfo.getNickName());
 			contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));

@@ -22,14 +22,14 @@ public class Test {
 		 
 		  HtmlEmail email = new HtmlEmail();
 
-		   email.setAuthenticator(new DefaultAuthenticator("houtai1@kanjunshi.net", "Tanglang2016"));
+		   email.setAuthenticator(new DefaultAuthenticator("3330782907@qq.com", "469277Kjs"));
 		   email.setHostName("smtp.qq.com");
 
 		   //设置收件人
-		   email.addTo("houtai2@kanjunshi.net", "收件人昵称（可以为空）");
+		   email.addTo("3236634725@qq.com", "收件人昵称（可以为空）");
 
 		   //设置发件人
-		   email.setFrom("houtai1@kanjunshi.net", "Tanglang2016");
+		   email.setFrom("3330782907@qq.com", "469277Kjs");
 
 		   //主题
 		   email.setSubject("举报信息ID:1123123");
