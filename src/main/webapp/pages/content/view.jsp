@@ -189,7 +189,7 @@ width:14px;
 height:12px;
 float:left;
 position: relative;
-background-image:url(http://7xwu0j.com1.z0.glb.clouddn.com/7033F66D-AF2B-42B5-8E7B-097D67D5A089@3x.png);
+background-image:url('http://7xwu0j.com1.z0.glb.clouddn.com/7033F66D-AF2B-42B5-8E7B-097D67D5A089@3x.png');
 background-size:cover;margin-right:-14px;
 }
 .comment_cell .comment_like_count{
@@ -230,16 +230,16 @@ margin:0;
 
 .senderFace{
 
-background-image:url(${content.issuerFaceSrc});
+background-image:url('${content.issuerFaceSrc}');
 background-size:cover;margin-right:-14px;
 }
 
 </style>
-
+<title>${content.title}</title>
 </head>
 <body>
 <div style="width:100%;height:667px;text-align:center;max-width:600px;
-margin-left: auto; margin-right: auto;">
+margin-left: auto; margin-right: auto;overflow-x:hidden;">
 
 	<c:if test="${isCamp!='1'}">
 	<div style="max-width:600px;max-height:396px; width:100vw;height:66vw;overflow:hidden;"><img style="background-color:black;width:100%" src="${content.mindMap}"/></div>
