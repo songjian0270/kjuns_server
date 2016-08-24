@@ -239,7 +239,7 @@ background-size:cover;margin-right:-14px;
 </head>
 <body>
 <div style="width:100%;height:667px;text-align:center;max-width:600px;
-margin-left: auto; margin-right: auto;">
+margin-left: auto; margin-right: auto;overflow-x:hidden;">
 
 	<c:if test="${isCamp!='1'}">
 	<div style="max-width:600px;max-height:396px; width:100vw;height:66vw;overflow:hidden;"><img style="background-color:black;width:100%" src="${content.mindMap}"/></div>
