@@ -235,7 +235,7 @@ background-size:cover;margin-right:-14px;
 }
 
 </style>
-
+<title>${content.title}</title>
 </head>
 <body>
 <div style="width:100%;height:667px;text-align:center;max-width:600px;
