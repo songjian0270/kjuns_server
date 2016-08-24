@@ -54,6 +54,8 @@ public class SysConf {
 	
 	public static final String MAIL_HOST = SysConf.getBundleString(CONF, "mai_host");
 	
+	public static final String DEFAULT_FACE_SRC = SysConf.getBundleString(CONF, "default_face_src");
+	
 	//===================== 备用域名设置   ============================================================
 /*	*//** 备用主域名  *//*
 	public static final String BACK_MASTER_SERVER_URL = SysConf.getBundleString(CONF, "back_master_server_url");
