@@ -6,9 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.kjuns.annotation.IgnoreVerify;
 import com.kjuns.exception.SMSException;
 import com.kjuns.service.SmsService;
 import com.kjuns.util.ErrorCode;
+import com.kjuns.util.sms.SmsMain;
 
 /**
  * <b>Function: </b> 短信   
@@ -54,6 +56,18 @@ public class SmsController extends BaseController{
 		try{
 			ErrorCode rc = smsService.verifyCheckCode(cellPhoneNumber, checkCode);
 			sendResponseContent(model, rc);
+		} catch (Exception ex) {
+			logger.error("verifyCheckCode >>> {}", ex.getMessage());
+			throw ex;
+		}
+	}
+	
+	@IgnoreVerify
+	@RequestMapping(value = "/xxx", method = RequestMethod.GET)
+	public void xx(Model model) throws Exception {
+		try{
+			SmsMain.sendSms("webapp", "15001798048", "您的验证码为:1152", 3, 1, "127.0.0.1");
+			sendResponseContent(model, ErrorCode.SUCCESS);
 		} catch (Exception ex) {
 			logger.error("verifyCheckCode >>> {}", ex.getMessage());
 			throw ex;

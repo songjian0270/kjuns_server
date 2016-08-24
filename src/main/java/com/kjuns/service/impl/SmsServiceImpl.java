@@ -14,6 +14,7 @@ import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
 import com.kjuns.util.UUIDUtils;
+import com.kjuns.util.sms.SmsMain;
 
 /**
  * <b>Function: </b>
@@ -48,8 +49,8 @@ public class SmsServiceImpl implements SmsService {
 			if(null != sms && CommonUtils.notEmpty(sms.getCode()) && sms.getMistiming() < expire){
 				checkCode = sms.getCode();
 			}
-			if (diallingCode.equals("86")) {
-
+	//		if (diallingCode.equals("86")) {
+				SmsMain.sendSms("webapp",  cellPhoneNumber, "加入看军事,我们一起驰骋星辰大海:" + checkCode , 3, 1, "");
 				if(b){
 					String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 					String id = UUIDUtils.getUUID().toString().replace("-", "");
@@ -62,42 +63,46 @@ public class SmsServiceImpl implements SmsService {
 				}else{
 					return ErrorCode.SMS_SEND_FAILD;
 				}
-			}else {
-				/* 添加验证码到redis 国外 */
-				
-				if(b){
-				
-					return ErrorCode.SUCCESS;
-				}else{
-					return ErrorCode.SMS_SEND_FAILD;
-				}
-			}
+//			}else {
+//				/* 添加验证码到redis 国外 */
+//				SmsMain.sendSms("webapp", cellPhoneNumber, "加入看军事,我们一起驰骋星辰大海:" + checkCode , 3, 1, "");
+//				if(b){
+//					String id = UUIDUtils.getUUID().toString().replace("-", "");
+//					SMS smsEntity = new SMS();
+//					smsEntity.setCode(checkCode);
+//					smsEntity.setId(id);
+//					smsEntity.setCreateDate(datetime);
+//					smsMapper.insetSMS(sms);
+//					return ErrorCode.SUCCESS;
+//				}else{
+//					return ErrorCode.SMS_SEND_FAILD;
+//				}
+//			}
 		}
 	}
 	
 	/** 验证码验证 */
 	public ErrorCode verifyCheckCode(String cellPhoneNumber, String checkCode) {
-//		if (CommonUtils.notEmpty(cellPhoneNumber) && CommonUtils.notEmpty(checkCode)) {
-//			SMS sms = smsMapper.getSMSForMobilePhone(cellPhoneNumber);
-//			logger.info("send phone:" + cellPhoneNumber);
-//			logger.info("sms verifyCheckCode:" + checkCode);
-//			logger.info("redis verifyCheckCode:" + sms.getMistiming());
-//			if (CommonUtils.notEmpty(sms) && sms.getMistiming() < expire) {
-//				if(CommonUtils.notEmpty(sms) && sms.getMistiming() < timeout){
-//					if (!checkCode.equals(sms.getCode())) {
-//						return ErrorCode.SMS_CODE_ERROR;
-//					}else{
-//						return ErrorCode.SUCCESS;
-//					}
-//				}else{
-//					return ErrorCode.SMS_CODE_REPEAT;	
-//				}
-//			} else {
-//				return ErrorCode.SMS_CODE_TIMEOUT;	
-//			}
-//		}
-//		return ErrorCode.SMS_CODE_TIMEOUT;
-		return ErrorCode.SUCCESS;
+		if (CommonUtils.notEmpty(cellPhoneNumber) && CommonUtils.notEmpty(checkCode)) {
+			SMS sms = smsMapper.getSMSForMobilePhone(cellPhoneNumber);
+			logger.info("send phone:" + cellPhoneNumber);
+			logger.info("sms verifyCheckCode:" + checkCode);
+			logger.info("redis verifyCheckCode:" + sms.getMistiming());
+			if (CommonUtils.notEmpty(sms) && sms.getMistiming() < expire) {
+				if(CommonUtils.notEmpty(sms) && sms.getMistiming() < timeout){
+					if (!checkCode.equals(sms.getCode())) {
+						return ErrorCode.SMS_CODE_ERROR;
+					}else{
+						return ErrorCode.SUCCESS;
+					}
+				}else{
+					return ErrorCode.SMS_CODE_REPEAT;	
+				}
+			} else {
+				return ErrorCode.SMS_CODE_TIMEOUT;	
+			}
+		}
+		return ErrorCode.SMS_CODE_TIMEOUT;
 	}
 
 
