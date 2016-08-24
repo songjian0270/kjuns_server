@@ -22,6 +22,7 @@ import com.kjuns.service.UserLoginService;
 import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
+import com.kjuns.util.SysConf;
 import com.kjuns.util.UUIDUtils;
 import com.kjuns.util.WeiXinUtils;
 import com.kjuns.util.weibo4j.Account;
@@ -489,7 +490,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 					p.put("nickName", nickName);
 					p.put("realName", realName);
 					p.put("token", token);
-					p.put("userId", userAccount.getUserId());
+					p.put("id", userAccount.getUserId());
 					return new BaseOutJB(ErrorCode.SUCCESS, p);
 				}
 			}
@@ -497,7 +498,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		
 		String userId = UUIDUtils.getUUID().toString().replace("-", "");
 		UserInfo userInfo = new UserInfo();
-		userInfo.setFaceSrc("default_head.png");	
+		userInfo.setFaceSrc(SysConf.DEFAULT_FACE_SRC);	
 		userInfo.setIdcard(idcard);
 		userInfo.setNickName(nickName);
 		userInfo.setRealName(realName);
@@ -527,11 +528,11 @@ public class UserLoginServiceImpl implements UserLoginService {
 		
 		if(result > 0){
 			Map<String, Object> p = new HashMap<>();
-			p.put("faceSrc", "default_head.png");
+			p.put("faceSrc", CommonUtils.getImage(SysConf.DEFAULT_FACE_SRC));
 			p.put("nickName", nickName);
 			p.put("realName", realName);
 			p.put("token", token);
-			p.put("userId", userId);
+			p.put("id", userId);
 			return new BaseOutJB(ErrorCode.SUCCESS, p);
 		}else{
 			return new BaseOutJB(ErrorCode.FAILED);
