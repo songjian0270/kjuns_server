@@ -9,7 +9,7 @@ public class PostTest {
 
 	public static String url = "http://localhost:8080/kjuns_server/";
 	
-//	public static String url = "http://139.196.100.235:56521/";
+//	public static String url = "http://139.196.93.240:56521/";
 
 	public static void main(String[] args) throws Exception {
 
@@ -19,7 +19,7 @@ public class PostTest {
 //		treeMap.put("cellPhoneNumber", "86-15001798048");
 //		treeMap.put("checkCode", "0000");
 		
-		treeMap.put("cellPhoneNumber", "15001798048");
+		treeMap.put("cellPhoneNumber", "18952477697");
 		treeMap.put("diallingCode", "86");
 		//完善信息
 /*		treeMap.put("token","f3c7beff91f0447487a81f54842dda54");

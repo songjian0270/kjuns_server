@@ -50,7 +50,7 @@ public class SmsServiceImpl implements SmsService {
 				checkCode = sms.getCode();
 			}
 			String resultString = SmsMain.sendSms("webapp", cellPhoneNumber, "加入看军事,我们一起驰骋星辰大海:" + checkCode, 3, 1, "");
-			if (null != sms && resultString.equals("success")) {
+			if (null == sms && resultString.equals("success")) {
 				String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 				String id = UUIDUtils.getUUID().toString().replace("-", "");
 				SMS smsEntity = new SMS();
