@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kjuns.mapper.SMSMapper">
 
-	<delete id="delSMSForMiblePhone" parameterType="String" >
+	<delete id="delSMSForMobilePhone" parameterType="String" >
 		delete from kjuns_sms where mobile_phone =#{mobilePhone}
 	</delete>
 	

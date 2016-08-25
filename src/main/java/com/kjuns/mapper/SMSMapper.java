@@ -11,14 +11,14 @@ public interface SMSMapper {
 	 * @param id
 	 * @return
 	 */
-	int delSMSForMiblePhone(@Param("miblePhone")String miblePhone);
+	int delSMSForMobilePhone(@Param("mobilePhone")String mobilePhone);
 
 	/**
 	 * 插入验证码
 	 * @param comment
 	 * @return
 	 */
-	int insetSMS(SMS sms);
+	int insertSMS(SMS sms);
 	
 	/**
 	 * 获取验证码

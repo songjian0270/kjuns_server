@@ -16,9 +16,11 @@ public class PostTest {
 		TreeMap<String, Object> treeMap = new TreeMap<String, Object>();
 		
 		//登录
-/*		treeMap.put("cellPhoneNumber", "86-18321971666");
-		treeMap.put("checkCode", "8888");*/
+//		treeMap.put("cellPhoneNumber", "86-15001798048");
+//		treeMap.put("checkCode", "0000");
 		
+		treeMap.put("cellPhoneNumber", "15001798048");
+		treeMap.put("diallingCode", "86");
 		//完善信息
 /*		treeMap.put("token","f3c7beff91f0447487a81f54842dda54");
 		treeMap.put("id","6c88c45272ca4c1397e55c1f64dd9009");
@@ -26,9 +28,9 @@ public class PostTest {
 		treeMap.put("nickName","xzcvzxcvzxczxc");
 		treeMap.put("realName","测试");
 		*/
-		treeMap.put("token","f3c7beff91f0447487a81f54842dda54");
-		treeMap.put("id","6c88c45272ca4c1397e55c1f64dd9009");
-		treeMap.put("type","0");
+//		treeMap.put("token","f3c7beff91f0447487a81f54842dda54");
+//		treeMap.put("id","6c88c45272ca4c1397e55c1f64dd9009");
+//		treeMap.put("type","0");
 		
 //		treeMap.put("id","d21d8fd0e73148d0946010684f295a12");
 //		treeMap.put("replyCommentId","d21d8fd0e73148d0946010684f295a32");
@@ -62,7 +64,8 @@ public class PostTest {
 	//	String reStr = HttpRequest.sendPost("http://localhost:8080/kjuns_server/user/info/detail", sbffkey+"signature=" + sign);	
 	//	String reStr = HttpRequest.sendPost("http://localhost:8080/kjuns_server/comments/add", sbffkey+"signature=" + sign);
 	//	String reStr = HttpRequest.sendPost(url+"content/add", sbffkey+"signature=" + sign);
-		String reStr = HttpRequest.sendPost(url+"common/report", sbffkey+"signature=" + sign);
+	//	String reStr = HttpRequest.sendPost(url+"common/report", sbffkey+"signature=" + sign);
+		String reStr = HttpRequest.sendPost(url+"sms/generateCheckCode", sbffkey+"signature=" + sign);
 		System.out.println(reStr);
 
 
