@@ -33,7 +33,7 @@ public class SmsServiceImpl implements SmsService {
 
 	private final Integer timeout = 60; // 超时时间
 
-	private final Integer expire = 900; // 过期时间
+	private final Integer expire = 90; // 过期时间
 
 	@Autowired
 	private SMSMapper smsMapper;
@@ -41,6 +41,7 @@ public class SmsServiceImpl implements SmsService {
 	@Override
 	public ErrorCode generateCheckCode(String cellPhoneNumber, String diallingCode) throws Exception {
 		String phone = diallingCode + "-" + cellPhoneNumber;
+		boolean isExit = true;
 		SMS sms = smsMapper.getSMSForMobilePhone(phone);
 		if (null != sms && CommonUtils.notEmpty(sms.getMistiming()) && sms.getMistiming() < timeout) {
 			return ErrorCode.SMS_CODE_REPEAT;
@@ -48,9 +49,10 @@ public class SmsServiceImpl implements SmsService {
 			String checkCode = CommonUtils.getSmsCode();
 			if (null != sms && CommonUtils.notEmpty(sms.getCode()) && sms.getMistiming() < expire) {
 				checkCode = sms.getCode();
+				isExit = false;
 			}
 			String resultString = SmsMain.sendSms("webapp", cellPhoneNumber, "加入看军事,我们一起驰骋星辰大海:" + checkCode, 3, 1, "");
-			if (null == sms && resultString.equals("success")) {
+			if (resultString.equals("success")) {
 				String datetime = CommonConstants.DATETIME_SEC.format(new Date());
 				String id = UUIDUtils.getUUID().toString().replace("-", "");
 				SMS smsEntity = new SMS();
@@ -58,8 +60,10 @@ public class SmsServiceImpl implements SmsService {
 				smsEntity.setId(id);
 				smsEntity.setMobilePhone(phone);
 				smsEntity.setCreateDate(datetime);
-				smsMapper.delSMSForMobilePhone(phone);
-				smsMapper.insertSMS(smsEntity);
+				if(isExit){
+					smsMapper.delSMSForMobilePhone(phone);
+					smsMapper.insertSMS(smsEntity);	
+				}
 				return ErrorCode.SUCCESS;
 			} else {
 				return ErrorCode.SMS_SEND_FAILD;
