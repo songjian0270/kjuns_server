@@ -199,9 +199,26 @@ public class CommonUtils {
     }
 
     public static String getImage(String image){
+    	return getImage(image,false);
+    }
+    
+    public static String getImage(String image,boolean addWatermark){
+    	if(addWatermark){
+    		image = image+"!wm";
+    	}
     	if (CommonUtils.notEmpty(image)) {
 			if (!image.startsWith("http")) {
-				return SysConf.QN_BUCKET_URL + image;
+				return SysConf.QN_BUCKET_URL + image ;
+			}
+		}
+    	return image;
+    }
+    
+    public static String getImage(String image,String style){
+		image = image+style;
+    	if (CommonUtils.notEmpty(image)) {
+			if (!image.startsWith("http")) {
+				return SysConf.QN_BUCKET_URL + image ;
 			}
 		}
     	return image;

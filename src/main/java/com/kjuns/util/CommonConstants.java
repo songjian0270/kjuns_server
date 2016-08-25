@@ -77,4 +77,7 @@ public class CommonConstants {
 
 	public static final String KJUNS_IMG_TYPE_ID = "2427d4151e334c6594231de41990da4c";
 	
+	public static final String KJUNS_IMG_WATER_MARK = "!wm";
+	public static final String KJUNS_IMG_STYLE_MIND = "!mind";
+	
 }

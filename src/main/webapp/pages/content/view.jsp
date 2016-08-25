@@ -128,7 +128,7 @@ margin:10px 0px !important;
 }
 
 .zhengwen p{
-padding:0px 6% !important;
+padding:0px 10% !important;
 margin:0px !important;
 }
 
@@ -256,7 +256,7 @@ margin-left: auto; margin-right: auto;">
 	</div>
 
 <c:if test="${isCamp!='1'}">
-<div style="margin-top:4%;">
+<div style="margin-top:3.6%;">
 	<p class="zhaiyao">${content.summary}</p>
 </div>
 <div style="border:1px solid #ebebeb;

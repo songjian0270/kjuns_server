@@ -250,10 +250,10 @@ public class ContentServiceImpl implements ContentService {
 					CommonConstants.DATETIME_SEC));
 		}
 		if(CommonUtils.notEmpty(contentVo.getMindMap())){
-			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap()));
+			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap(),CommonConstants.KJUNS_IMG_STYLE_MIND));
 		}
 		if(CommonUtils.notEmpty(contentVo.getThumbnail())){
-			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail()));
+			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail(),true));
 		}
 		return contentVo;
 	}
@@ -376,10 +376,10 @@ public class ContentServiceImpl implements ContentService {
 					CommonConstants.DATETIME_SEC));
 		}
 		if(CommonUtils.notEmpty(contentVo.getMindMap())){
-			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap()));
+			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap(),CommonConstants.KJUNS_IMG_STYLE_MIND));
 		}
 		if(CommonUtils.notEmpty(contentVo.getThumbnail())){
-			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail()));
+			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail(),true));
 		}
 		return contentVo;
 	}
