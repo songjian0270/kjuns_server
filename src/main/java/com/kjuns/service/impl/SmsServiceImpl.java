@@ -33,7 +33,7 @@ public class SmsServiceImpl implements SmsService {
 
 	private final Integer timeout = 60; // 超时时间
 
-	private final Integer expire = 90; // 过期时间
+	private final Integer expire = 900; // 过期时间
 
 	@Autowired
 	private SMSMapper smsMapper;
