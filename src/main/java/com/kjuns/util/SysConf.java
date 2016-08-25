@@ -56,6 +56,16 @@ public class SysConf {
 	
 	public static final String DEFAULT_FACE_SRC = SysConf.getBundleString(CONF, "default_face_src");
 	
+	public static final Integer SMS_LIMIT = SysConf.getBundleInteger(CONF, "smsLimit");
+	
+	public static final String SMS_SERVICE_URL = SysConf.getBundleString(CONF, "smsServiceUrl");
+	
+	public static final String SMS_ENV = SysConf.getBundleString(CONF, "smsEvn");
+	
+	public static final String SMS_USER = SysConf.getBundleString(CONF, "smsUser");
+	
+	public static final String SMS_PWD = SysConf.getBundleString(CONF, "smsPwd");
+	
 	//===================== 备用域名设置   ============================================================
 /*	*//** 备用主域名  *//*
 	public static final String BACK_MASTER_SERVER_URL = SysConf.getBundleString(CONF, "back_master_server_url");
