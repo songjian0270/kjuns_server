@@ -335,8 +335,9 @@ function initImage(){
 			//给视频增加封面
 			if(imgs[i].tagName.toUpperCase() =="VIDEO"){
 				imgs[i].setAttribute("poster",imgs[i].getAttribute("src")+"-000001");
+			}else{
+				moveElement(imgs[i]);
 			}
-			moveElement(imgs[i]);
 		}
 	}
 	document.getElementById("zhengwen").setAttribute("class","");
