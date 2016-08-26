@@ -126,6 +126,12 @@ width:100% !important;
 height:auto !important;
 margin:10px 0px !important;
 }
+.zhengwen iframe{
+width:100% !important;
+height:45vw !important;
+max-height:360px !important;
+margin:10px 0px !important;
+}
 
 .zhengwen p{
 padding:0px 10% !important;
