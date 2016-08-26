@@ -198,6 +198,9 @@ public class ContentController extends BaseController{
 	public String view(String id,String isFull, Model model) throws Exception {
 		try {
 			ContentVo content = contentService.selectById(id);
+			if(content ==null){
+				return "/content/delete";
+			}
 			PageList hotComments = null;
 			PageList newComments = null;
 			if(null != content){
@@ -221,6 +224,9 @@ public class ContentController extends BaseController{
 	public String campView(String id,String isFull, Model model) throws Exception {
 		try {
 			ContentVo content = contentService.selectCampById(id);
+			if(content ==null){
+				return "/content/delete";
+			}
 			PageList hotComments = null;
 			PageList newComments = null;
 			if(null != content){
