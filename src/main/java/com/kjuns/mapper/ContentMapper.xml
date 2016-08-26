@@ -52,7 +52,7 @@
 	<select id="selectById" parameterType="String" resultType="com.kjuns.vo.ContentVo">
 		SELECT id, title, subhead, summary, source, mind_map mindMap, thumbnail, content,
 		create_by createBy,create_date dateTime,isTop,user_id issuerId,
-		isHot,isDepth,isTease FROM kjuns_content where id=#{id}
+		isHot,isDepth,isTease FROM kjuns_content where id=#{id} and data_flag =1
 	</select>
 	
 </mapper>
