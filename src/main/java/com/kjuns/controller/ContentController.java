@@ -198,9 +198,13 @@ public class ContentController extends BaseController{
 	public String view(String id,String isFull, Model model) throws Exception {
 		try {
 			ContentVo content = contentService.selectById(id);
-			Page page = new Page(0,2);
-			PageList hotComments = commentService.queryContentComments(id, 0, "1",page );
-			PageList newComments = commentService.queryContentComments(id, 0, "0",page );
+			PageList hotComments = null;
+			PageList newComments = null;
+			if(null != content){
+				Page page = new Page(0,2);
+				hotComments = commentService.queryContentComments(id, 0, "1",page );
+				newComments = commentService.queryContentComments(id, 0, "0",page );
+			}
 			model.addAttribute("isFull",isFull);
 			model.addAttribute("content",content);
 			model.addAttribute("hotComments",hotComments);
@@ -217,9 +221,13 @@ public class ContentController extends BaseController{
 	public String campView(String id,String isFull, Model model) throws Exception {
 		try {
 			ContentVo content = contentService.selectCampById(id);
-			Page page = new Page(0,2);
-			PageList hotComments = commentService.queryContentComments(id, 0, "1",page );
-			PageList newComments = commentService.queryContentComments(id, 0, "0",page );
+			PageList hotComments = null;
+			PageList newComments = null;
+			if(null != content){
+				Page page = new Page(0,2);
+				hotComments = commentService.queryContentComments(id, 0, "1",page );
+				newComments = commentService.queryContentComments(id, 0, "0",page );
+			}
 			model.addAttribute("isFull",isFull);
 			model.addAttribute("isCamp","1");
 			model.addAttribute("content",content);

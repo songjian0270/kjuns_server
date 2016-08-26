@@ -227,33 +227,35 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public ContentVo selectById(String id) throws Exception {
 		ContentVo contentVo = contentMapper.selectById(id);
-		//标签
-		List<ContentTag> tagList = contentTagMapper.queryContentTagForContentId(id);
-		if(null != tagList){
-			contentVo.setContentTagList(tagList);	
-		}
-		//相关推荐
-		List<ContentRelatedArticles> relatedArticlesList = 
-				contentRelatedArticlesMapper.queryContentRelatedArticlesForContentId(id);
-		if(null != relatedArticlesList){
-			contentVo.setContentRelatedArticlesList(relatedArticlesList);
-		}
-		//发布人
-		if(CommonUtils.notEmpty(contentVo.getIssuerId())){
-			UserInfo userInfo = userInfoMapper.getStop(contentVo.getIssuerId());
-			contentVo.setIssuerId(contentVo.getIssuerId());
-			contentVo.setIssuerName(userInfo.getNickName());
-			contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
-		}
-		if(CommonUtils.notEmpty(contentVo.getDateTime())){
-			contentVo.setCreateDate(CommonUtils.dateToUnixTimestamp(contentVo.getDateTime(), 
-					CommonConstants.DATETIME_SEC));
-		}
-		if(CommonUtils.notEmpty(contentVo.getMindMap())){
-			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap(),CommonConstants.KJUNS_IMG_STYLE_MIND));
-		}
-		if(CommonUtils.notEmpty(contentVo.getThumbnail())){
-			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail(),true));
+		if(null != contentVo){
+			//标签
+			List<ContentTag> tagList = contentTagMapper.queryContentTagForContentId(id);
+			if(null != tagList){
+				contentVo.setContentTagList(tagList);	
+			}
+			//相关推荐
+			List<ContentRelatedArticles> relatedArticlesList = 
+					contentRelatedArticlesMapper.queryContentRelatedArticlesForContentId(id);
+			if(null != relatedArticlesList){
+				contentVo.setContentRelatedArticlesList(relatedArticlesList);
+			}
+			//发布人
+			if(CommonUtils.notEmpty(contentVo.getIssuerId())){
+				UserInfo userInfo = userInfoMapper.getStop(contentVo.getIssuerId());
+				contentVo.setIssuerId(contentVo.getIssuerId());
+				contentVo.setIssuerName(userInfo.getNickName());
+				contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+			}
+			if(CommonUtils.notEmpty(contentVo.getDateTime())){
+				contentVo.setCreateDate(CommonUtils.dateToUnixTimestamp(contentVo.getDateTime(), 
+						CommonConstants.DATETIME_SEC));
+			}
+			if(CommonUtils.notEmpty(contentVo.getMindMap())){
+				contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap(),CommonConstants.KJUNS_IMG_STYLE_MIND));
+			}
+			if(CommonUtils.notEmpty(contentVo.getThumbnail())){
+				contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail(),true));
+			}
 		}
 		return contentVo;
 	}
@@ -353,33 +355,35 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public ContentVo selectCampById(String id) throws Exception {
 		ContentVo contentVo = campMapper.selectById(id);
-		//标签
-		List<ContentTag> tagList = contentTagMapper.queryContentTagForContentId(id);
-		if(null != tagList){
-			contentVo.setContentTagList(tagList);	
-		}
-		//相关推荐
-		List<ContentRelatedArticles> relatedArticlesList = 
-				contentRelatedArticlesMapper.queryContentRelatedArticlesForContentId(id);
-		if(null != relatedArticlesList){
-			contentVo.setContentRelatedArticlesList(relatedArticlesList);
-		}
-		//发布人
-		if(CommonUtils.notEmpty(contentVo.getIssuerId())){
-			UserInfo userInfo = userInfoMapper.getStop(contentVo.getIssuerId());
-			contentVo.setIssuerId(contentVo.getIssuerId());
-			contentVo.setIssuerName(userInfo.getNickName());
-			contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
-		}
-		if(CommonUtils.notEmpty(contentVo.getDateTime())){
-			contentVo.setCreateDate(CommonUtils.dateToUnixTimestamp(contentVo.getDateTime(), 
-					CommonConstants.DATETIME_SEC));
-		}
-		if(CommonUtils.notEmpty(contentVo.getMindMap())){
-			contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap(),CommonConstants.KJUNS_IMG_STYLE_MIND));
-		}
-		if(CommonUtils.notEmpty(contentVo.getThumbnail())){
-			contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail(),true));
+		if(null != contentVo){
+			//标签
+			List<ContentTag> tagList = contentTagMapper.queryContentTagForContentId(id);
+			if(null != tagList){
+				contentVo.setContentTagList(tagList);	
+			}
+			//相关推荐
+			List<ContentRelatedArticles> relatedArticlesList = 
+					contentRelatedArticlesMapper.queryContentRelatedArticlesForContentId(id);
+			if(null != relatedArticlesList){
+				contentVo.setContentRelatedArticlesList(relatedArticlesList);
+			}
+			//发布人
+			if(CommonUtils.notEmpty(contentVo.getIssuerId())){
+				UserInfo userInfo = userInfoMapper.getStop(contentVo.getIssuerId());
+				contentVo.setIssuerId(contentVo.getIssuerId());
+				contentVo.setIssuerName(userInfo.getNickName());
+				contentVo.setIssuerFaceSrc(CommonUtils.getImage(userInfo.getFaceSrc()));
+			}
+			if(CommonUtils.notEmpty(contentVo.getDateTime())){
+				contentVo.setCreateDate(CommonUtils.dateToUnixTimestamp(contentVo.getDateTime(), 
+						CommonConstants.DATETIME_SEC));
+			}
+			if(CommonUtils.notEmpty(contentVo.getMindMap())){
+				contentVo.setMindMap(CommonUtils.getImage(contentVo.getMindMap(),CommonConstants.KJUNS_IMG_STYLE_MIND));
+			}
+			if(CommonUtils.notEmpty(contentVo.getThumbnail())){
+				contentVo.setThumbnail(CommonUtils.getImage(contentVo.getThumbnail(),true));
+			}
 		}
 		return contentVo;
 	}
