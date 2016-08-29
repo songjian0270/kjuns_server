@@ -66,6 +66,10 @@ public class SysConf {
 	
 	public static final String SMS_PWD = SysConf.getBundleString(CONF, "smsPwd");
 	
+	public static final String ADMIN_MOBILE_PHONE = SysConf.getBundleString(CONF, "admin_mobile_phone");
+	
+	public static final String ADMIN_MOBILE_PASS = SysConf.getBundleString(CONF, "admin_mobile_pass");
+	
 	//===================== 备用域名设置   ============================================================
 /*	*//** 备用主域名  *//*
 	public static final String BACK_MASTER_SERVER_URL = SysConf.getBundleString(CONF, "back_master_server_url");

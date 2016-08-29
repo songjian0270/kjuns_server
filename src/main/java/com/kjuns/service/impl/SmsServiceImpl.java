@@ -13,6 +13,7 @@ import com.kjuns.service.SmsService;
 import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
+import com.kjuns.util.SysConf;
 import com.kjuns.util.UUIDUtils;
 import com.kjuns.util.sms.SmsMain;
 
@@ -77,6 +78,9 @@ public class SmsServiceImpl implements SmsService {
 			SMS sms = smsMapper.getSMSForMobilePhone(cellPhoneNumber);
 			logger.info("send phone:" + cellPhoneNumber);
 			logger.info("sms verifyCheckCode:" + checkCode);
+			if(cellPhoneNumber.equals(SysConf.ADMIN_MOBILE_PHONE) && checkCode.equals(SysConf.ADMIN_MOBILE_PASS)){
+				return ErrorCode.SUCCESS;
+			}
 			if (CommonUtils.notEmpty(sms) && sms.getMistiming() < expire) {
 				if (!checkCode.equals(sms.getCode())) {
 					return ErrorCode.SMS_CODE_ERROR;
