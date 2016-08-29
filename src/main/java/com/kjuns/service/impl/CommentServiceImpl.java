@@ -186,7 +186,13 @@ public class CommentServiceImpl implements CommentService {
 		}else if(contentType == 1){
 			table = CommonConstants.KJUNS_CAMP_COMMENTS;
 		}
-		int result = commentMapper.insertContentCommentsLike(table, id);
+		int count =1;
+		if(CommonUtils.notEmpty(userId)){
+			if(userId.indexOf("admin") >= 0){
+				 count =43;
+			}
+		}
+		int result = commentMapper.insertContentCommentsLike(table, id,count);
 		return result > 0 ? true:false;
 	}
 	
