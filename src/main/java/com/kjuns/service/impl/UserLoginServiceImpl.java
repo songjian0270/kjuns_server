@@ -170,6 +170,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 			userInfoVo.setNickName(userInfo.getNickName());
 			userInfoVo.setSex(userInfo.getSex());
 			userInfoVo.setRealName(userInfo.getRealName());
+			userInfoVo.setAutomaticThought(userInfo.getAutomaticThoughts());
 			userInfoVo.setLocation(userInfo.getLocation());
 			return new BaseOutJB(ErrorCode.SUCCESS, userInfoVo);
 		}else{
