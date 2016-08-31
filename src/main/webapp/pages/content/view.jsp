@@ -242,11 +242,44 @@ background-image:url('${content.issuerFaceSrc}');
 background-size:cover;margin-right:-14px;
 }
 
+.download{
+height:40px;
+width:100%;
+text-align:center;
+max-width:600px;
+margin-left: auto; 
+margin-right: auto;
+padding-bottom:1px;
+}
+
+.download2{
+height:28px;
+width:100%;
+text-align:center;
+max-width:600px;
+margin-left: auto; 
+margin-right: auto;
+}
 </style>
 <title>${content.title}</title>
 </head>
 <body>
-<div style="width:100%;height:667px;text-align:center;max-width:600px;
+
+<c:if test="${isFull=='1'}">
+<div class="download" onclick="javascript:downloadApp()">
+	<div style ="height:100%">
+		<div style="float:left;width:75%;height:100%;">
+			<div style="height:40px;background-size:contain;background-repeat:no-repeat;background-image:url('http://7xwu0j.com1.z0.glb.clouddn.com/kanjunshi_top.png')"></div>
+		</div>
+		<div style="float:right;width:23%">
+			<p style="font-size:10px;color:white;padding:3px 10px;background:#ba0001;border-radius: 4px;height:18px;line-height:18px;margin:10px auto;text-align:center;width:54px">立即下载</p>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+</div>
+</c:if>
+<div style="
+border-top:0.5px solid rgba(0,0,0,0.15);width:100%;height:667px;text-align:center;max-width:600px;
 margin-left: auto; margin-right: auto;">
 
 	<c:if test="${isCamp!='1'}">
@@ -271,7 +304,7 @@ height:0px;text-align:center;
 margin:0px auto 10px auto;"></div>
 </c:if>
 <div style="width:100%" class="zhengwen" id="zhengwen">
-${ content.content}
+${content.content}
 </div>
 <div style="margin:5% 5% 0px 5%">
 <div style="height:2%;width:100%" class="notifi">看军事社区规范：直抒胸臆  理性爱国</div>
@@ -290,6 +323,9 @@ ${ content.content}
 
 <c:if test="${isFull=='1'}">
 <jsp:include page="comments.jsp" />
+<div class="download2">
+	<p onclick="javascript:downloadApp()" style="font-size:10px;color:white;padding:2px 10px;background:#ba0001;border-radius: 4px;height:18px;line-height:18px;margin:10px auto;text-align:center;width:60%">立即下载.查看更多精彩评论</p>
+</div>
 </c:if>
 </div>
 </body>
@@ -366,6 +402,16 @@ function clickImg(target){
 	else{
 		window.KanjunshiAndroid.showImgs(target.getAttribute('src')+","+getImgSrc(getAllImg()));
 	}
+}
+
+function downloadApp(){
+	if(navigator.userAgent.match(/(iPhone|iPod|ios)/i)){
+		window.location.href = 'https://itunes.apple.com/cn/app/kan-jun-shi-jun-qing-zi-xun/id1147128061?l=en&mt=8';
+	}
+	else{
+		window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.tanglang.kanjunshi";
+	}
+	return true;
 }
 
 function getImgSrc(target){
