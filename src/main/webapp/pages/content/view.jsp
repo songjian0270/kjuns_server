@@ -121,6 +121,16 @@ height:auto !important;
 padding:0px !important;
 margin:0px !important;
 }
+
+
+.zhengwen p img{
+width:80vw !important;
+max-width:480px !important;
+height:auto !important;
+padding:0px !important;
+margin:0px !important;
+}
+
 .zhengwen video{
 width:100% !important;
 height:auto !important;
@@ -406,10 +416,12 @@ function clickImg(target){
 
 function downloadApp(){
 	if(navigator.userAgent.match(/(iPhone|iPod|ios)/i)){
-		window.location.href = 'https://itunes.apple.com/cn/app/kan-jun-shi-jun-qing-zi-xun/id1147128061?l=en&mt=8';
+		//window.location.href = "http://fir.im/kjs"
+		window.location.href = 'https://itunes.apple.com/cn/app/kan-jun-shi-jun-qing-zi-xun/id1147128061';
 	}
 	else{
-		window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.tanglang.kanjunshi";
+		window.location.href = "http://fir.im/kjs"
+		//window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.tanglang.kanjunshi";
 	}
 	return true;
 }
