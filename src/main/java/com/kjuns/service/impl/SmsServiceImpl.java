@@ -81,6 +81,9 @@ public class SmsServiceImpl implements SmsService {
 			if(cellPhoneNumber.equals(SysConf.ADMIN_MOBILE_PHONE) && checkCode.equals(SysConf.ADMIN_MOBILE_PASS)){
 				return ErrorCode.SUCCESS;
 			}
+			if(cellPhoneNumber.equals(SysConf.TEST_MOBILE_PHONE) && checkCode.equals(SysConf.TEST_MOBILE_PASS)){
+				return ErrorCode.SUCCESS;
+			}
 			if (CommonUtils.notEmpty(sms) && sms.getMistiming() < expire) {
 				if (!checkCode.equals(sms.getCode())) {
 					return ErrorCode.SMS_CODE_ERROR;
