@@ -19,6 +19,7 @@ import com.kjuns.service.CommentService;
 import com.kjuns.util.CommonConstants;
 import com.kjuns.util.CommonUtils;
 import com.kjuns.util.ErrorCode;
+import com.kjuns.util.SysConf;
 import com.kjuns.util.UUIDUtils;
 import com.kjuns.util.pager.Page;
 import com.kjuns.vo.ContentCommentsVo;
@@ -73,7 +74,7 @@ public class CommentServiceImpl implements CommentService {
 //						Visitor visitor = new Visitor();
 //						visitor.setId(random);
 //						Visitor vtor = visitorMapper.get(visitor);
-						comments.setFaceSrc("");
+						comments.setFaceSrc(CommonUtils.getImage(SysConf.DEFAULT_FACE_SRC));
 						comments.setNickName(comment.getUserNickName());
 					}else{
 						UserInfo userInfo = userInfoMapper.get(comment.getUserId());
@@ -95,7 +96,7 @@ public class CommentServiceImpl implements CommentService {
 //							visitor.setId(random);
 //							Visitor vtor = visitorMapper.get(visitor);
 							comments.setReplyNickName(userReplyComment.getUserNickName());
-							comments.setReplyFaceSrc("");
+							comments.setReplyFaceSrc(CommonUtils.getImage(SysConf.DEFAULT_FACE_SRC));
 						}else{
 							UserInfo userInfo = userInfoMapper.get(userReplyComment.getUserId());
 							comments.setReplyCommentId(CommonUtils.getStr(comment.getReplyCommentId()));
