@@ -73,6 +73,7 @@ public class CommentServiceImpl implements CommentService {
 //						Visitor visitor = new Visitor();
 //						visitor.setId(random);
 //						Visitor vtor = visitorMapper.get(visitor);
+						comments.setFaceSrc("");
 						comments.setNickName(comment.getUserNickName());
 					}else{
 						UserInfo userInfo = userInfoMapper.get(comment.getUserId());
@@ -93,7 +94,8 @@ public class CommentServiceImpl implements CommentService {
 //							Visitor visitor = new Visitor();
 //							visitor.setId(random);
 //							Visitor vtor = visitorMapper.get(visitor);
-							comments.setNickName(userReplyComment.getUserNickName());
+							comments.setReplyNickName(userReplyComment.getUserNickName());
+							comments.setReplyFaceSrc("");
 						}else{
 							UserInfo userInfo = userInfoMapper.get(userReplyComment.getUserId());
 							comments.setReplyCommentId(CommonUtils.getStr(comment.getReplyCommentId()));

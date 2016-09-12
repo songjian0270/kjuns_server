@@ -10,6 +10,8 @@ public class UserComment extends BaseModel {
 	
 	private String replyCommentId;
 	
+	private String replyUserNickName;
+	
 	private long likeCount;
 	
 	private String userNickName;
@@ -46,6 +48,14 @@ public class UserComment extends BaseModel {
 
 	public void setReplyCommentId(String replyCommentId) {
 		this.replyCommentId = replyCommentId;
+	}
+
+	public String getReplyUserNickName() {
+		return replyUserNickName;
+	}
+
+	public void setReplyUserNickName(String replyUserNickName) {
+		this.replyUserNickName = replyUserNickName;
 	}
 
 	public long getLikeCount() {

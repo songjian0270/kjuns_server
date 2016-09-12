@@ -34,7 +34,7 @@
 	
 	<select id="get" resultType="com.kjuns.model.UserComment" parameterType="String">
 		SELECT id, content_id contentId, reply_comment_id replyCommentId, create_by createBy,content, like_count likeCount,
-		create_date createDate, user_id userId FROM ${table} where data_flag = 1 
+		create_date createDate, user_id userId,user_nick_name userNickName FROM ${table} where data_flag = 1 
 		and id = #{id}
 	</select>
 	
