@@ -110,9 +110,10 @@ color:#333333;
 letter-spacing:-0.26px;
 line-height:22px;
 text-align:left;text-overflow:clip;
-word-break:break-all;
 max-width:600px;
 overflow-x:hidden;
+word-break:normal;
+word-warp:break-word;	
 }
 
 .zhengwen div img{
