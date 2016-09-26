@@ -290,7 +290,7 @@ margin-right: auto;
 </div>
 </c:if>
 <div style="
-border-top:0.5px solid rgba(0,0,0,0.15);width:100%;height:667px;text-align:center;max-width:600px;
+border-top:0.5px solid rgba(0,0,0,0.15);width:100%;text-align:center;max-width:600px;
 margin-left: auto; margin-right: auto;">
 
 	<c:if test="${isCamp!='1'}">
