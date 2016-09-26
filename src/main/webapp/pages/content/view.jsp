@@ -301,9 +301,9 @@ margin-left: auto; margin-right: auto;">
 		<div style="height:100%;float:left;width:50%">
 			<div class="senderFace" style="height:20px;width:20px;margin:0 auto;float:left"></div>
 			<p class="senderName">${content.issuerName }</p>
-			<div style="clear:both;"></div>
 		</div>
 		<div class="sendDate"><date:date value ="${fn:substring(content.createDate,0,10)}"/></div>
+		<div style="clear:both;"></div>
 	</div>
 
 <c:if test="${isCamp!='1'}">
