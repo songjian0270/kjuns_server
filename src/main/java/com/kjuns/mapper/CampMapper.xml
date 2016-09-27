@@ -13,7 +13,7 @@
 	<select id="queryCampList" resultType="com.kjuns.model.Content">
 		SELECT id, title, content, thumbnail,user_id issuerId, create_by createBy,create_date createDate 
 		FROM kjuns_camp where data_flag = 1 
-		order by create_date desc limit #{pageNo},#{pageSize}
+		order by isTop desc,isHot desc,create_date desc limit #{pageNo},#{pageSize}
 	</select>
 	
 	<select id="selectById" parameterType="String" resultType="com.kjuns.vo.ContentVo">
