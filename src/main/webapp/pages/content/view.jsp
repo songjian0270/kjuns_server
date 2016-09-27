@@ -170,13 +170,17 @@ text-align:left;
  min-height:50px
 }
 
-.comment_cell .comment_nickName{
+.comment_cell .comment_nickname{
 font-family:STHeitiSC-Medium;
 font-size:14px;
 color:#333333;
 letter-spacing:0.03px;
 line-height:14px;
 text-align:left;
+max-width:40vw;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
 }
 
 .comment_cell .comment_senddate{
