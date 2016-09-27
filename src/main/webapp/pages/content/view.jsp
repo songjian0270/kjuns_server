@@ -110,9 +110,10 @@ color:#333333;
 letter-spacing:-0.26px;
 line-height:22px;
 text-align:left;text-overflow:clip;
-word-break:break-all;
 max-width:600px;
 overflow-x:hidden;
+word-break:normal;
+word-warp:break-word;	
 }
 
 .zhengwen div img{
@@ -289,7 +290,7 @@ margin-right: auto;
 </div>
 </c:if>
 <div style="
-border-top:0.5px solid rgba(0,0,0,0.15);width:100%;height:667px;text-align:center;max-width:600px;
+border-top:0.5px solid rgba(0,0,0,0.15);width:100%;text-align:center;max-width:600px;
 margin-left: auto; margin-right: auto;">
 
 	<c:if test="${isCamp!='1'}">
@@ -302,6 +303,7 @@ margin-left: auto; margin-right: auto;">
 			<p class="senderName">${content.issuerName }</p>
 		</div>
 		<div class="sendDate"><date:date value ="${fn:substring(content.createDate,0,10)}"/></div>
+		<div style="clear:both;"></div>
 	</div>
 
 <c:if test="${isCamp!='1'}">
