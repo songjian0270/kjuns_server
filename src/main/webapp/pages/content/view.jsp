@@ -426,7 +426,7 @@ function downloadApp(){
 		window.location.href = 'https://itunes.apple.com/cn/app/kan-jun-shi-jun-qing-zi-xun/id1147128061';
 	}
 	else{
-		window.location.href = "http://fir.im/kjs"
+		window.location.href = "http://www.wandoujia.com/apps/com.tanglang.kanjunshi"
 		//window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.tanglang.kanjunshi";
 	}
 	return true;
